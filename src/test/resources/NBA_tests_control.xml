@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="NBA Tests" verbose="10" data-provider-thread-count="1">
+
+    <test name="DashboardTabTest" preserve-order="true">
+        <classes>
+            <class name="ALoginTest">
+                <methods>
+                    <include name="loginTest"/>
+                </methods>
+            </class>
+            <class name="DashboardTests">
+                <methods>
+                    <include name="openGameTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <!--<listeners>-->
+        <!--<listener class-name="org.uncommons.reportng.HTMLReporter"/>-->
+    <!--</listeners>-->
+</suite>
