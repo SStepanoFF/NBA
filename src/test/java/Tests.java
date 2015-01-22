@@ -26,9 +26,17 @@ public class Tests extends BaseTest{
     }
 
     @Test
-    private void openGameTest(){
+    private void selectDate(){
         dashboardTab.selectDate();
-        //dashboardTab.numbGamesVerification();
+    }
+
+    @Test
+    private void compareGameNumber(){
+        dashboardTab.numbGamesVerification();
+    }
+
+    @Test
+    private void compareTaskNumber(){
         dashboardTab.numbTasksVerification();
     }
 }

@@ -64,6 +64,7 @@ public class DashboardTab extends Operations {
         }catch (junit.framework.AssertionFailedError e){
             e.getStackTrace();
             ProprtyLoader.writeToFile("ERROR! Incorrect tasks number: UI="+taskList.size()+"  DB="+dbRes+"\n");
+            throw new RuntimeException("Ошибка в модуле");
         }finally {
             driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
         }
@@ -78,6 +79,7 @@ public class DashboardTab extends Operations {
         }catch (junit.framework.AssertionFailedError e){
             e.getStackTrace();
             ProprtyLoader.writeToFile("ERROR! Incorrect games number: UI="+gamesList.size()+"  DB="+dbRes+"\n");
+            throw new RuntimeException("Ошибка в модуле");
         }finally {
             driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
         }

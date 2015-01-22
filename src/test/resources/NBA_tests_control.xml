@@ -7,9 +7,9 @@
             <class name="Tests" >
                 <methods>
                     <include name="loginTest"/>
-                    <include name="openGameTest"/>
-                    <!--<include name="openGameTest"/>-->
-                    <!--<include name="openGameTest"/>-->
+                    <include name="selectDate"/>
+                    <include name="compareGameNumber"/>
+                    <include name="compareTaskNumber"/>
                 </methods>
             </class>
             <!--<class name="DashboardTests">-->
