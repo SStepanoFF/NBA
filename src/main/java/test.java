@@ -1,4 +1,5 @@
 import framework.DataBase;
+import framework.Operations;
 import framework.ProprtyLoader;
 
 /**
@@ -7,7 +8,8 @@ import framework.ProprtyLoader;
 public class test {
     public static void main(String []args){
         DataBase dataBase=new DataBase();
-        int q=dataBase.taskCount(111111132);
+
+        int q=dataBase.gamesCount();
         ProprtyLoader.writeToFile("" + q);
     }
 }

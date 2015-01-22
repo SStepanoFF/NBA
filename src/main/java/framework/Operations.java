@@ -6,9 +6,14 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -38,7 +43,6 @@ public class Operations {
         action.moveToElement(tab).build().perform();
     }
 
-
     public boolean isElementPresent(WebElement element){
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
         try {
@@ -49,6 +53,14 @@ public class Operations {
         }finally {
             driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
         }
+    }
 
+    public Date dataConvertfromString(String text) {
+        Date date=null;
+        try{
+            SimpleDateFormat format=new SimpleDateFormat("dd.MM.yyyy", Locale.UK);
+            date=format.parse(text);
+        }catch (ParseException e){}
+        return date;
     }
 }

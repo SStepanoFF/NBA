@@ -20,6 +20,7 @@ public class DashboardTab extends Operations {
 
     public DashboardTab(WebDriver driver){
         super(driver);
+        dataBase=new DataBase();
         PageFactory.initElements(driver, this);
         WebDriverWait wait=new WebDriverWait(driver, Integer.parseInt(ProprtyLoader.loadProperty("timeout")));
         wait.until(ExpectedConditions.visibilityOf(dashTab));
@@ -43,24 +44,43 @@ public class DashboardTab extends Operations {
     private WebElement month;
     //endregion
 
-    private void selectDate(){
+    @FindBy (css="td[data-bind='html:startTime']")
+    private List<WebElement> gamesList;
+
+    public void selectDate(){
         datepicker.click();
         for (int i=0; i<date.size(); i++)
-            if (ProprtyLoader.loadProperty("date").equals(date.get(i).getText())){
+            if (ProprtyLoader.loadProperty("day").equals(date.get(i).getText())){
                 date.get(i).click();
             }
     }
 
-    public void openGame(){
-        dataBase=new DataBase();
-        selectDate();
+    public void numbTasksVerification(){
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+        int dbRes=dataBase.taskCount(Integer.parseInt(ProprtyLoader.loadProperty("gameID")));
         try {
-            Assert.assertTrue(taskList.size() == dataBase.taskCount(Integer.parseInt(ProprtyLoader.loadProperty("gameID")))); //Compare count of task with DB
+            Assert.assertTrue(taskList.size() == dbRes); //Compare count of task with DB
+            ProprtyLoader.writeToFile("Number of tasks="+taskList.size()+"\n");
         }catch (junit.framework.AssertionFailedError e){
-            ProprtyLoader.writeToFile("Incorrect tasks number\n");
+            e.getStackTrace();
+            ProprtyLoader.writeToFile("ERROR! Incorrect tasks number: UI="+taskList.size()+"  DB="+dbRes+"\n");
         }finally {
             driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
         }
     }
+
+    public void numbGamesVerification(){
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+        int dbRes=dataBase.gamesCount();
+        try {
+            Assert.assertTrue(gamesList.size() == dbRes); //Compare count of games with DB
+            ProprtyLoader.writeToFile("Number of games="+gamesList.size()+"\n");
+        }catch (junit.framework.AssertionFailedError e){
+            e.getStackTrace();
+            ProprtyLoader.writeToFile("ERROR! Incorrect games number: UI="+gamesList.size()+"  DB="+dbRes+"\n");
+        }finally {
+            driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
+        }
+    }
+
 }

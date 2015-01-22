@@ -1,30 +1,29 @@
-import framework.DataBase;
+
 import framework.ProprtyLoader;
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.testng.ITestContext;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pages.DashboardTab;
 import pages.LoginPage;
 import webDriver.Driver;
 import java.util.concurrent.TimeUnit;
 
 
-public class LoginTest {
-    public WebDriver driver;
-    private LoginPage loginPage;
+public class LoginTest extends BaseTest{
 
-    @BeforeTest
-    public void setUp() {
-        driver = Driver.getInstance();
-        if (ProprtyLoader.loadProperty("portal").equals("1")){
-            driver.get(ProprtyLoader.loadProperty("prodUrl"));
-        }
-        else driver.get(ProprtyLoader.loadProperty("testUrl"));
-        driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")), TimeUnit.SECONDS);
+    private LoginPage loginPage;
+    //private WebDriver driver;
+
+//    public LoginTest(WebDriver driver){
+//        super(driver);
+//    }
+
+    @BeforeClass
+    public void setUp() {  //ITestContext contex
+       if (ProprtyLoader.loadProperty("portal").equals("1")) {
+            driver.navigate().to(ProprtyLoader.loadProperty("prodUrl"));
+        } else driver.navigate().to(ProprtyLoader.loadProperty("testUrl"));
         loginPage=new LoginPage(driver);
-        ProprtyLoader.clearResultFile();
     }
 
     @Test

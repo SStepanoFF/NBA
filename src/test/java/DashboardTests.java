@@ -1,7 +1,9 @@
 import framework.DataBase;
 import framework.ProprtyLoader;
+import org.junit.BeforeClass;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import org.testng.ITestContext;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -13,25 +15,23 @@ import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 
 
-public class DashboardTests extends LoginTest{
-    private WebDriver driver;
+public class DashboardTests extends BaseTest{
+
     private DashboardTab dashboardTab;
+    //WebDriver driver;
 
-    @BeforeTest
-    public void setUp() {
-        driver = Driver.getInstance();
-        driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")), TimeUnit.SECONDS);
+//    public DashboardTests(WebDriver driver){
+//        super(driver);
+//    }
+
+    @BeforeClass
+    public void setUp1() {
         dashboardTab=new DashboardTab(driver);
-    }
-
-    @AfterTest
-    public void tearDown() {
-        driver.quit();
     }
 
     @Test
     private void openGameTest(){
-        dashboardTab.openGame();
+
     }
 
 }

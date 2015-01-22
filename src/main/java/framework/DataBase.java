@@ -29,7 +29,7 @@ public class DataBase {
     public int taskCount(int gameID){
         try{
             statement = conn.createStatement();//Готовим запрос
-            resultSets = statement.executeQuery("SELECT COUNT(*) as C FROM GAMES JOIN TASKS ON GAMES.GAME_ID=TASKS.GAME_ID WHERE EXTERNAL_ID=111111132");
+            resultSets = statement.executeQuery("SELECT COUNT(*) as C FROM GAMES JOIN TASKS ON GAMES.GAME_ID=TASKS.GAME_ID WHERE EXTERNAL_ID="+gameID);
             while(resultSets.next()){
                 return resultSets.getInt("C");
             }
@@ -40,6 +40,31 @@ public class DataBase {
         }
         finally{
             try {
+                resultSets.close();
+                statement.close();
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public int gamesCount(){
+        try{
+            statement = conn.createStatement();//Готовим запрос
+            resultSets = statement.executeQuery("SELECT COUNT(*) AS C FROM GAMES WHERE  STARTUTC LIKE '2015-01-19%' AND HOME_TEAM_ID=117");
+            while(resultSets.next()){
+                return resultSets.getInt("C");
+            }
+            return resultSets.getInt("C");  //MUST CORRECT!!!
+        } catch(Exception e){
+            e.printStackTrace();
+            return -1;
+        }
+        finally{
+            try {
+                resultSets.close();
+                statement.close();
                 conn.close();
             } catch (SQLException e) {
                 e.printStackTrace();

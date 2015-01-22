@@ -1,0 +1,2 @@
+IE driver version 2.44.0 x86
+file size 2 568 704 bytes
