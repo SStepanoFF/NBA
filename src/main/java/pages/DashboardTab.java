@@ -73,7 +73,7 @@ public class DashboardTab extends Operations {
         }catch (junit.framework.AssertionFailedError e){
             e.getStackTrace();
             ProprtyLoader.writeToFile("ERROR! Incorrect tasks number: UI="+taskList.size()+"  DB="+dbRes+"\n");
-            throw new RuntimeException("Ошибка в модуле");
+            throw new RuntimeException("Assert error numbTasksVerification");
         }finally {
             driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
         }
@@ -88,7 +88,7 @@ public class DashboardTab extends Operations {
         }catch (junit.framework.AssertionFailedError e){
             e.getStackTrace();
             ProprtyLoader.writeToFile("ERROR! Incorrect games number: UI="+gamesList.size()+"  DB="+dbRes+"\n");
-            throw new RuntimeException("Ошибка в модуле");
+            throw new RuntimeException("Assert error numbGamesVerification");
         }finally {
             driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
         }
@@ -105,11 +105,11 @@ public class DashboardTab extends Operations {
                 driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
                 try {
                     Assert.assertTrue(element.getText().contains(status));     //Verify text status
-                    ProprtyLoader.writeToFile("Game status="+element.getText()+"\n");
+                    ProprtyLoader.writeToFile("Game status=" + element.getText()+"\n");
                 }catch (junit.framework.AssertionFailedError e){
                     e.getStackTrace();
                     ProprtyLoader.writeToFile("ERROR! Incorrect games status: "+element.getText()+"\n");
-                    throw new RuntimeException("Ошибка в модуле");
+                    throw new RuntimeException("Assert error status powerFailTestStatusIdentification");
                 }finally {
                     driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
                 }
