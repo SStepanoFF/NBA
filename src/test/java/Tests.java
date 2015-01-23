@@ -28,6 +28,7 @@ public class Tests extends BaseTest{
     @Test
     private void selectDate(){
         dashboardTab.selectDate();
+        dashboardTab.powerFailTestStatusIdentification("Done");
     }
 
     @Test

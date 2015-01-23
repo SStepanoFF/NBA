@@ -26,7 +26,7 @@ public class DataBase {
         }
     }
 
-    public int taskCount(int gameID){
+    public int taskCount(String gameID){
         try{
             statement = conn.createStatement();//Готовим запрос
             resultSets = statement.executeQuery("SELECT COUNT(*) as C FROM GAMES JOIN TASKS ON GAMES.GAME_ID=TASKS.GAME_ID WHERE EXTERNAL_ID="+gameID);
@@ -42,17 +42,17 @@ public class DataBase {
             try {
                 resultSets.close();
                 statement.close();
-                conn.close();
+               // conn.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public int gamesCount(){
+    public int gamesCount(String date){
         try{
             statement = conn.createStatement();//Готовим запрос
-            resultSets = statement.executeQuery("SELECT COUNT(*) AS C FROM GAMES WHERE  STARTUTC LIKE '2015-01-19%' AND HOME_TEAM_ID=117");
+            resultSets = statement.executeQuery("SELECT COUNT(*) AS C FROM GAMES WHERE  STARTUTC LIKE '"+date+"%' AND HOME_TEAM_ID=117");
             while(resultSets.next()){
                 return resultSets.getInt("C");
             }
@@ -65,7 +65,7 @@ public class DataBase {
             try {
                 resultSets.close();
                 statement.close();
-                conn.close();
+               // conn.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }

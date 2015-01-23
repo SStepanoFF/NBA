@@ -47,17 +47,26 @@ public class DashboardTab extends Operations {
     @FindBy (css="td[data-bind='html:startTime']")
     private List<WebElement> gamesList;
 
+    //region Task WebElements
+    @FindBy (linkText = "Power Failure Test")
+    private WebElement task;
+
+    @FindBy (xpath="//td[text()=('Power Failure Test')]/following-sibling::td/button")        ////td[text()=("Power Failure Test")]/following-sibling::*[2] подкраш поле
+    private List<WebElement> powerFailTestStatus;        ////td[text()=("Power Failure Test")]/following-sibling::td/button конкретный баттон
+    //endregion
+
     public void selectDate(){
         datepicker.click();
         for (int i=0; i<date.size(); i++)
-            if (ProprtyLoader.loadProperty("day").equals(date.get(i).getText())){
+            if (date.get(i).getText().equals(ProprtyLoader.loadProperty("date").substring(8)) && //verify day
+                    Integer.parseInt(date.get(i).getAttribute("data-month"))==0){                //verify month
                 date.get(i).click();
             }
     }
 
     public void numbTasksVerification(){
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-        int dbRes=dataBase.taskCount(Integer.parseInt(ProprtyLoader.loadProperty("gameID")));
+        int dbRes=dataBase.taskCount(ProprtyLoader.loadProperty("gameID"));
         try {
             Assert.assertTrue(taskList.size() == dbRes); //Compare count of task with DB
             ProprtyLoader.writeToFile("Number of tasks="+taskList.size()+"\n");
@@ -72,7 +81,7 @@ public class DashboardTab extends Operations {
 
     public void numbGamesVerification(){
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-        int dbRes=dataBase.gamesCount();
+        int dbRes=dataBase.gamesCount(ProprtyLoader.loadProperty("date"));
         try {
             Assert.assertTrue(gamesList.size() == dbRes); //Compare count of games with DB
             ProprtyLoader.writeToFile("Number of games="+gamesList.size()+"\n");
@@ -82,6 +91,29 @@ public class DashboardTab extends Operations {
             throw new RuntimeException("Ошибка в модуле");
         }finally {
             driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
+        }
+    }
+
+    public void colorIdentification(){
+        //((JavascriptExecuter)driver).executeScript("return arguments[0].style.background-color", element);
+        task.getCssValue("background-color");
+    }
+
+    public void powerFailTestStatusIdentification(String status){
+        for(WebElement element: powerFailTestStatus) {
+            if (element.getAttribute("id").contains(ProprtyLoader.loadProperty("gameID"))) {  //select button by gameID
+                driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+                try {
+                    Assert.assertTrue(element.getText().contains(status));     //Verify text status
+                    ProprtyLoader.writeToFile("Game status="+element.getText()+"\n");
+                }catch (junit.framework.AssertionFailedError e){
+                    e.getStackTrace();
+                    ProprtyLoader.writeToFile("ERROR! Incorrect games status: "+element.getText()+"\n");
+                    throw new RuntimeException("Ошибка в модуле");
+                }finally {
+                    driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
+                }
+            }
         }
     }
 

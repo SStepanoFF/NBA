@@ -9,7 +9,10 @@ public class test {
     public static void main(String []args){
         DataBase dataBase=new DataBase();
 
-        int q=dataBase.gamesCount();
-        ProprtyLoader.writeToFile("" + q);
+        //int q=dataBase.gamesCount();
+        //ProprtyLoader.writeToFile("" + q);
+
+        String text=ProprtyLoader.loadProperty("date").substring(8);
+        ProprtyLoader.writeToFile("" + text);
     }
 }

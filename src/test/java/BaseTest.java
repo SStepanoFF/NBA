@@ -28,7 +28,7 @@ public class BaseTest {
     public void tearDown() {
        // WebDriver driver = getDriver(context);
         if (driver != null) {
-            driver.quit();
+            //driver.quit();
         }
 //        context.removeAttribute(getCurrentTestCaseName(context));
 //        try{

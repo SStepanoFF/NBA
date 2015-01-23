@@ -8,8 +8,9 @@
                 <methods>
                     <include name="loginTest"/>
                     <include name="selectDate"/>
-                    <include name="compareGameNumber"/>
-                    <include name="compareTaskNumber"/>
+                    <!--<include name="compareGameNumber"/>-->
+                    <!--<include name="compareTaskNumber"/>-->
+                    <include name="colorIdentification"/>
                 </methods>
             </class>
             <!--<class name="DashboardTests">-->
@@ -19,7 +20,4 @@
             <!--</class>-->
         </classes>
     </test>
-    <!--<listeners>-->
-        <!--<listener class-name="HTMLReporter"/>-->
-    <!--</listeners>-->
 </suite>
