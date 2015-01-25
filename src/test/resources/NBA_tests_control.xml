@@ -14,7 +14,7 @@
                     <include name="selectDate"/>
                     <include name="compareGameNumber"/>
                     <include name="compareTaskNumber"/>
-                    <include name="colorIdentification"/>
+                    <include name="statusIdentificationTest"/>
                 </methods>
             </class>
         </classes>

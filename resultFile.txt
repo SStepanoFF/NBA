@@ -1,2 +1,4 @@
 Can't connect to DB
 
+Game status=Done
+
