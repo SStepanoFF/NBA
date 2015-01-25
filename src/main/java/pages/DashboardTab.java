@@ -105,11 +105,11 @@ public class DashboardTab extends Operations {
     }
 
     private void getTaskStatus(List<WebElement> taskName, String status){
-        for(WebElement element: powerFailTestStatus) {
+        for(WebElement element: taskName) {
             if (element.getAttribute("id").contains(gameID)) {  //select button by gameID
                 driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
                 try {
-                    Assert.assertTrue(element.getText().contains(status));     //Verify text status
+                    Assert.assertTrue(element.getText().contains(status));     //Verify task status
                     ProprtyLoader.writeToFile("Game status=" + element.getText()+"\n");
                 }catch (junit.framework.AssertionFailedError e){
                     e.getStackTrace();
