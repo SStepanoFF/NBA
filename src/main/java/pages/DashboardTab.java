@@ -17,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 public class DashboardTab extends Operations {
     private DataBase dataBase;
+    private String gameID=ProprtyLoader.loadProperty("gameID");
 
     public DashboardTab(WebDriver driver){
         super(driver);
@@ -66,13 +67,13 @@ public class DashboardTab extends Operations {
 
     public void numbTasksVerification(){
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-        int dbRes=dataBase.taskCount(ProprtyLoader.loadProperty("gameID"));
+        int dbCountTask=dataBase.taskCount(gameID);
         try {
-            Assert.assertTrue(taskList.size() == dbRes); //Compare count of task with DB
+            Assert.assertTrue(taskList.size() == dbCountTask); //Compare count of task with DB
             ProprtyLoader.writeToFile("Number of tasks="+taskList.size()+"\n");
         }catch (junit.framework.AssertionFailedError e){
             e.getStackTrace();
-            ProprtyLoader.writeToFile("ERROR! Incorrect tasks number: UI="+taskList.size()+"  DB="+dbRes+"\n");
+            ProprtyLoader.writeToFile("ERROR! Incorrect tasks number: UI="+taskList.size()+"  DB="+dbCountTask+"\n");
             throw new RuntimeException("Assert error numbTasksVerification");
         }finally {
             driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
@@ -81,13 +82,13 @@ public class DashboardTab extends Operations {
 
     public void numbGamesVerification(){
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-        int dbRes=dataBase.gamesCount(ProprtyLoader.loadProperty("date"));
+        int dbCountGame=dataBase.gamesCount(ProprtyLoader.loadProperty("date"));
         try {
-            Assert.assertTrue(gamesList.size() == dbRes); //Compare count of games with DB
+            Assert.assertTrue(gamesList.size() == dbCountGame); //Compare count of games with DB
             ProprtyLoader.writeToFile("Number of games="+gamesList.size()+"\n");
         }catch (junit.framework.AssertionFailedError e){
             e.getStackTrace();
-            ProprtyLoader.writeToFile("ERROR! Incorrect games number: UI="+gamesList.size()+"  DB="+dbRes+"\n");
+            ProprtyLoader.writeToFile("ERROR! Incorrect games number: UI="+gamesList.size()+"  DB="+dbCountGame+"\n");
             throw new RuntimeException("Assert error numbGamesVerification");
         }finally {
             driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
@@ -100,8 +101,12 @@ public class DashboardTab extends Operations {
     }
 
     public void powerFailTestStatusIdentification(String status){
+        getTaskStatus(powerFailTestStatus,status);
+    }
+
+    private void getTaskStatus(List<WebElement> taskName, String status){
         for(WebElement element: powerFailTestStatus) {
-            if (element.getAttribute("id").contains(ProprtyLoader.loadProperty("gameID"))) {  //select button by gameID
+            if (element.getAttribute("id").contains(gameID)) {  //select button by gameID
                 driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
                 try {
                     Assert.assertTrue(element.getText().contains(status));     //Verify text status
