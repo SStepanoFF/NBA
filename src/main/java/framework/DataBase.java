@@ -23,6 +23,7 @@ public class DataBase {
         catch(Exception e){
             e.printStackTrace();
             ProprtyLoader.writeToFile("Can't connect to DB\n");
+            //throw new RuntimeException("Assert error BD connection");
         }
     }
 

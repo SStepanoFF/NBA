@@ -1,14 +1,16 @@
 import framework.ProprtyLoader;
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pages.DashboardTab;
 import pages.LoginPage;
+import setup.BaseTest;
 
 /**
  * Created by sergii.stepanov on 22.01.2015.
  */
-public class Tests extends BaseTest{
-
+public class Tests extends BaseTest {
+    WebDriver driver;
     private LoginPage loginPage;
     private DashboardTab dashboardTab;
 
@@ -22,7 +24,7 @@ public class Tests extends BaseTest{
 
     @Test
     private void loginTest(){
-        dashboardTab=loginPage.loginNBA();
+        //dashboardTab=loginPage.loginNBA();
     }
 
     @Test

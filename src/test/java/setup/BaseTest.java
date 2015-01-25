@@ -1,3 +1,5 @@
+package setup;
+
 import framework.ProprtyLoader;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
@@ -11,30 +13,22 @@ import java.util.concurrent.TimeUnit;
 
 public class BaseTest {
 
-    protected WebDriver driver;
+    private WebDriver driver;
 
-//    public BaseTest(WebDriver driver){
-//        this.driver=driver;
-//    }
-
-    @BeforeSuite
-    public void setUpTest() {
+    @BeforeTest(alwaysRun = true)
+    public void setUpTest(ITestContext context) {
         driver = Driver.getInstance();
+        context.setAttribute(getCurrentTestCaseName(context), driver);
         driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")), TimeUnit.SECONDS);
         ProprtyLoader.clearResultFile();
     }
 
     @AfterTest(alwaysRun = true)
-    public void tearDown() {
-       // WebDriver driver = getDriver(context);
+    public void tearDown(ITestContext context) {
+        driver = getDriver(context);
         if (driver != null) {
-            //driver.quit();
+            driver.quit();
         }
-//        context.removeAttribute(getCurrentTestCaseName(context));
-//        try{
-//            Thread.sleep(10000);   //give driver sometime to breathe.
-//        }
-//        catch (Exception exc){}
 
    }
 
@@ -58,14 +52,14 @@ public class BaseTest {
 //    return  null;
 //}
 
-//    protected WebDriver getDriver (ITestContext context) {
-//        return (WebDriver) context.getAttribute(getCurrentTestCaseName(context));
-//    }
-//
-//    protected String getCurrentTestCaseName(ITestContext context) {
-//        return context.getCurrentXmlTest().getName();
-//    }
-//
+    protected WebDriver getDriver (ITestContext context) {
+        return (WebDriver) context.getAttribute(getCurrentTestCaseName(context));
+    }
+
+    protected String getCurrentTestCaseName(ITestContext context) {
+        return context.getCurrentXmlTest().getName();
+    }
+
 //    public String getWindowHandle(WebDriver driver) {
 //        return driver.getWindowHandle();
 //    }

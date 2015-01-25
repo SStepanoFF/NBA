@@ -4,20 +4,19 @@
 
     <test name="AllTests" preserve-order="true">
         <classes >
-            <class name="Tests" >
+            <class name="testcases.LoginTest" >
                 <methods>
                     <include name="loginTest"/>
+                </methods>
+            </class>
+            <class name="testcases.DashboardTests">
+                <methods>
                     <include name="selectDate"/>
-                    <!--<include name="compareGameNumber"/>-->
-                    <!--<include name="compareTaskNumber"/>-->
+                    <include name="compareGameNumber"/>
+                    <include name="compareTaskNumber"/>
                     <include name="colorIdentification"/>
                 </methods>
             </class>
-            <!--<class name="DashboardTests">-->
-                <!--<methods>-->
-                    <!--<include name="openGameTest"/>-->
-                <!--</methods>-->
-            <!--</class>-->
         </classes>
     </test>
 </suite>

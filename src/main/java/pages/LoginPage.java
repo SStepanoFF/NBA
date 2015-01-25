@@ -30,7 +30,7 @@ public class LoginPage extends Operations {
     @FindBy (id="password")
     private WebElement passField;
 
-    public DashboardTab loginNBA(){
+    public void loginNBA(){
         if (ProprtyLoader.loadProperty("portal").equals("1")){
             logName=ProprtyLoader.loadProperty("prodLoginName");
             password=ProprtyLoader.loadProperty("prodPass");
@@ -42,6 +42,5 @@ public class LoginPage extends Operations {
         loginField.sendKeys(logName);
         passField.sendKeys(password);
         logButt.click();
-        return new DashboardTab(driver);
     }
 }
