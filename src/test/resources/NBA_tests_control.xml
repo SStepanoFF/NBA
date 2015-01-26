@@ -15,6 +15,7 @@
                     <include name="compareGameNumber"/>
                     <include name="compareTaskNumber"/>
                     <include name="statusIdentificationTest"/>
+                    <!--<include name="colorIdentificationTest"/>-->
                 </methods>
             </class>
         </classes>

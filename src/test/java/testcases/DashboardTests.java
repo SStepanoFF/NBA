@@ -35,5 +35,10 @@ public class DashboardTests extends BaseTest {
     }
 
     @Test
-    private void statusIdentificationTest(){ dashboardTab.powerFailTestStatusIdentification("Done");}
+    private void statusIdentificationTest(){ dashboardTab.powerFailTestStatusIdentification("Donex");}
+
+    @Test
+    private void colorIdentificationTest(){
+        dashboardTab.colorIdentification();
+    }
 }

@@ -3,21 +3,23 @@ package pages;
 import framework.DataBase;
 import framework.ProprtyLoader;
 import framework.Operations;
-import junit.framework.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class DashboardTab extends Operations {
     private DataBase dataBase;
-    private String gameID=ProprtyLoader.loadProperty("gameID");
+    private final String gameID=ProprtyLoader.loadProperty("gameID");
+    private final String game="11";
 
     public DashboardTab(WebDriver driver){
         super(driver);
@@ -30,9 +32,6 @@ public class DashboardTab extends Operations {
 
     @FindBy (linkText = "Dashboard")
     private WebElement dashTab;
-
-    @FindBy (css="td[data-bind='html:title']")
-    private List<WebElement> taskList;
 
     //region Datepicker WebElements
     @FindBy (css=".ui-datepicker-trigger")
@@ -49,8 +48,15 @@ public class DashboardTab extends Operations {
     private List<WebElement> gamesList;
 
     //region Task WebElements
-    @FindBy (linkText = "Power Failure Test")
-    private WebElement task;
+    @FindBy (css="td[data-bind='html:title']")
+    private List<WebElement> taskList;
+
+    @FindBy (css = "td button")
+    private List<WebElement> statusButtList;
+
+    private final String locatorr="//td[descendant::button[contains(@id,'"+game+"')]]";
+    @FindBy(xpath = locatorr)
+    private List<WebElement> colorStatus;
 
     @FindBy (xpath="//td[text()=('Power Failure Test')]/following-sibling::td/button")        ////td[text()=("Power Failure Test")]/following-sibling::*[2] подкраш поле
     private List<WebElement> powerFailTestStatus;        ////td[text()=("Power Failure Test")]/following-sibling::td/button конкретный баттон
@@ -71,7 +77,7 @@ public class DashboardTab extends Operations {
         try {
             Assert.assertTrue(taskList.size() == dbCountTask); //Compare count of task with DB
             ProprtyLoader.writeToFile("Number of tasks="+taskList.size()+"\n");
-        }catch (junit.framework.AssertionFailedError e){
+        }catch (AssertionError e){
             e.getStackTrace();
             ProprtyLoader.writeToFile("ERROR! Incorrect tasks number: UI="+taskList.size()+"  DB="+dbCountTask+"\n");
             throw new RuntimeException("Assert error numbTasksVerification");
@@ -86,7 +92,7 @@ public class DashboardTab extends Operations {
         try {
             Assert.assertTrue(gamesList.size() == dbCountGame); //Compare count of games with DB
             ProprtyLoader.writeToFile("Number of games="+gamesList.size()+"\n");
-        }catch (junit.framework.AssertionFailedError e){
+        }catch (AssertionError e){
             e.getStackTrace();
             ProprtyLoader.writeToFile("ERROR! Incorrect games number: UI="+gamesList.size()+"  DB="+dbCountGame+"\n");
             throw new RuntimeException("Assert error numbGamesVerification");
@@ -97,29 +103,40 @@ public class DashboardTab extends Operations {
 
     public void colorIdentification(){
         //((JavascriptExecuter)driver).executeScript("return arguments[0].style.background-color", element);
-        task.getCssValue("background-color");
+        colorStatus.get(1).getCssValue("background-color");  //"rgba(0, 109, 204, 1)"- blue  "rgba(0, 128, 0, 1)" -green    "rgba(255, 0, 0, 1)" -red
+        //colorStatus.getText();
     }
 
     public void powerFailTestStatusIdentification(String status){
-        getTaskStatus(powerFailTestStatus,status);
+        taskStatusAssertion(getTaskStatus(powerFailTestStatus), status);
     }
 
-    private void getTaskStatus(List<WebElement> taskName, String status){
+    public void allTasksStatusVerification(String status){  //Проверка статуса всех тасок если все они одинаковы
+        //getTaskStatus(statusButtList,status);
+    }
+
+    private String getTaskStatus(List<WebElement> taskName){
+        String taskStatus="Error status";
         for(WebElement element: taskName) {
             if (element.getAttribute("id").contains(gameID)) {  //select button by gameID
+                taskStatus = element.getText();
+            }
+        }
+        return  taskStatus;
+    }
+
+    private void taskStatusAssertion(String realStatus, String mustStatus){
                 driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
                 try {
-                    Assert.assertTrue(element.getText().contains(status));     //Verify task status
-                    ProprtyLoader.writeToFile("Game status=" + element.getText()+"\n");
-                }catch (junit.framework.AssertionFailedError e){
+                    Assert.assertTrue(realStatus.contains(mustStatus));     //Verify task status
+                    ProprtyLoader.writeToFile("Game status=" + realStatus+"\n");
+                }catch (AssertionError e){
                     e.getStackTrace();
-                    ProprtyLoader.writeToFile("ERROR! Incorrect games status: "+element.getText()+"\n");
+                    ProprtyLoader.writeToFile("ERROR! Incorrect games status: "+realStatus+"  must be: "+mustStatus+"\n");
                     throw new RuntimeException("Assert error status powerFailTestStatusIdentification");
                 }finally {
                     driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
                 }
-            }
-        }
     }
 
 }
