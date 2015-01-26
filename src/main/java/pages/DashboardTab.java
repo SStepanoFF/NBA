@@ -24,7 +24,6 @@ public class DashboardTab extends Operations {
     public DashboardTab(WebDriver driver){
         super(driver);
         dataBase=new DataBase();
-        PageFactory.initElements(driver, this);
         WebDriverWait wait=new WebDriverWait(driver, Integer.parseInt(ProprtyLoader.loadProperty("timeout")));
         wait.until(ExpectedConditions.visibilityOf(dashTab));
         dashTab.click();
@@ -53,10 +52,6 @@ public class DashboardTab extends Operations {
 
     @FindBy (css = "td button")
     private List<WebElement> statusButtList;
-
-    private final String locatorr="//td[descendant::button[contains(@id,'"+game+"')]]";
-    @FindBy(xpath = locatorr)
-    private List<WebElement> colorStatus;
 
     @FindBy (xpath="//td[text()=('Power Failure Test')]/following-sibling::td/button")        ////td[text()=("Power Failure Test")]/following-sibling::*[2] подкраш поле
     private List<WebElement> powerFailTestStatus;        ////td[text()=("Power Failure Test")]/following-sibling::td/button конкретный баттон
@@ -101,10 +96,10 @@ public class DashboardTab extends Operations {
         }
     }
 
-    public void colorIdentification(){
-        //((JavascriptExecuter)driver).executeScript("return arguments[0].style.background-color", element);
-        colorStatus.get(1).getCssValue("background-color");  //"rgba(0, 109, 204, 1)"- blue  "rgba(0, 128, 0, 1)" -green    "rgba(255, 0, 0, 1)" -red
-        //colorStatus.getText();
+    public void powerFailTestColorIdentification(String color){
+        String locatorr="//td[descendant::button[contains(@id,'"+gameID+"')]]";
+        WebElement powerFailTestColor=driver.findElement(By.xpath(locatorr));
+        taskColorAssertion(powerFailTestColor.getCssValue("background-color"),color);
     }
 
     public void powerFailTestStatusIdentification(String status){
@@ -129,14 +124,28 @@ public class DashboardTab extends Operations {
                 driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
                 try {
                     Assert.assertTrue(realStatus.contains(mustStatus));     //Verify task status
-                    ProprtyLoader.writeToFile("Game status=" + realStatus+"\n");
+                    ProprtyLoader.writeToFile("Task status=" + realStatus+"\n");
                 }catch (AssertionError e){
                     e.getStackTrace();
-                    ProprtyLoader.writeToFile("ERROR! Incorrect games status: "+realStatus+"  must be: "+mustStatus+"\n");
+                    ProprtyLoader.writeToFile("ERROR! Incorrect task status: "+realStatus+"  must be: "+mustStatus+"\n");
                     throw new RuntimeException("Assert error status powerFailTestStatusIdentification");
                 }finally {
                     driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
                 }
+    }
+
+    private void taskColorAssertion(String realColor, String mustColor){
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+        try {
+            Assert.assertTrue(realColor.contains(mustColor));     //Verify task status
+            ProprtyLoader.writeToFile("Task color=" + realColor+"\n");
+        }catch (AssertionError e){
+            e.getStackTrace();
+            ProprtyLoader.writeToFile("ERROR! Incorrect task color: "+realColor+"  must be: "+mustColor+"\n");
+            throw new RuntimeException("Assert error status powerFailTestColorIdentification");
+        }finally {
+            driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
+        }
     }
 
 }

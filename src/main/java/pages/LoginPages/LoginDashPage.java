@@ -1,4 +1,4 @@
-package pages;
+package pages.LoginPages;
 
 import framework.ProprtyLoader;
 import framework.Operations;
@@ -10,13 +10,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
-public class LoginPage extends Operations {
+public class LoginDashPage extends Operations {
 
     private String logName, password="";
 
-    public LoginPage(WebDriver driver){
+    public LoginDashPage(WebDriver driver){
         super(driver);
-        PageFactory.initElements(driver,this);
         WebDriverWait wait=new WebDriverWait(driver,Integer.parseInt(ProprtyLoader.loadProperty("timeout")));
         wait.until(ExpectedConditions.visibilityOf(logButt));
     }

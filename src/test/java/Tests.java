@@ -3,7 +3,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pages.DashboardTab;
-import pages.LoginPage;
+import pages.LoginPages.LoginDashPage;
 import setup.BaseTest;
 
 /**
@@ -11,7 +11,7 @@ import setup.BaseTest;
  */
 public class Tests extends BaseTest {
     WebDriver driver;
-    private LoginPage loginPage;
+    private LoginDashPage loginDashPage;
     private DashboardTab dashboardTab;
 
     @BeforeClass
@@ -19,7 +19,7 @@ public class Tests extends BaseTest {
         if (ProprtyLoader.loadProperty("portal").equals("1")) {
             driver.navigate().to(ProprtyLoader.loadProperty("prodUrl"));
         } else driver.navigate().to(ProprtyLoader.loadProperty("testUrl"));
-        loginPage=new LoginPage(driver);
+        loginDashPage =new LoginDashPage(driver);
     }
 
     @Test

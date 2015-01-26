@@ -4,11 +4,8 @@ import framework.ProprtyLoader;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.annotations.*;
-import pages.LoginPage;
 import webDriver.Driver;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
 
 public class BaseTest {

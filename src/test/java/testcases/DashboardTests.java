@@ -12,6 +12,9 @@ public class DashboardTests extends BaseTest {
 
     private DashboardTab dashboardTab;
     private WebDriver driver;
+    private String blue="rgba(0, 109, 204, 1)";
+    private String green="rgba(0, 128, 0, 1)";
+    private String red="rgba(255, 0, 0, 1)";
 
     @BeforeClass
     public void setup(ITestContext context) {
@@ -35,10 +38,10 @@ public class DashboardTests extends BaseTest {
     }
 
     @Test
-    private void statusIdentificationTest(){ dashboardTab.powerFailTestStatusIdentification("Donex");}
+    private void statusIdentificationTest(){ dashboardTab.powerFailTestStatusIdentification("Done");}
 
     @Test
     private void colorIdentificationTest(){
-        dashboardTab.colorIdentification();
+        dashboardTab.powerFailTestColorIdentification(blue); // blue green red
     }
 }
