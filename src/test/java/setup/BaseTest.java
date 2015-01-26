@@ -11,6 +11,10 @@ import java.util.concurrent.TimeUnit;
 public class BaseTest {
 
     private WebDriver dashDriver;
+    private String handle;
+    private String name;
+    private String dashPage;
+
 
     @BeforeTest(alwaysRun = true)
     public void setUpTest(ITestContext context) {
@@ -28,26 +32,6 @@ public class BaseTest {
         }
 
    }
-
-//
-//@DataProvider(name = "DataProvider")
-//public Object [][] getData(Method m, ITestContext context ){
-//    Class<?>[] params = m.getParameterTypes();
-//    for (Class<?> param:params){
-//        Constructor<?>[]constructors = param.getConstructors();
-//        for(Constructor<?> c : constructors){
-//            try{
-//                Object obj=  c.newInstance(context.getName(), m.getName());
-//                return new Object[][]{
-//                        new Object[]{obj}  };
-//            }
-//            catch (Exception exc){
-//                exc.printStackTrace();
-//            }
-//        }
-//    }
-//    return  null;
-//}
 
     protected WebDriver getDriver (ITestContext context) {
         return (WebDriver) context.getAttribute(getCurrentTestCaseName(context));
