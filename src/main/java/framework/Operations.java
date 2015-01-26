@@ -17,9 +17,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by Sergey on 27.12.2014.
- */
+
 public class Operations {
 
     protected Actions action;

@@ -12,9 +12,9 @@
             </class>
             <class name="testcases.DashboardTests">
                 <methods>
-                    <!--<include name="selectDate"/>-->
-                    <!--<include name="compareGameNumber"/>-->
-                    <!--<include name="compareTaskNumber"/>-->
+                    <include name="selectDate"/>
+                    <include name="compareGameNumber"/>
+                    <include name="compareTaskNumber"/>
                     <!--<include name="statusIdentificationTest"/>-->
                     <!--<include name="colorIdentificationTest"/>-->
                 </methods>

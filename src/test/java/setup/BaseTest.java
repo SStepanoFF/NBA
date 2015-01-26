@@ -10,21 +10,21 @@ import java.util.concurrent.TimeUnit;
 
 public class BaseTest {
 
-    private WebDriver driver;
+    private WebDriver dashDriver;
 
     @BeforeTest(alwaysRun = true)
     public void setUpTest(ITestContext context) {
-        driver = Driver.getInstance();
-        context.setAttribute(getCurrentTestCaseName(context), driver);
-        driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")), TimeUnit.SECONDS);
+        dashDriver = Driver.getInstance();
+        context.setAttribute(getCurrentTestCaseName(context), dashDriver);
+        dashDriver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")), TimeUnit.SECONDS);
         ProprtyLoader.clearResultFile();
     }
 
     @AfterTest(alwaysRun = true)
-    public void tearDown(ITestContext context) {
-        driver = getDriver(context);
-        if (driver != null) {
-            driver.quit();
+    public void tearDown(ITestContext context1) {
+        dashDriver = getDriver(context1);
+        if (dashDriver != null) {
+            dashDriver.quit();
         }
 
    }

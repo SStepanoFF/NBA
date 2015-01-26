@@ -11,15 +11,17 @@ import setup.BaseTest;
 public class DashboardTests extends BaseTest {
 
     private DashboardTab dashboardTab;
-    private WebDriver driver;
+    private WebDriver dashDriver;
+    private WebDriver survDriver;
+
     private String blue="rgba(0, 109, 204, 1)";
     private String green="rgba(0, 128, 0, 1)";
     private String red="rgba(255, 0, 0, 1)";
 
     @BeforeClass
     public void setup(ITestContext context) {
-        driver = getDriver(context);
-        dashboardTab=new DashboardTab(driver);
+        dashDriver = getDriver(context);
+        dashboardTab=new DashboardTab(dashDriver);
     }
 
     @Test

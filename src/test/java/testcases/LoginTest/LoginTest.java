@@ -15,18 +15,16 @@ public class LoginTest extends BaseTest {
     private LoginDashPage loginDashPage;
     private LoginSurveyPage loginSurveyPage;
     private WebDriver dashDriver;
-    private WebDriver survDriver;
+
+    //http://automated-testing.info/t/webdriver-features-robota-s-neskolkimi-oknami-vkladkami-odnovremenno-pri-pomoshhi-selenium-web-driver/2289
 
     @BeforeClass
     public void setup(ITestContext context) {
         dashDriver = getDriver(context);
-        survDriver=getDriver(context);
        if (ProprtyLoader.loadProperty("portal").equals("1")) {
            dashDriver.navigate().to(ProprtyLoader.loadProperty("prodUrl"));
         } else dashDriver.navigate().to(ProprtyLoader.loadProperty("testUrl"));
-        survDriver.navigate().to(ProprtyLoader.loadProperty("offlineUrl"));
         loginDashPage =new LoginDashPage(dashDriver);
-        loginSurveyPage=new LoginSurveyPage(survDriver);
     }
 
     @Test
@@ -35,6 +33,8 @@ public class LoginTest extends BaseTest {
     }
 
     @Test
-    private void loginSurveyPageTest(){loginSurveyPage.loginNBA();}
+    private void loginSurveyPageTest(){
+        loginSurveyPage.loginNBA();
+    }
 
 }
