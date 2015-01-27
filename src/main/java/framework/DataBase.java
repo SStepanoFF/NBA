@@ -22,7 +22,7 @@ public class DataBase {
         }
         catch(Exception e){
             e.printStackTrace();
-            ProprtyLoader.writeToFile("Can't connect to DB\n");
+            ProprtyLoader.writeToFile("ERROR! Can't connect to DB\n");
         }
     }
 

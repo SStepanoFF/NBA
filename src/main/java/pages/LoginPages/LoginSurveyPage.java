@@ -10,8 +10,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginSurveyPage extends LoginDashPage {
 
-    private String logName, password="";
-
     public LoginSurveyPage(WebDriver driver){
         super(driver);
         WebDriverWait wait=new WebDriverWait(driver,Integer.parseInt(ProprtyLoader.loadProperty("timeout")));
@@ -26,4 +24,8 @@ public class LoginSurveyPage extends LoginDashPage {
 
     @FindBy (id="passwordField")
     private WebElement passField;
+
+    public void logSurvPage(){
+        login(loginField,passField,logButt);
+    }
 }

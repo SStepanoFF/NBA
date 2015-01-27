@@ -1,6 +1,8 @@
 package testcases.LoginTest;
 
 import framework.ProprtyLoader;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.annotations.BeforeClass;
@@ -14,27 +16,20 @@ public class LoginTest extends BaseTest {
 
     private LoginDashPage loginDashPage;
     private LoginSurveyPage loginSurveyPage;
-    private WebDriver dashDriver;
-
-    //http://automated-testing.info/t/webdriver-features-robota-s-neskolkimi-oknami-vkladkami-odnovremenno-pri-pomoshhi-selenium-web-driver/2289
+    private WebDriver driver;
 
     @BeforeClass
     public void setup(ITestContext context) {
-        dashDriver = getDriver(context);
+        driver = getDriver(context);
        if (ProprtyLoader.loadProperty("portal").equals("1")) {
-           dashDriver.navigate().to(ProprtyLoader.loadProperty("prodUrl"));
-        } else dashDriver.navigate().to(ProprtyLoader.loadProperty("testUrl"));
-        loginDashPage =new LoginDashPage(dashDriver);
+           driver.navigate().to(ProprtyLoader.loadProperty("prodUrl"));
+        } else driver.navigate().to(ProprtyLoader.loadProperty("testUrl"));
+        dashPageHandler=driver.getWindowHandle();
+        loginDashPage =new LoginDashPage(driver);
     }
 
     @Test
     private void loginDashPageTest(){
-        loginDashPage.loginNBA();
+        loginDashPage.loginDashPage();
     }
-
-    @Test
-    private void loginSurveyPageTest(){
-        loginSurveyPage.loginNBA();
-    }
-
 }

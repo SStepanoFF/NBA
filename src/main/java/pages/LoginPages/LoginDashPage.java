@@ -12,8 +12,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginDashPage extends Operations {
 
-    private String logName, password="";
-
     public LoginDashPage(WebDriver driver){
         super(driver);
         WebDriverWait wait=new WebDriverWait(driver,Integer.parseInt(ProprtyLoader.loadProperty("timeout")));
@@ -29,7 +27,12 @@ public class LoginDashPage extends Operations {
     @FindBy (id="password")
     private WebElement passField;
 
-    public void loginNBA(){
+    public void loginDashPage(){
+        login(loginField,passField,logButt);
+    }
+
+    public void login(WebElement logField1,WebElement passField1, WebElement logBtn){
+        String logName, password="";
         if (ProprtyLoader.loadProperty("portal").equals("1")){
             logName=ProprtyLoader.loadProperty("prodLoginName");
             password=ProprtyLoader.loadProperty("prodPass");
@@ -38,8 +41,8 @@ public class LoginDashPage extends Operations {
             logName=ProprtyLoader.loadProperty("testLoginName");
             password=ProprtyLoader.loadProperty("testPass");
         }
-        loginField.sendKeys(logName);
-        passField.sendKeys(password);
-        logButt.click();
+        logField1.sendKeys(logName);
+        passField1.sendKeys(password);
+        logBtn.click();
     }
 }

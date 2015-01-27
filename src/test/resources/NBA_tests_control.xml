@@ -7,6 +7,10 @@
             <class name="testcases.LoginTest.LoginTest" >
                 <methods>
                     <include name="loginDashPageTest"/>
+                </methods>
+            </class>
+            <class name="testcases.LoginTest.LoginSurvPageTest" >
+                <methods>
                     <include name="loginSurveyPageTest"/>
                 </methods>
             </class>
@@ -15,8 +19,8 @@
                     <include name="selectDate"/>
                     <include name="compareGameNumber"/>
                     <include name="compareTaskNumber"/>
-                    <!--<include name="statusIdentificationTest"/>-->
-                    <!--<include name="colorIdentificationTest"/>-->
+                    <include name="statusIdentificationTest"/>
+                    <include name="colorIdentificationTest"/>
                 </methods>
             </class>
         </classes>
