@@ -4,7 +4,7 @@
 
     <test name="AllTests" preserve-order="true">
         <classes >
-            <class name="testcases.LoginTest.LoginTest" >
+            <class name="testcases.LoginTest.LoginDashTest" >
                 <methods>
                     <include name="loginDashPageTest"/>
                 </methods>

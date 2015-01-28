@@ -19,8 +19,6 @@ import java.util.concurrent.TimeUnit;
 public class BaseTest {
 
     private WebDriver driver;
-    public String survPageHandler;
-    public String dashPageHandler;
 
     @BeforeTest(alwaysRun = true)
     public void setUpTest(ITestContext context) {
@@ -46,24 +44,6 @@ public class BaseTest {
         return context.getCurrentXmlTest().getName();
     }
 
-    protected void createNewWindow(WebDriver driver, String url) {
-        try {
-            ((JavascriptExecutor) driver).executeScript("window.open(arguments[0])");
-            switchWindow(driver,1);
-            driver.navigate().to(url);
-        } catch (Exception e) {
-            ProprtyLoader.writeToFile("ERROR! Couldn't load second page");
-        }
-    }
-
-    protected void switchWindow(WebDriver driver, int number) {
-        try{
-            driver.switchTo().window(driver.getWindowHandles().toArray()[number].toString());
-        }catch (Exception e){
-            ProprtyLoader.writeToFile("ERROR! Couldn't switch tab");
-        }
-    }
-
     protected void createNewTab(WebDriver driver, String url) {
         driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "t");
         driver.navigate().to(url);
@@ -79,4 +59,21 @@ public class BaseTest {
         }
     }
 
+//    protected void createNewWindow(WebDriver driver, String url) {
+//        try {
+//            ((JavascriptExecutor) driver).executeScript("window.open(arguments[0])");
+//            switchWindow(driver,1);
+//            driver.navigate().to(url);
+//        } catch (Exception e) {
+//            ProprtyLoader.writeToFile("ERROR! Couldn't load second page");
+//        }
+//    }
+//
+//    protected void switchWindow(WebDriver driver, int number) {
+//        try{
+//            driver.switchTo().window(driver.getWindowHandles().toArray()[number].toString());
+//        }catch (Exception e){
+//            ProprtyLoader.writeToFile("ERROR! Couldn't switch tab");
+//        }
+//    }
 }

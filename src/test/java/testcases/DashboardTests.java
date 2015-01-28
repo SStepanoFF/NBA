@@ -20,7 +20,6 @@ public class DashboardTests extends BaseTest {
     @BeforeClass
     public void setup(ITestContext context) {
         driver = getDriver(context);
-        //switchWindow(driver,dashPageHandler);
         dashboardTab=new DashboardTab(driver);
     }
 

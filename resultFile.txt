@@ -1,6 +1,2 @@
 ERROR! Can't connect to DB
 
-Task status=Done
-
-Task color=rgba(0, 109, 204, 1)
-
