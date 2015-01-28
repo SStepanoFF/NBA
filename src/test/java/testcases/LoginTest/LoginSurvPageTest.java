@@ -17,11 +17,7 @@ public class LoginSurvPageTest extends BaseTest {
     @BeforeClass
     public void setup(ITestContext context) {
         driver = getDriver(context);
-        createNewWindow(driver,ProprtyLoader.loadProperty("offlineUrl"));
-        //createNewTab(driver, ProprtyLoader.loadProperty("offlineUrl"));
-//        survPageHandler=driver.getWindowHandles().toArray()[0].toString();
-//        switchWindow(driver,0);
-//        driver.navigate().to(ProprtyLoader.loadProperty("offlineUrl"));
+        createNewTab(driver, ProprtyLoader.loadProperty("offlineUrl"));  //createNewWindow(driver,ProprtyLoader.loadProperty("offlineUrl"));
         loginSurveyPage=new LoginSurveyPage(driver);
     }
 
@@ -32,8 +28,8 @@ public class LoginSurvPageTest extends BaseTest {
 
     @AfterClass
     public void teardown(ITestContext context){
-        driver=getDriver(context);
-        switchWindow(driver,0);
+        driver = getDriver(context);
+        switchTab(driver);  //switchWindow(driver, 0);
     }
 
 }

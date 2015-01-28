@@ -6,17 +6,21 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.ITestContext;
 import org.testng.annotations.*;
 import webDriver.Driver;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class BaseTest {
 
     private WebDriver driver;
-    protected String survPageHandler;
-    protected String dashPageHandler;
+    public String survPageHandler;
+    public String dashPageHandler;
 
     @BeforeTest(alwaysRun = true)
     public void setUpTest(ITestContext context) {
@@ -52,28 +56,27 @@ public class BaseTest {
         }
     }
 
-    protected void createNewTab(WebDriver driver, String url) {
-        driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "t");
-        switchWindow(driver,0);
-        driver.navigate().to(url);
-    }
-
-    protected void switchWindow(WebDriver driver,int numberOfWindow) {
-        String handle = driver.getWindowHandles().toArray()[numberOfWindow].toString();
+    protected void switchWindow(WebDriver driver, int number) {
         try{
-            driver.switchTo().window(handle);
-            driver.switchTo().activeElement();
+            driver.switchTo().window(driver.getWindowHandles().toArray()[number].toString());
         }catch (Exception e){
             ProprtyLoader.writeToFile("ERROR! Couldn't switch tab");
         }
     }
 
-//    protected void switchFromSecondTabToFirst() {
-//        try {
-//            driver.switchTo().window(dashPageHandler);
-//            driver.switchTo().activeElement();
-//        } catch (Exception e) {
-//            System.err.println("Couldn't get back to first page");
-//        }
-//    }
+    protected void createNewTab(WebDriver driver, String url) {
+        driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "t");
+        driver.navigate().to(url);
+    }
+
+    protected void switchTab(WebDriver driver) {
+        try{
+            driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL +"\t");
+            ArrayList tabs = new ArrayList(driver.getWindowHandles());
+            driver.switchTo().window(tabs.get(0).toString());  //driver.switchTo().defaultContent();
+        }catch (Exception e){
+            ProprtyLoader.writeToFile("ERROR! Couldn't switch tab");
+        }
+    }
+
 }

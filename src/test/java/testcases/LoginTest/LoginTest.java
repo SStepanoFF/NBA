@@ -15,7 +15,6 @@ import setup.BaseTest;
 public class LoginTest extends BaseTest {
 
     private LoginDashPage loginDashPage;
-    private LoginSurveyPage loginSurveyPage;
     private WebDriver driver;
 
     @BeforeClass
@@ -24,7 +23,7 @@ public class LoginTest extends BaseTest {
        if (ProprtyLoader.loadProperty("portal").equals("1")) {
            driver.navigate().to(ProprtyLoader.loadProperty("prodUrl"));
         } else driver.navigate().to(ProprtyLoader.loadProperty("testUrl"));
-        dashPageHandler=driver.getWindowHandle();
+        super.dashPageHandler=driver.getWindowHandle();
         loginDashPage =new LoginDashPage(driver);
     }
 
