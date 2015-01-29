@@ -4,23 +4,30 @@
 
     <test name="AllTests" preserve-order="true">
         <classes >
-            <class name="testcases.LoginTest.LoginDashTest" >
-                <methods>
-                    <include name="loginDashPageTest"/>
-                </methods>
-            </class>
+            <!--<class name="testcases.LoginTest.LoginDashTest" >-->
+                <!--<methods>-->
+                    <!--<include name="loginDashPageTest"/>-->
+                <!--</methods>-->
+            <!--</class>-->
             <class name="testcases.LoginTest.LoginSurvPageTest" >
                 <methods>
                     <include name="loginSurveyPageTest"/>
+                    <!--<include name="syncTest"/>-->
                 </methods>
             </class>
-            <class name="testcases.DashboardTests">
+            <!--<class name="testcases.DashboardTests">-->
+                <!--<methods>-->
+                    <!--<include name="selectDate"/>-->
+                    <!--<include name="compareGameNumber"/>-->
+                    <!--<include name="compareTaskNumber"/>-->
+                    <!--<include name="statusIdentificationTest"/>-->
+                    <!--<include name="colorIdentificationTest"/>-->
+                <!--</methods>-->
+            <!--</class>-->
+            <class name="testcases.TaskTest" >
                 <methods>
-                    <include name="selectDate"/>
-                    <include name="compareGameNumber"/>
-                    <include name="compareTaskNumber"/>
-                    <include name="statusIdentificationTest"/>
-                    <include name="colorIdentificationTest"/>
+                    <include name="submitSurveyTest"/>
+                    <!--<include name="syncTest"/>-->
                 </methods>
             </class>
         </classes>

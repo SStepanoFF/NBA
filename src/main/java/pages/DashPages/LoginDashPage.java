@@ -1,20 +1,22 @@
-package pages.LoginPages;
+package pages.DashPages;
 
 import framework.ProprtyLoader;
 import framework.Operations;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.concurrent.TimeUnit;
 
 
 public class LoginDashPage extends Operations {
 
     public LoginDashPage(WebDriver driver){
         super(driver);
-        WebDriverWait wait=new WebDriverWait(driver,Integer.parseInt(ProprtyLoader.loadProperty("timeout")));
+        driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("dashTimeout")), TimeUnit.SECONDS);
+        WebDriverWait wait=new WebDriverWait(driver,Integer.parseInt(ProprtyLoader.loadProperty("dashTimeout")));
         wait.until(ExpectedConditions.visibilityOf(logButt));
     }
 

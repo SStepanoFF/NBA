@@ -43,6 +43,10 @@ public class Operations {
         action.moveToElement(tab).build().perform();
     }
 
+    public void mouseClick(WebElement element){
+        action.moveToElement(element, 10, 2).click().build().perform();
+    }
+
     public boolean isElementPresent(WebElement element){
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
         try {
@@ -51,7 +55,7 @@ public class Operations {
         }catch (org.openqa.selenium.NoSuchElementException e){
             return false;
         }finally {
-            driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("dashTimeout")),TimeUnit.SECONDS);
         }
     }
 

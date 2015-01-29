@@ -8,9 +8,9 @@ import java.sql.Connection;
 import java.sql.Statement;
 
 public class DataBase {
-    private Connection conn;
-    private Statement statement;
-    private ResultSet resultSets;
+    private static Connection conn;
+    private static Statement statement;
+    private static ResultSet resultSets;
 
     public DataBase() {
         try {
@@ -26,17 +26,18 @@ public class DataBase {
         }
     }
 
-    public int taskCount(String gameID){
+    public static int taskCount(String gameID){
+        int result=-1;
         try{
             statement = conn.createStatement();//Готовим запрос
             resultSets = statement.executeQuery("SELECT COUNT(*) as C FROM GAMES JOIN TASKS ON GAMES.GAME_ID=TASKS.GAME_ID WHERE EXTERNAL_ID="+gameID);
             while(resultSets.next()){
-                return resultSets.getInt("C");
+                result=resultSets.getInt("C");
             }
-            return resultSets.getInt("C");  //MUST CORRECT!!!
+            return result;
         } catch(Exception e){
             e.printStackTrace();
-            return -1;
+            return result;
         }
         finally{
             try {
@@ -50,22 +51,48 @@ public class DataBase {
     }
 
     public int gamesCount(String date){
+        int result=-1;
         try{
             statement = conn.createStatement();//Готовим запрос
             resultSets = statement.executeQuery("SELECT COUNT(*) AS C FROM GAMES WHERE  STARTUTC LIKE '"+date+"%' AND HOME_TEAM_ID=117");
             while(resultSets.next()){
-                return resultSets.getInt("C");
+                result= resultSets.getInt("C");
             }
-            return resultSets.getInt("C");  //MUST CORRECT!!!
+            return result;
         } catch(Exception e){
             e.printStackTrace();
-            return -1;
+            return result;
         }
         finally{
             try {
                 resultSets.close();
                 statement.close();
                // conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static String getTaskExtId(String gameId,String taskName){
+        String result="Error Task ExtId";
+        try{
+            statement = conn.createStatement();//Готовим запрос
+            resultSets = statement.executeQuery("SELECT TASK_EXT_ID FROM GAMES JOIN TASKS ON GAMES.GAME_ID=TASKS.GAME_ID  " +
+                    "WHERE EXTERNAL_ID="+gameId+" AND TASKSECTIONTITLE=\""+taskName+"\"");
+            while(resultSets.next()){
+                result= resultSets.getString("TASK_EXT_ID");
+            }
+            return result;
+        } catch(Exception e){
+            e.printStackTrace();
+            return result;
+        }
+        finally{
+            try {
+                resultSets.close();
+                statement.close();
+                // conn.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }

@@ -24,7 +24,6 @@ public class BaseTest {
     public void setUpTest(ITestContext context) {
         driver = Driver.getInstance();
         context.setAttribute(getCurrentTestCaseName(context), driver);
-        driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")), TimeUnit.SECONDS);
         ProprtyLoader.clearResultFile();
     }
 

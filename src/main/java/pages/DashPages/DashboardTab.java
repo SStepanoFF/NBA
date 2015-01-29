@@ -1,4 +1,4 @@
-package pages;
+package pages.DashPages;
 
 import framework.DataBase;
 import framework.ProprtyLoader;
@@ -19,12 +19,12 @@ import java.util.concurrent.TimeUnit;
 public class DashboardTab extends Operations {
     private DataBase dataBase;
     private final String gameID=ProprtyLoader.loadProperty("gameID");
-    private final String game="11";
 
     public DashboardTab(WebDriver driver){
         super(driver);
         dataBase=new DataBase();
-        WebDriverWait wait=new WebDriverWait(driver, Integer.parseInt(ProprtyLoader.loadProperty("timeout")));
+        driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("dashTimeout")), TimeUnit.SECONDS);
+        WebDriverWait wait=new WebDriverWait(driver, Integer.parseInt(ProprtyLoader.loadProperty("dashTimeout")));
         wait.until(ExpectedConditions.visibilityOf(dashTab));
         dashTab.click();
     }
@@ -77,7 +77,7 @@ public class DashboardTab extends Operations {
             ProprtyLoader.writeToFile("ERROR! Incorrect tasks number: UI="+taskList.size()+"  DB="+dbCountTask+"\n");
             throw new RuntimeException("Assert error numbTasksVerification");
         }finally {
-            driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("dashTimeout")),TimeUnit.SECONDS);
         }
     }
 
@@ -92,14 +92,14 @@ public class DashboardTab extends Operations {
             ProprtyLoader.writeToFile("ERROR! Incorrect games number: UI="+gamesList.size()+"  DB="+dbCountGame+"\n");
             throw new RuntimeException("Assert error numbGamesVerification");
         }finally {
-            driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("dashTimeout")),TimeUnit.SECONDS);
         }
     }
 
     public void powerFailTestColorIdentification(String color){
         String locatorr="//td[descendant::button[contains(@id,'"+gameID+"')]]";
         WebElement powerFailTestColor=driver.findElement(By.xpath(locatorr));
-        taskColorAssertion(powerFailTestColor.getCssValue("background-color"),color);
+        taskColorAssertion(powerFailTestColor.getCssValue("background-color"), color);
     }
 
     public void powerFailTestStatusIdentification(String status){
@@ -130,7 +130,7 @@ public class DashboardTab extends Operations {
                     ProprtyLoader.writeToFile("ERROR! Incorrect task status: "+realStatus+"  must be: "+mustStatus+"\n");
                     throw new RuntimeException("Assert error status powerFailTestStatusIdentification");
                 }finally {
-                    driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
+                    driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("dashTimeout")),TimeUnit.SECONDS);
                 }
     }
 
@@ -144,7 +144,7 @@ public class DashboardTab extends Operations {
             ProprtyLoader.writeToFile("ERROR! Incorrect task color: "+realColor+"  must be: "+mustColor+"\n");
             throw new RuntimeException("Assert error status powerFailTestColorIdentification");
         }finally {
-            driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("dashTimeout")),TimeUnit.SECONDS);
         }
     }
 

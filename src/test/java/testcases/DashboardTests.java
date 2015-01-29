@@ -4,7 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pages.DashboardTab;
+import pages.DashPages.DashboardTab;
 import setup.BaseTest;
 
 

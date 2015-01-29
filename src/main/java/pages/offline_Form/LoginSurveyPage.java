@@ -1,18 +1,21 @@
-package pages.LoginPages;
+package pages.offline_Form;
 
 import framework.ProprtyLoader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import pages.DashPages.LoginDashPage;
+
+import java.util.concurrent.TimeUnit;
 
 public class LoginSurveyPage extends LoginDashPage {
 
     public LoginSurveyPage(WebDriver driver){
         super(driver);
-        WebDriverWait wait=new WebDriverWait(driver,Integer.parseInt(ProprtyLoader.loadProperty("timeout")));
+        driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("survTimeout")), TimeUnit.SECONDS);
+        WebDriverWait wait=new WebDriverWait(driver,Integer.parseInt(ProprtyLoader.loadProperty("survTimeout")));
         wait.until(ExpectedConditions.visibilityOf(logButt));
     }
 

@@ -6,7 +6,8 @@ import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pages.LoginPages.LoginSurveyPage;
+import pages.offline_Form.LoginSurveyPage;
+import pages.offline_Form.MainOfflinePage;
 import setup.BaseTest;
 
 public class LoginSurvPageTest extends BaseTest {
@@ -26,10 +27,16 @@ public class LoginSurvPageTest extends BaseTest {
         loginSurveyPage.logSurvPage();
     }
 
-    @AfterClass
-    public void teardown(ITestContext context){
-        driver = getDriver(context);
-        switchTab(driver);  //switchWindow(driver, 0);
+    @Test
+    private void syncTest(){
+        MainOfflinePage mainOfflinePage=new MainOfflinePage(driver);
+        mainOfflinePage.syncOperation();
     }
+
+//    @AfterClass
+//    public void teardown(ITestContext context){
+//        driver = getDriver(context);
+//        switchTab(driver);  //switchWindow(driver, 0);
+//    }
 
 }

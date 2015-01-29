@@ -2,8 +2,8 @@ import framework.ProprtyLoader;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pages.DashboardTab;
-import pages.LoginPages.LoginDashPage;
+import pages.DashPages.DashboardTab;
+import pages.DashPages.LoginDashPage;
 import setup.BaseTest;
 
 /**
