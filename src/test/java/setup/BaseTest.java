@@ -58,21 +58,21 @@ public class BaseTest {
         }
     }
 
-//    protected void createNewWindow(WebDriver driver, String url) {
-//        try {
-//            ((JavascriptExecutor) driver).executeScript("window.open(arguments[0])");
-//            switchWindow(driver,1);
-//            driver.navigate().to(url);
-//        } catch (Exception e) {
-//            ProprtyLoader.writeToFile("ERROR! Couldn't load second page");
-//        }
-//    }
-//
-//    protected void switchWindow(WebDriver driver, int number) {
-//        try{
-//            driver.switchTo().window(driver.getWindowHandles().toArray()[number].toString());
-//        }catch (Exception e){
-//            ProprtyLoader.writeToFile("ERROR! Couldn't switch tab");
-//        }
-//    }
+    protected void createNewWindow(WebDriver driver, String url) {
+        try {
+            ((JavascriptExecutor) driver).executeScript("window.open(arguments[0])");
+            switchWindow(driver,1);
+            driver.navigate().to(url);
+        } catch (Exception e) {
+            ProprtyLoader.writeToFile("ERROR! Couldn't load second page");
+        }
+    }
+
+    protected void switchWindow(WebDriver driver, int number) {
+        try{
+            driver.switchTo().window(driver.getWindowHandles().toArray()[number].toString());
+        }catch (Exception e){
+            ProprtyLoader.writeToFile("ERROR! Couldn't switch tab");
+        }
+    }
 }

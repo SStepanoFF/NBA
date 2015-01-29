@@ -39,12 +39,12 @@ public class Operations {
         webElement.click();
     }
 
-    public void mouseoverTab(WebElement tab){
-        action.moveToElement(tab).build().perform();
+    public void mouseOver(WebElement element){
+        action.moveToElement(element).build().perform();
     }
 
     public void mouseClick(WebElement element){
-        action.moveToElement(element, 10, 2).click().build().perform();
+        action.moveToElement(element, 2, 2).click().build().perform();
     }
 
     public boolean isElementPresent(WebElement element){

@@ -18,7 +18,8 @@ public class LoginSurvPageTest extends BaseTest {
     @BeforeClass
     public void setup(ITestContext context) {
         driver = getDriver(context);
-        createNewTab(driver, ProprtyLoader.loadProperty("offlineUrl"));  //createNewWindow(driver,ProprtyLoader.loadProperty("offlineUrl"));
+        createNewTab(driver, ProprtyLoader.loadProperty("offlineUrl"));
+        //createNewWindow(driver,ProprtyLoader.loadProperty("offlineUrl"));
         loginSurveyPage=new LoginSurveyPage(driver);
     }
 

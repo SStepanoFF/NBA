@@ -20,8 +20,9 @@ public class TaskOfflinePage extends MainOfflinePage {
     public TaskOfflinePage(WebDriver driver){
         super(driver);
         driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("survTimeout")), TimeUnit.SECONDS);
-        WebDriverWait wait=new WebDriverWait(driver, Integer.parseInt(ProprtyLoader.loadProperty("survTimeout")));
-        wait.until(ExpectedConditions.visibilityOf(taskTab));
+        waitDownLoad();
+        //WebDriverWait wait=new WebDriverWait(driver, Integer.parseInt(ProprtyLoader.loadProperty("survTimeout")));
+        //wait.until(ExpectedConditions.elementToBeClickable(taskTab));
         taskTab.click();
     }
 
@@ -35,7 +36,7 @@ public class TaskOfflinePage extends MainOfflinePage {
     @FindBy (css="div[id='tasksList'] * li")  //"a[title='Edit']"
     private List<WebElement> survList;
 
-    @FindBy (className = "detailsPanel_item editFormButton")
+    @FindBy (css="a[class='detailsPanel_item editFormButton']")
     private WebElement editFormBtn;
 
     //region Survey WebElements
@@ -53,8 +54,10 @@ public class TaskOfflinePage extends MainOfflinePage {
 
     private void findSurvey(String taskName){
         for (int i=survList.size()-1; i>=0;i--){
-           mouseClick(survList.get(i));
-            //survList.get(i).click();
+            //mouseClick(survList.get(i));
+            survList.get(i).click();
+            //mouseClick(editFormBtn);
+            mouseOver(editFormBtn);
             editFormBtn.click();
             if(taskId.get(7).getAttribute("value").contains(DataBase.getTaskExtId(gameID,taskName))){ //сравнение taskId  в сюрвее и в BD
                 break;
