@@ -4,32 +4,39 @@
 
     <test name="AllTests" preserve-order="true">
         <classes >
-            <!--<class name="testcases.LoginTest.LoginDashTest" >-->
+            <!--<class name="testcases.DashPageTests.LoginDashTest" >-->
                 <!--<methods>-->
                     <!--<include name="loginDashPageTest"/>-->
                 <!--</methods>-->
             <!--</class>-->
-            <class name="testcases.LoginTest.LoginSurvPageTest" >
+            <class name="testcases.TaskOfflineTest.LoginSurvPageTest" >
                 <methods>
                     <include name="loginSurveyPageTest"/>
                     <!--<include name="syncTest"/>-->
                 </methods>
             </class>
-            <!--<class name="testcases.DashboardTests">-->
+            <!--<class name="testcases.DashPageTests.DashboardMainTests">-->
                 <!--<methods>-->
                     <!--<include name="selectDate"/>-->
                     <!--<include name="compareGameNumber"/>-->
                     <!--<include name="compareTaskNumber"/>-->
-                    <!--<include name="statusIdentificationTest"/>-->
-                    <!--<include name="colorIdentificationTest"/>-->
                 <!--</methods>-->
             <!--</class>-->
-            <class name="testcases.TaskTest" >
+            <class name="testcases.TaskOfflineTest.SurvAnswerTest" >
                 <methods>
-                    <include name="submitSurveyTest"/>
+                    <!--<include name="submitWithOneIncorrectTaskTest"/>-->
+                    <include name="submitWithAllOtherCorrectTaskTest"/>
                     <!--<include name="syncTest"/>-->
                 </methods>
             </class>
+            <!--<class name="testcases.DashPageTests.DashboardTaskTest" >-->
+                <!--<methods>-->
+                    <!--<include name="incorrectOneTaskStatusVerificationTest"/>-->
+                    <!--<include name="incorrectOneTaskColorVerificationTest"/>-->
+                    <!--<include name="correctAllStatusVerificationTest"/>-->
+                    <!--<include name="correctAllColorVerificationTest"/>-->
+                <!--</methods>-->
+            <!--</class>-->
         </classes>
     </test>
 </suite>

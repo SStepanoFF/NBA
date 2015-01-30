@@ -2,8 +2,8 @@ import framework.ProprtyLoader;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pages.DashPages.DashboardTab;
-import pages.DashPages.LoginDashPage;
+import pages.dashPages.DashboardTab;
+import pages.dashPages.LoginDashPage;
 import setup.BaseTest;
 
 /**
@@ -30,7 +30,6 @@ public class Tests extends BaseTest {
     @Test
     private void selectDate(){
         dashboardTab.selectDate();
-        dashboardTab.powerFailTestStatusIdentification("Done");
     }
 
     @Test

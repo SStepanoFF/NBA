@@ -1,4 +1,4 @@
-package testcases.LoginTest;
+package testcases.TaskOfflineTest;
 
 import framework.ProprtyLoader;
 import org.openqa.selenium.WebDriver;

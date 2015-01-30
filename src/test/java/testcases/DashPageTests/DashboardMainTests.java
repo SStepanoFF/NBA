@@ -1,21 +1,18 @@
-package testcases;
+package testcases.DashPageTests;
 
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pages.DashPages.DashboardTab;
+import pages.dashPages.DashboardTab;
 import setup.BaseTest;
 
 
-public class DashboardTests extends BaseTest {
+public class DashboardMainTests extends BaseTest {
 
     private DashboardTab dashboardTab;
     private WebDriver driver;
-
-    private String blue="rgba(0, 109, 204, 1)";
-    private String green="rgba(0, 128, 0, 1)";
-    private String red="rgba(255, 0, 0, 1)";
 
     @BeforeClass
     public void setup(ITestContext context) {
@@ -38,11 +35,10 @@ public class DashboardTests extends BaseTest {
         dashboardTab.numbTasksVerification();
     }
 
-    @Test
-    private void statusIdentificationTest(){ dashboardTab.powerFailTestStatusIdentification("Done");}
-
-    @Test
-    private void colorIdentificationTest(){
-        dashboardTab.powerFailTestColorIdentification(blue); // blue green red
+    @AfterClass
+    public void teardown(ITestContext context){
+        driver = getDriver(context);
+        switchTab(driver);  //switchWindow(driver, 0);
     }
+
 }

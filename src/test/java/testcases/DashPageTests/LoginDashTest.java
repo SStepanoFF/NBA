@@ -1,11 +1,11 @@
-package testcases.LoginTest;
+package testcases.DashPageTests;
 
 import framework.ProprtyLoader;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pages.DashPages.LoginDashPage;
+import pages.dashPages.LoginDashPage;
 import setup.BaseTest;
 
 

@@ -2,6 +2,7 @@ package pages.offline_Form;
 
 import framework.Operations;
 import framework.ProprtyLoader;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -17,9 +18,9 @@ public class MainOfflinePage extends Operations {
 
     public MainOfflinePage(WebDriver driver){
         super(driver);
-        driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("survTimeout")), TimeUnit.SECONDS);
         WebDriverWait wait=new WebDriverWait(driver, Integer.parseInt(ProprtyLoader.loadProperty("survTimeout")));
         wait.until(ExpectedConditions.visibilityOf(taskTab));
+        driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("survTimeout")), TimeUnit.SECONDS);
     }
 
     @FindBy(id="task")
@@ -37,12 +38,15 @@ public class MainOfflinePage extends Operations {
         waitDownLoad();
         menuBtn.click();
         syncBtn.click();
+        waitDownLoad();
     }
 
     public void waitDownLoad(){
         if (isElementPresent(loadingDialog)){
-            WebDriverWait wait=new WebDriverWait(driver,Integer.parseInt(ProprtyLoader.loadProperty("survTimeout")));
-            wait.until(ExpectedConditions.not(ExpectedConditions.visibilityOf(loadingDialog)));
+            try {
+                WebDriverWait wait = new WebDriverWait(driver, 120);
+                wait.until(ExpectedConditions.not(ExpectedConditions.visibilityOf(loadingDialog)));
+            }catch (StaleElementReferenceException e){}
         }
     }
 }

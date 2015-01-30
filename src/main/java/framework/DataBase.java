@@ -74,7 +74,7 @@ public class DataBase {
         }
     }
 
-    public static String getTaskExtId(String gameId,String taskName){
+    public String getTaskExtId(String gameId,String taskName){
         String result="Error Task ExtId";
         try{
             statement = conn.createStatement();//Готовим запрос
