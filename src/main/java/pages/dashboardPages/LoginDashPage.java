@@ -1,4 +1,4 @@
-package pages.DashPages;
+package pages.dashboardPages;
 
 import framework.ProprtyLoader;
 import framework.Operations;

@@ -5,7 +5,7 @@ import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pages.dashPages.DashboardTab;
+import pages.dashboardPages.DashboardTab;
 import setup.BaseTest;
 
 
