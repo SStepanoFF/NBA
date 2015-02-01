@@ -16,12 +16,12 @@ import java.util.concurrent.TimeUnit;
 
 public class TaskOfflinePage extends MainOfflinePage {
 
-    private final String gameID=ProprtyLoader.loadProperty("gameID");
+    private final String gameID="10199919"; //ProprtyLoader.loadProperty("gameID");
     private DataBase dataBase;
 
     public TaskOfflinePage(WebDriver driver){
         super(driver);
-        dataBase=new DataBase();
+        //dataBase=new DataBase();
         waitDownLoad();
         //WebDriverWait wait=new WebDriverWait(driver, Integer.parseInt(ProprtyLoader.loadProperty("survTimeout")));
         //wait.until(ExpectedConditions.elementToBeClickable(taskTab));
@@ -31,11 +31,13 @@ public class TaskOfflinePage extends MainOfflinePage {
 
     @FindBy (id="task")
     private WebElement taskTab;
+    @FindBy (id="form")
+    private WebElement formTab;
 
     //region Task Name WebElements
     @FindBy (linkText = "Power Failure Test QA 2015")
     private WebElement powerFailTestTask;
-    @FindBy (xpath="//h3[contains(text(),'2015')]")
+    @FindBy (xpath="//a[@class='ksList__listItem showTasks']//h3[contains(text(),'2015')]")
     private List<WebElement> tasksList;
     @FindBy (xpath="//span[contains(text(),'Open')]")  //"span:contains('Open')"   span.ks-desc-title:contains('Open')
     private List<WebElement> survList;
@@ -60,51 +62,52 @@ public class TaskOfflinePage extends MainOfflinePage {
     //endregion
 
     public void powerFailIncorrect(){
- //       try {
-            powerFailTestTask.click();
-            findSurvey("Power Failure Test");
+        powerFailTestTask.click();
+        if(findSurvey("Power Failure Test")) {
             for (WebElement yesBtn : yesBtnList) {  //select all YES answers
                 yesBtn.click();
             }
             noBtnList.get(noBtnList.size() - 1).click();  //select last NO-Button
             textField.get(textField.size() - 1).sendKeys("text");  //write comment on NO answer
-            ProprtyLoader.writeToFile("Power Fail incorrect task created\n");
-//        }catch (Exception e){
-//            ProprtyLoader.writeToFile("ERROR! Power Fail incorrect task was not create");
-//            throw new RuntimeException("Power Fail incorrect task was not create");
-//        }
+            ProprtyLoader.writeToFile("Power Fail incorrect task was created\n");
+        }
+        else{
+            ProprtyLoader.writeToFile("ERROR! Power Fail incorrect task was not create");
+            throw new RuntimeException("Power Fail incorrect task was not created");
+        }
     }
 
     public void createAllCorrectTasks(){
-      //  try {
-            for (int i = 1; i < tasksList.size(); i++) {            //take all other task except first
-                tasksList.get(i).click();
-                findSurvey(tasksList.get(i).getText().substring(5));  //delete year (2015) from task text name
-                for (WebElement yesBtn : yesBtnList) {          //select all YES answers
-                    yesBtn.click();
-                }
-                ProprtyLoader.writeToFile("All other correct tasks created\n");
-            }
-//        }catch (Exception e){
-//            ProprtyLoader.writeToFile("ERROR! All other correct tasks were not create");
-//            throw new RuntimeException("All other correct tasks were not create");
-//        }
+         for (int i = 1; i < tasksList.size(); i++) {            //take all other task except first
+             tasksList.get(i).click();
+             if (findSurvey(tasksList.get(i).getText().substring(5))) {  //delete year (2015) from task text name
+                 for (WebElement yesBtn : yesBtnList) {          //select all YES answers
+                     yesBtn.click();
+                 }
+                 ProprtyLoader.writeToFile("All other correct tasks were created\n");
+             }else{
+                 ProprtyLoader.writeToFile("ERROR! All other correct tasks were not create");
+                 //throw new RuntimeException("All other correct tasks were not created");
+             }
+         }
     }
 
-    private void findSurvey(String taskName){
-//        try {
-            for (int i = survList.size() - 1; i >= 0; i--) {
+    private boolean findSurvey(String taskName){
+      boolean index=false;
+        for (int i = survList.size() - 1; i >= 0; i--) {
                 survList.get(i).click();
                 editFormBtn.click();
-                if (taskId.get(7).getAttribute("value").contains(dataBase.getTaskExtId(gameID, taskName))) { //сравнение taskId  в сюрвее и в BD
+                if (taskId.get(7).getAttribute("value").contains("34d13564d18845ed820ffe0e1962128a")) { //dataBase.getTaskExtId(gameID, taskName)   //сравнение taskId  в сюрвее и в BD
+                    index=true;
                     break;
                 } else {
                     closeSurveyBtn.click();
                 }
             }
-//        }catch (Exception e){
-//            ProprtyLoader.writeToFile("ERROR! Can't find survey for task:"+taskName);
-//        }
+      if(!index) {
+          ProprtyLoader.writeToFile("ERROR! Can't find survey for task:" + taskName);
+        }
+        return index;
     }
 
     public void submit(){
