@@ -4,39 +4,39 @@
 
     <test name="AllTests" preserve-order="true">
         <classes >
-            <!--<class name="testcases.DashPageTests.LoginDashTest" >-->
-                <!--<methods>-->
-                    <!--<include name="loginDashPageTest"/>-->
-                <!--</methods>-->
-            <!--</class>-->
-            <class name="testcases.TaskOfflineTest.LoginSurvPageTest" >
+            <class name="testcases.DashPageTests.DashLoginTest" >
+                <methods>
+                    <include name="loginDashPageTest"/>
+                </methods>
+            </class>
+            <class name="testcases.TaskOfflineTest.OfflineLoginTest" >
                 <methods>
                     <include name="loginSurveyPageTest"/>
-                    <!--<include name="syncTest"/>-->
+                    <include name="syncTest"/>
                 </methods>
             </class>
-            <!--<class name="testcases.DashPageTests.DashboardMainTests">-->
-                <!--<methods>-->
-                    <!--<include name="selectDate"/>-->
-                    <!--<include name="compareGameNumber"/>-->
-                    <!--<include name="compareTaskNumber"/>-->
-                <!--</methods>-->
-            <!--</class>-->
-            <class name="testcases.TaskOfflineTest.SurvAnswerTest" >
+            <class name="testcases.DashPageTests.DashMainPageTests">
                 <methods>
-                    <!--<include name="submitWithOneIncorrectTaskTest"/>-->
-                    <include name="submitWithAllOtherCorrectTaskTest"/>
-                    <!--<include name="syncTest"/>-->
+                    <include name="selectDate"/>
+                    <include name="compareGameNumber"/>
+                    <include name="compareTaskNumber"/>
                 </methods>
             </class>
-            <!--<class name="testcases.DashPageTests.DashboardTaskTest" >-->
-                <!--<methods>-->
-                    <!--<include name="incorrectOneTaskStatusVerificationTest"/>-->
-                    <!--<include name="incorrectOneTaskColorVerificationTest"/>-->
-                    <!--<include name="correctAllStatusVerificationTest"/>-->
-                    <!--<include name="correctAllColorVerificationTest"/>-->
-                <!--</methods>-->
-            <!--</class>-->
+            <class name="testcases.TaskOfflineTest.OfflineSurvAnswerTest" >
+                <methods>
+                    <include name="submitWithOneIncorrectTaskTest"/>
+                    <include name="submitWithAllOtherCorrectTaskTest"/>
+                    <include name="syncTest"/>
+                </methods>
+            </class>
+            <class name="testcases.DashPageTests.DashTaskVerificationTest" >
+                <methods>
+                    <include name="incorrectOneTaskStatusVerificationTest"/>
+                    <include name="incorrectOneTaskColorVerificationTest"/>
+                    <include name="correctAllStatusVerificationTest"/>
+                    <include name="correctAllColorVerificationTest"/>
+                </methods>
+            </class>
         </classes>
     </test>
 </suite>

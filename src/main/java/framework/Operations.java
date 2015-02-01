@@ -11,6 +11,7 @@ import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -66,5 +67,11 @@ public class Operations {
             date=format.parse(text);
         }catch (ParseException e){}
         return date;
+    }
+
+    public String getCurrentDate(){
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        Date date = new Date();
+        return dateFormat.format(date).toString();
     }
 }

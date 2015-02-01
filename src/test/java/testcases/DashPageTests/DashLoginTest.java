@@ -9,7 +9,7 @@ import pages.dashboardPages.LoginDashPage;
 import setup.BaseTest;
 
 
-public class LoginDashTest extends BaseTest {
+public class DashLoginTest extends BaseTest {
 
     private LoginDashPage loginDashPage;
     private WebDriver driver;

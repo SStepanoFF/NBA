@@ -8,9 +8,9 @@ import pages.dashboardPages.DashboardTab;
 import setup.BaseTest;
 
 /**
- * Created by sergii.stepanov on 30.01.2015.
+ * Created by Sergey on 01.02.2015.
  */
-public class DashboardTaskTest extends BaseTest {
+public class DashFixTaskTest extends BaseTest {
 
     private WebDriver driver;
     private DashboardTab dashboardTab;
@@ -33,7 +33,7 @@ public class DashboardTaskTest extends BaseTest {
 
     @Test
     private void incorrectOneTaskColorVerificationTest(){
-       // dashboardTab.powerFailTestColorVerification(orange); // blue green red orange
+        // dashboardTab.powerFailTestColorVerification(orange); // blue green red orange
     }
 
     @Test

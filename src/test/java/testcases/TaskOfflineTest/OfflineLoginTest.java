@@ -10,7 +10,7 @@ import pages.offline_Form.LoginSurveyPage;
 import pages.offline_Form.MainOfflinePage;
 import setup.BaseTest;
 
-public class LoginSurvPageTest extends BaseTest {
+public class OfflineLoginTest extends BaseTest {
 
     private LoginSurveyPage loginSurveyPage;
     private WebDriver driver;

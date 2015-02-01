@@ -16,12 +16,13 @@ import java.util.concurrent.TimeUnit;
 
 public class TaskOfflinePage extends MainOfflinePage {
 
-    private final String gameID="10199919"; //ProprtyLoader.loadProperty("gameID");
+    private final String gameID=ProprtyLoader.loadProperty("gameID");
     private DataBase dataBase;
+    private String currentDate;
 
     public TaskOfflinePage(WebDriver driver){
         super(driver);
-        //dataBase=new DataBase();
+        dataBase=new DataBase();
         waitDownLoad();
         //WebDriverWait wait=new WebDriverWait(driver, Integer.parseInt(ProprtyLoader.loadProperty("survTimeout")));
         //wait.until(ExpectedConditions.elementToBeClickable(taskTab));
@@ -41,10 +42,16 @@ public class TaskOfflinePage extends MainOfflinePage {
     private List<WebElement> tasksList;
     @FindBy (xpath="//span[contains(text(),'Open')]")  //"span:contains('Open')"   span.ks-desc-title:contains('Open')
     private List<WebElement> survList;
+    @FindBy (linkText = "Power Failure Test")
+    private WebElement powerFailTestForm;
+    @FindBy (xpath = "//ul[@id='rl']//p")
+    private List<WebElement> survListForm;
     //endregion
 
     @FindBy (xpath="//*[@id='taskEditForm']//a[1]")
-    private WebElement editFormBtn;
+    private WebElement editBtnTasks;
+    @FindBy (xpath = "//div[@class='detailsPanel']/a[1]")
+    private WebElement editBtnForms;
 
     //region Survey WebElements
     @FindBy (css="form>input")
@@ -69,6 +76,7 @@ public class TaskOfflinePage extends MainOfflinePage {
             }
             noBtnList.get(noBtnList.size() - 1).click();  //select last NO-Button
             textField.get(textField.size() - 1).sendKeys("text");  //write comment on NO answer
+            submitBtn.click();
             ProprtyLoader.writeToFile("Power Fail incorrect task was created\n");
         }
         else{
@@ -80,24 +88,27 @@ public class TaskOfflinePage extends MainOfflinePage {
     public void createAllCorrectTasks(){
          for (int i = 1; i < tasksList.size(); i++) {            //take all other task except first
              tasksList.get(i).click();
-             if (findSurvey(tasksList.get(i).getText().substring(5))) {  //delete year (2015) from task text name
+             String taskName=tasksList.get(i).getText();
+             if (findSurvey(taskName.substring(0,taskName.length()-8))) {  //delete year (2015) from task text name
                  for (WebElement yesBtn : yesBtnList) {          //select all YES answers
                      yesBtn.click();
                  }
-                 ProprtyLoader.writeToFile("All other correct tasks were created\n");
+                 submitBtn.click();
+                 ProprtyLoader.writeToFile(taskName+" correct task was created");
              }else{
                  ProprtyLoader.writeToFile("ERROR! All other correct tasks were not create");
                  //throw new RuntimeException("All other correct tasks were not created");
              }
          }
+        ProprtyLoader.writeToFile("All other correct tasks were created");
     }
 
     private boolean findSurvey(String taskName){
       boolean index=false;
         for (int i = survList.size() - 1; i >= 0; i--) {
                 survList.get(i).click();
-                editFormBtn.click();
-                if (taskId.get(7).getAttribute("value").contains("34d13564d18845ed820ffe0e1962128a")) { //dataBase.getTaskExtId(gameID, taskName)   //сравнение taskId  в сюрвее и в BD
+                editBtnTasks.click();
+                if (taskId.get(7).getAttribute("value").contains(dataBase.getTaskExtId(gameID, taskName))) {   //сравнение taskId  в сюрвее и в BD
                     index=true;
                     break;
                 } else {
@@ -110,7 +121,27 @@ public class TaskOfflinePage extends MainOfflinePage {
         return index;
     }
 
-    public void submit(){
+    public void fixPowerFailTestTask(){
+        formTab.click();
+        powerFailTestForm.click();
+        findSurvByDataForm(getCurrentDate());
+        editBtnForms.click();
+        yesBtnList.get(yesBtnList.size()-1).click();
         submitBtn.click();
+    }
+
+    private boolean findSurvByDataForm(String date){
+        boolean index=false;
+        for (WebElement element:survListForm) {
+            if(element.getText().contains(date)) {
+                element.click();
+                index = true;
+                break;
+            }
+        }
+        if(!index) {
+            ProprtyLoader.writeToFile("ERROR! Can't find survey by date on Form Tab. Date: " + date);
+        }
+        return index;
     }
 }

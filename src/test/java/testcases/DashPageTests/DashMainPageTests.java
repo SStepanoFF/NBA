@@ -1,40 +1,38 @@
-package testcases.TaskOfflineTest;
+package testcases.DashPageTests;
 
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pages.offline_Form.TaskOfflinePage;
+import pages.dashboardPages.DashboardTab;
 import setup.BaseTest;
 
 
-public class SurvAnswerTest extends BaseTest {
+public class DashMainPageTests extends BaseTest {
 
+    private DashboardTab dashboardTab;
     private WebDriver driver;
-    private TaskOfflinePage taskOfflinePage;
 
     @BeforeClass
     public void setup(ITestContext context) {
         driver = getDriver(context);
-        taskOfflinePage=new TaskOfflinePage(driver);
+        dashboardTab=new DashboardTab(driver);
     }
 
     @Test
-    public void submitWithOneIncorrectTaskTest(){
-        taskOfflinePage.powerFailIncorrect();
-        taskOfflinePage.submit();
+    private void selectDate(){
+        dashboardTab.selectDate();
     }
 
     @Test
-    public void submitWithAllOtherCorrectTaskTest(){
-        taskOfflinePage.createAllCorrectTasks();
-        taskOfflinePage.submit();
+    private void compareGameNumber(){
+        dashboardTab.numbGamesVerification();
     }
 
     @Test
-    private void syncTest(){
-        taskOfflinePage.syncOperation();
+    private void compareTaskNumber(){
+        dashboardTab.numbTasksVerification();
     }
 
     @AfterClass
@@ -42,4 +40,5 @@ public class SurvAnswerTest extends BaseTest {
         driver = getDriver(context);
         switchTab(driver);  //switchWindow(driver, 0);
     }
+
 }
