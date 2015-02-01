@@ -70,7 +70,7 @@ public class Operations {
     }
 
     public String getCurrentDate(){
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date date = new Date();
         return dateFormat.format(date).toString();
     }

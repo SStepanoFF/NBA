@@ -10,9 +10,9 @@ import pages.dashboardPages.LoginDashPage;
 
 import java.util.concurrent.TimeUnit;
 
-public class LoginSurveyPage extends LoginDashPage {
+public class LoginOfflinePage extends LoginDashPage {
 
-    public LoginSurveyPage(WebDriver driver){
+    public LoginOfflinePage(WebDriver driver){
         super(driver);
         driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("survTimeout")), TimeUnit.SECONDS);
         WebDriverWait wait=new WebDriverWait(driver,Integer.parseInt(ProprtyLoader.loadProperty("survTimeout")));

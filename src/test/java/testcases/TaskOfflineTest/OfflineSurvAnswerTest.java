@@ -22,7 +22,7 @@ public class OfflineSurvAnswerTest extends BaseTest {
 
     @Test
     public void submitWithOneIncorrectTaskTest(){
-        taskOfflinePage.powerFailIncorrect();
+        taskOfflinePage.createPowerFailIncorrectTask();
     }
 
     @Test
@@ -35,9 +35,9 @@ public class OfflineSurvAnswerTest extends BaseTest {
         taskOfflinePage.syncOperation();
     }
 
-    @AfterClass
-    public void teardown(ITestContext context){
-        driver = getDriver(context);
-        switchTab(driver);  //switchWindow(driver, 0);
-    }
+//    @AfterClass
+//    public void teardown(ITestContext context){
+//        driver = getDriver(context);
+//        switchTab(driver);  //switchWindow(driver, 0);
+//    }
 }

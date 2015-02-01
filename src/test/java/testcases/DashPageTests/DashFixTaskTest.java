@@ -28,12 +28,12 @@ public class DashFixTaskTest extends BaseTest {
 
     @Test
     private void incorrectOneTaskStatusVerificationTest(){
-        //dashboardTab.powerFailTestStatusVerification("Incorrect");
+        //dashboardTab.powerFailTestStatusVerification("Done");
     }
 
     @Test
     private void incorrectOneTaskColorVerificationTest(){
-        // dashboardTab.powerFailTestColorVerification(orange); // blue green red orange
+        // dashboardTab.powerFailTestColorVerification(blue); // blue green red orange
     }
 
     @Test

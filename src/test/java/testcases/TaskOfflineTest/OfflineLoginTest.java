@@ -3,16 +3,15 @@ package testcases.TaskOfflineTest;
 import framework.ProprtyLoader;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pages.offline_Form.LoginSurveyPage;
+import pages.offline_Form.LoginOfflinePage;
 import pages.offline_Form.MainOfflinePage;
 import setup.BaseTest;
 
 public class OfflineLoginTest extends BaseTest {
 
-    private LoginSurveyPage loginSurveyPage;
+    private LoginOfflinePage loginOfflinePage;
     private WebDriver driver;
 
     @BeforeClass
@@ -20,12 +19,12 @@ public class OfflineLoginTest extends BaseTest {
         driver = getDriver(context);
         createNewTab(driver, ProprtyLoader.loadProperty("offlineUrl"));
         //createNewWindow(driver,ProprtyLoader.loadProperty("offlineUrl"));
-        loginSurveyPage=new LoginSurveyPage(driver);
+        loginOfflinePage =new LoginOfflinePage(driver);
     }
 
     @Test
     private void loginSurveyPageTest(){
-        loginSurveyPage.logSurvPage();
+        loginOfflinePage.logSurvPage();
     }
 
     @Test

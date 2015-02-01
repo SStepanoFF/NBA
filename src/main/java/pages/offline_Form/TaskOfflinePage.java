@@ -18,7 +18,7 @@ public class TaskOfflinePage extends MainOfflinePage {
 
     private final String gameID=ProprtyLoader.loadProperty("gameID");
     private DataBase dataBase;
-    private String currentDate;
+    private String submitTaskDate;
 
     public TaskOfflinePage(WebDriver driver){
         super(driver);
@@ -42,7 +42,7 @@ public class TaskOfflinePage extends MainOfflinePage {
     private List<WebElement> tasksList;
     @FindBy (xpath="//span[contains(text(),'Open')]")  //"span:contains('Open')"   span.ks-desc-title:contains('Open')
     private List<WebElement> survList;
-    @FindBy (linkText = "Power Failure Test")
+    @FindBy (xpath = "//a[contains(@id,'form')]//h3[contains(text(),'Power Failure Test')]")
     private WebElement powerFailTestForm;
     @FindBy (xpath = "//ul[@id='rl']//p")
     private List<WebElement> survListForm;
@@ -68,7 +68,7 @@ public class TaskOfflinePage extends MainOfflinePage {
     private WebElement submitBtn;
     //endregion
 
-    public void powerFailIncorrect(){
+    public void createPowerFailIncorrectTask(){
         powerFailTestTask.click();
         if(findSurvey("Power Failure Test")) {
             for (WebElement yesBtn : yesBtnList) {  //select all YES answers
@@ -76,11 +76,12 @@ public class TaskOfflinePage extends MainOfflinePage {
             }
             noBtnList.get(noBtnList.size() - 1).click();  //select last NO-Button
             textField.get(textField.size() - 1).sendKeys("text");  //write comment on NO answer
+            submitTaskDate=getCurrentDate();        //Get date of task submitting
             submitBtn.click();
-            ProprtyLoader.writeToFile("Power Fail incorrect task was created\n");
+            ProprtyLoader.writeToFile("Power Fail incorrect task was created");
         }
         else{
-            ProprtyLoader.writeToFile("ERROR! Power Fail incorrect task was not create");
+            ProprtyLoader.writeToFile("ERROR! Power Fail incorrect task was not created");
             throw new RuntimeException("Power Fail incorrect task was not created");
         }
     }
@@ -96,7 +97,7 @@ public class TaskOfflinePage extends MainOfflinePage {
                  submitBtn.click();
                  ProprtyLoader.writeToFile(taskName+" correct task was created");
              }else{
-                 ProprtyLoader.writeToFile("ERROR! All other correct tasks were not create");
+                 ProprtyLoader.writeToFile("ERROR! All other correct tasks were not created");
                  //throw new RuntimeException("All other correct tasks were not created");
              }
          }
@@ -108,7 +109,7 @@ public class TaskOfflinePage extends MainOfflinePage {
         for (int i = survList.size() - 1; i >= 0; i--) {
                 survList.get(i).click();
                 editBtnTasks.click();
-                if (taskId.get(7).getAttribute("value").contains(dataBase.getTaskExtId(gameID, taskName))) {   //сравнение taskId  в сюрвее и в BD
+                if (taskId.get(7).getAttribute("value").contains("520b2717bc28412885942c3c5f9414e6")) {   //dataBase.getTaskExtId(gameID, taskName)  сравнение taskId  в сюрвее и в BD
                     index=true;
                     break;
                 } else {
@@ -124,10 +125,14 @@ public class TaskOfflinePage extends MainOfflinePage {
     public void fixPowerFailTestTask(){
         formTab.click();
         powerFailTestForm.click();
-        findSurvByDataForm(getCurrentDate());
-        editBtnForms.click();
-        yesBtnList.get(yesBtnList.size()-1).click();
-        submitBtn.click();
+        if(findSurvByDataForm(submitTaskDate)) {
+            editBtnForms.click();
+            yesBtnList.get(yesBtnList.size() - 1).click();
+            submitBtn.click();
+        }else{
+            ProprtyLoader.writeToFile("ERROR! Power Fail task fixing was not completed");
+            throw new RuntimeException("Power Fail task fixing was not completed");
+        }
     }
 
     private boolean findSurvByDataForm(String date){
