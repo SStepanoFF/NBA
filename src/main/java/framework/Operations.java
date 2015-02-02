@@ -27,6 +27,7 @@ public class Operations {
     public Operations(WebDriver driver){
         this.driver=driver;
         this.action=new Actions(driver);
+        driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")), TimeUnit.SECONDS);
         PageFactory.initElements(driver, this);
     }
 
@@ -56,7 +57,7 @@ public class Operations {
         }catch (org.openqa.selenium.NoSuchElementException e){
             return false;
         }finally {
-            driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("dashTimeout")),TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
         }
     }
 

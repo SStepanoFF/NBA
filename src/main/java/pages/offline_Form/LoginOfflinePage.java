@@ -14,8 +14,7 @@ public class LoginOfflinePage extends LoginDashPage {
 
     public LoginOfflinePage(WebDriver driver){
         super(driver);
-        driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("survTimeout")), TimeUnit.SECONDS);
-        WebDriverWait wait=new WebDriverWait(driver,Integer.parseInt(ProprtyLoader.loadProperty("survTimeout")));
+        WebDriverWait wait=new WebDriverWait(driver,Integer.parseInt(ProprtyLoader.loadProperty("timeout")));
         wait.until(ExpectedConditions.visibilityOf(logButt));
     }
 

@@ -23,9 +23,6 @@ public class TaskOfflinePage extends MainOfflinePage {
         super(driver);
         dataBase=new DataBase();
         waitDownLoad();
-        //WebDriverWait wait=new WebDriverWait(driver, Integer.parseInt(ProprtyLoader.loadProperty("survTimeout")));
-        //wait.until(ExpectedConditions.elementToBeClickable(taskTab));
-        driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("survTimeout")), TimeUnit.SECONDS);
         taskTab.click();
     }
 
@@ -43,13 +40,13 @@ public class TaskOfflinePage extends MainOfflinePage {
     private List<WebElement> survList;
     @FindBy (xpath = "//a[contains(@id,'form')]//h3[contains(text(),'Power Failure Test')]")
     private WebElement powerFailTestForm;
-    @FindBy (xpath = "//ul[@id='rl']//p")
+    @FindBy (xpath = "//ul[@id='rl']//p")//span[@class='main-view']
     private List<WebElement> survListForm;
     //endregion
 
     @FindBy (xpath="//*[@id='taskEditForm']//a[1]")
     private WebElement editBtnTasks;
-    @FindBy (xpath = "//div[@class='detailsPanel']/a[1]")
+    @FindBy (xpath = "//div[@class='detailsPanel']/a[1]")//a[@class='detailsPanel_item editResponseButton']
     private WebElement editBtnForms;
 
     //region Survey WebElements
@@ -77,8 +74,8 @@ public class TaskOfflinePage extends MainOfflinePage {
             }
             noBtnList.get(noBtnList.size() - 1).click();  //select last NO-Button
             textField.get(textField.size() - 1).sendKeys("text");  //write comment on NO answer
-            super.submitTaskDate=getCurrentDate();        //Get date of task submitting
             submitBtn.click();
+            //super.submitTaskDate=getCurrentDate();        //Get date of task submitting
             ProprtyLoader.writeToFile("Power Fail incorrect task was created");
         }
         else{
@@ -104,7 +101,6 @@ public class TaskOfflinePage extends MainOfflinePage {
              }else{
                  ProprtyLoader.writeToFile("ERROR! Correct "+taskName+" was not created");
                  indexOfCorrect++;
-                 //throw new RuntimeException("All other correct tasks were not created");
              }
          }
         if (indexOfCorrect==0){
@@ -135,8 +131,7 @@ public class TaskOfflinePage extends MainOfflinePage {
     public void fixPowerFailTestTask(){
         formTab.click();
         powerFailTestForm.click();
-        if(findSurvByDataForm(super.submitTaskDate)) {
-            editBtnForms.click();
+        if(findSurveyFormTab("Power Failure Test")) {
             yesBtnList.get(yesBtnList.size() - 1).click();
             submitBtn.click();
         }else{
@@ -145,17 +140,20 @@ public class TaskOfflinePage extends MainOfflinePage {
         }
     }
 
-    private boolean findSurvByDataForm(String date){
+    private boolean findSurveyFormTab(String taskName){
         boolean index=false;
-        for (WebElement element:survListForm) {
-            if(element.getText().contains(date)) {
-                element.click();
-                index = true;
+        for (int i =0;i< survListForm.size() ; i++) {
+            survListForm.get(i).click();
+            editBtnForms.click();
+            if (taskId.get(7).getAttribute("value").contains(dataBase.getTaskExtId(gameID, taskName.substring(0,8)))) {   //  сравнение taskId  в сюрвее и в BD
+                index=true;
                 break;
+            } else {
+                closeSurveyBtn.click();
             }
         }
         if(!index) {
-            ProprtyLoader.writeToFile("ERROR! Can't find survey by date on Form Tab. Date: " + date);
+            ProprtyLoader.writeToFile("ERROR! Can't find survey for task:" + taskName);
         }
         return index;
     }

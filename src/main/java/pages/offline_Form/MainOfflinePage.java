@@ -20,9 +20,8 @@ public class MainOfflinePage extends Operations {
 
     public MainOfflinePage(WebDriver driver){
         super(driver);
-        WebDriverWait wait=new WebDriverWait(driver, Integer.parseInt(ProprtyLoader.loadProperty("survTimeout")));
+        WebDriverWait wait=new WebDriverWait(driver, Integer.parseInt(ProprtyLoader.loadProperty("timeout")));
         wait.until(ExpectedConditions.visibilityOf(taskTab));
-        driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("survTimeout")), TimeUnit.SECONDS);
     }
 
     @FindBy(id="task")

@@ -33,12 +33,11 @@ public class OfflineSurvAnswerTest extends BaseTest {
     @Test
     private void syncTest(){
         taskOfflinePage.syncOperation();
-        switchTab(driver);
     }
 
-//    @AfterClass
-//    public void teardown(ITestContext context){
-//        driver = getDriver(context);
-//        switchTab(driver);  //switchWindow(driver, 0);
-//    }
+    @AfterClass
+    public void teardown(ITestContext context){
+        driver = getDriver(context);
+        switchTab(driver);  //switchWindow(driver, 0);
+    }
 }

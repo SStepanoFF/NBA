@@ -22,8 +22,7 @@ public class DashboardTab extends Operations {
     public DashboardTab(WebDriver driver){
         super(driver);
         dataBase=new DataBase();
-        driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("dashTimeout")), TimeUnit.SECONDS);
-        WebDriverWait wait=new WebDriverWait(driver, Integer.parseInt(ProprtyLoader.loadProperty("dashTimeout")));
+        WebDriverWait wait=new WebDriverWait(driver, Integer.parseInt(ProprtyLoader.loadProperty("timeout")));
         wait.until(ExpectedConditions.visibilityOf(dashTab));
         dashTab.click();
     }
@@ -87,7 +86,7 @@ public class DashboardTab extends Operations {
             ProprtyLoader.writeToFile("ERROR! Incorrect tasks number: UI="+taskList.size()+"  DB="+dbCountTask+"\n");
             throw new RuntimeException("Assert error numbTasksVerification");
         }finally {
-            driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("dashTimeout")),TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
         }
     }
 
@@ -102,7 +101,7 @@ public class DashboardTab extends Operations {
             ProprtyLoader.writeToFile("ERROR! Incorrect games number: UI="+gamesList.size()+"  DB="+dbCountGame+"\n");
             throw new RuntimeException("Assert error numbGamesVerification");
         }finally {
-            driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("dashTimeout")),TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
         }
     }
 
@@ -136,15 +135,6 @@ public class DashboardTab extends Operations {
         }
     }
 
-//    private String getTaskStatus(WebElement taskName){
-//        String taskStatus="Error status";
-//        if (taskName.getAttribute("id").contains(gameID)) {  //select button by gameID
-//                taskStatus = element.getText();
-//            }
-//        }
-//        return  taskStatus;
-//    }
-
     private void taskStatusAssertion(String realStatus, String mustStatus){
                 driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
                 try {
@@ -155,7 +145,7 @@ public class DashboardTab extends Operations {
                     ProprtyLoader.writeToFile("ERROR! Incorrect task status: "+realStatus+"  must be: "+mustStatus);
                     throw new RuntimeException("Assert error Incorrect task status");
                 }finally {
-                    driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("dashTimeout")),TimeUnit.SECONDS);
+                    driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
                 }
     }
 
@@ -169,7 +159,7 @@ public class DashboardTab extends Operations {
             ProprtyLoader.writeToFile("ERROR! Incorrect task color: "+realColor+"  must be: "+mustColor+"\n");
             throw new RuntimeException("Assert error status powerFailTestColorIdentification");
         }finally {
-            driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("dashTimeout")),TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
         }
     }
 

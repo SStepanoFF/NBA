@@ -15,8 +15,7 @@ public class LoginDashPage extends Operations {
 
     public LoginDashPage(WebDriver driver){
         super(driver);
-        driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("dashTimeout")), TimeUnit.SECONDS);
-        WebDriverWait wait=new WebDriverWait(driver,Integer.parseInt(ProprtyLoader.loadProperty("dashTimeout")));
+        WebDriverWait wait=new WebDriverWait(driver,Integer.parseInt(ProprtyLoader.loadProperty("timeout")));
         wait.until(ExpectedConditions.visibilityOf(logButt));
     }
 
