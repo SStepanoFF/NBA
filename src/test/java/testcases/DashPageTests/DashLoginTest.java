@@ -5,11 +5,11 @@ import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pages.dashPages.LoginDashPage;
+import pages.dashboardPages.LoginDashPage;
 import setup.BaseTest;
 
 
-public class LoginDashTest extends BaseTest {
+public class DashLoginTest extends BaseTest {
 
     private LoginDashPage loginDashPage;
     private WebDriver driver;

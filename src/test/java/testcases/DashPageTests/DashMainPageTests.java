@@ -1,15 +1,16 @@
 package testcases.DashPageTests;
 
+import framework.ProprtyLoader;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pages.dashPages.DashboardTab;
+import pages.dashboardPages.DashboardTab;
 import setup.BaseTest;
 
 
-public class DashboardMainTests extends BaseTest {
+public class DashMainPageTests extends BaseTest {
 
     private DashboardTab dashboardTab;
     private WebDriver driver;
@@ -21,17 +22,20 @@ public class DashboardMainTests extends BaseTest {
     }
 
     @Test
-    private void selectDate(){
+    private void selectDateTest(){
+        ProprtyLoader.writeToFile("\nSelectDateTest:");
         dashboardTab.selectDate();
     }
 
     @Test
-    private void compareGameNumber(){
+    private void compareGameNumberTest(){
+        ProprtyLoader.writeToFile("\nCompareGameNumberTest:");
         dashboardTab.numbGamesVerification();
     }
 
     @Test
-    private void compareTaskNumber(){
+    private void compareTaskNumberTest(){
+        ProprtyLoader.writeToFile("\nCompareTaskNumberTest:");
         dashboardTab.numbTasksVerification();
     }
 

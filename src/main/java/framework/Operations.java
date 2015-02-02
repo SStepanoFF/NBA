@@ -11,6 +11,7 @@ import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,6 +27,7 @@ public class Operations {
     public Operations(WebDriver driver){
         this.driver=driver;
         this.action=new Actions(driver);
+        driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")), TimeUnit.SECONDS);
         PageFactory.initElements(driver, this);
     }
 
@@ -55,7 +57,7 @@ public class Operations {
         }catch (org.openqa.selenium.NoSuchElementException e){
             return false;
         }finally {
-            driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("dashTimeout")),TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
         }
     }
 
@@ -66,5 +68,11 @@ public class Operations {
             date=format.parse(text);
         }catch (ParseException e){}
         return date;
+    }
+
+    public String getCurrentDate(){
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date date = new Date();
+        return dateFormat.format(date).toString();
     }
 }

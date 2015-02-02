@@ -1,5 +1,6 @@
-package pages.DashPages;
+package pages.dashboardPages;
 
+import framework.Operations;
 import framework.DataBase;
 import framework.ProprtyLoader;
 import framework.Operations;
@@ -7,8 +8,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.How;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -23,8 +22,7 @@ public class DashboardTab extends Operations {
     public DashboardTab(WebDriver driver){
         super(driver);
         dataBase=new DataBase();
-        driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("dashTimeout")), TimeUnit.SECONDS);
-        WebDriverWait wait=new WebDriverWait(driver, Integer.parseInt(ProprtyLoader.loadProperty("dashTimeout")));
+        WebDriverWait wait=new WebDriverWait(driver, Integer.parseInt(ProprtyLoader.loadProperty("timeout")));
         wait.until(ExpectedConditions.visibilityOf(dashTab));
         dashTab.click();
     }
@@ -35,40 +33,52 @@ public class DashboardTab extends Operations {
     //region Datepicker WebElements
     @FindBy (css=".ui-datepicker-trigger")
     private WebElement datepicker;
-
     @FindBy (css = "td[data-handler='selectDay']")
     private List<WebElement> date;
-
     @FindBy (css=".ui-datepicker-month")
     private WebElement month;
+    @FindBy (linkText = "Prev")
+    private WebElement prevMonthBtn;
     //endregion
 
     @FindBy (css="td[data-bind='html:startTime']")
     private List<WebElement> gamesList;
 
     //region Task WebElements
-    @FindBy (css="td[data-bind='html:title']")
-    private List<WebElement> taskList;
-
+//    @FindBy (css="td[data-bind='html:title']")
+//    private List<WebElement> taskList;
     @FindBy (css = "td button")
     private List<WebElement> statusButtList;
-
     @FindBy (xpath="//td[text()=('Power Failure Test')]/following-sibling::td/button")        ////td[text()=("Power Failure Test")]/following-sibling::*[2] подкраш поле
     private List<WebElement> powerFailTestStatus;        ////td[text()=("Power Failure Test")]/following-sibling::td/button конкретный баттон
     //endregion
 
     public void selectDate(){
         datepicker.click();
-        for (int i=0; i<date.size(); i++)
-            if (date.get(i).getText().equals(ProprtyLoader.loadProperty("date").substring(8)) && //verify day
-                    Integer.parseInt(date.get(i).getAttribute("data-month"))==0){                //verify month
-                date.get(i).click();
+        String dateProp=ProprtyLoader.loadProperty("date");
+        String day=dateProp.substring(8);                                           //get day from property file
+        String month=dateProp.substring(5, 7);     //get month from property file
+        if (Integer.parseInt(month.substring(0, 1))==0) {
+            month=Integer.toString(Integer.parseInt(month.substring(1))- 1);  //correct month type according to UI
+        }
+        boolean findDate=false;
+        while (!findDate){
+            for (int i = 0; i < date.size(); i++) {
+                if (date.get(i).getText().equals(day) && (date.get(i).getAttribute("data-month")).equals(month)) {         //verify day and month
+                    date.get(i).click();
+                    findDate=true;
+                    ProprtyLoader.writeToFile("Date was selected");
+                }
             }
+            if(!findDate) prevMonthBtn.click();
+        }
     }
 
     public void numbTasksVerification(){
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-        int dbCountTask=dataBase.taskCount(gameID);
+        int dbCountTask=dataBase.taskCount(gameID);     //get number of tasks from DB
+        String locator="button[id*='"+gameID+"']";
+        List<WebElement> taskList = driver.findElements(By.cssSelector(locator));  //get task list from UI
         try {
             Assert.assertTrue(taskList.size() == dbCountTask); //Compare count of task with DB
             ProprtyLoader.writeToFile("Number of tasks="+taskList.size()+"\n");
@@ -77,7 +87,7 @@ public class DashboardTab extends Operations {
             ProprtyLoader.writeToFile("ERROR! Incorrect tasks number: UI="+taskList.size()+"  DB="+dbCountTask+"\n");
             throw new RuntimeException("Assert error numbTasksVerification");
         }finally {
-            driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("dashTimeout")),TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
         }
     }
 
@@ -92,45 +102,48 @@ public class DashboardTab extends Operations {
             ProprtyLoader.writeToFile("ERROR! Incorrect games number: UI="+gamesList.size()+"  DB="+dbCountGame+"\n");
             throw new RuntimeException("Assert error numbGamesVerification");
         }finally {
-            driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("dashTimeout")),TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
         }
     }
 
-    public void powerFailTestColorIdentification(String color){
-        String locatorr="//td[descendant::button[contains(@id,'"+gameID+"')]]";
-        WebElement powerFailTestColor=driver.findElement(By.xpath(locatorr));
+    public void powerFailTestColorVerification(String color){
+        String locator="//td[descendant::button[contains(@id,'"+gameID+"')]]";  //locator for task color
+        WebElement powerFailTestColor=driver.findElement(By.xpath(locator));
         taskColorAssertion(powerFailTestColor.getCssValue("background-color"), color);
     }
 
-    public void powerFailTestStatusIdentification(String status){
-        taskStatusAssertion(getTaskStatus(powerFailTestStatus), status);
+    public void allTaskColorVerification(String color){
+        String locator="//td[descendant::button[contains(@id,'"+gameID+"')]]";  //locator for task color
+        List<WebElement> taskColor=driver.findElements(By.xpath(locator));
+        for (int i=0;i<taskColor.size();i++) {
+            taskColorAssertion(taskColor.get(i).getCssValue("background-color"), color);
+        }
+    }
+
+    public void powerFailTestStatusVerification(String status){
+        String locator="button[id*='"+gameID+"']";
+        List<WebElement> taskList = driver.findElements(By.cssSelector(locator));  //get task list from UI
+        taskStatusAssertion(taskList.get(0).getText(),status);
     }
 
     public void allTasksStatusVerification(String status){  //Проверка статуса всех тасок если все они одинаковы
-        //getTaskStatus(statusButtList,status);
-    }
-
-    private String getTaskStatus(List<WebElement> taskName){
-        String taskStatus="Error status";
-        for(WebElement element: taskName) {
-            if (element.getAttribute("id").contains(gameID)) {  //select button by gameID
-                taskStatus = element.getText();
-            }
+        String locator="button[id*='"+gameID+"']";
+        List<WebElement> taskList = driver.findElements(By.cssSelector(locator));  //get task list from UI
+        for (int i=1;i<taskList.size();i++){
+            taskStatusAssertion(taskList.get(i).getText(), status);
         }
-        return  taskStatus;
     }
 
     private void taskStatusAssertion(String realStatus, String mustStatus){
                 driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
                 try {
                     Assert.assertTrue(realStatus.contains(mustStatus));     //Verify task status
-                    ProprtyLoader.writeToFile("Task status=" + realStatus+"\n");
                 }catch (AssertionError e){
                     e.getStackTrace();
-                    ProprtyLoader.writeToFile("ERROR! Incorrect task status: "+realStatus+"  must be: "+mustStatus+"\n");
-                    throw new RuntimeException("Assert error status powerFailTestStatusIdentification");
+                    ProprtyLoader.writeToFile("ERROR! Incorrect task status: "+realStatus+"  must be: "+mustStatus);
+                    throw new RuntimeException("Assert error Incorrect task status");
                 }finally {
-                    driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("dashTimeout")),TimeUnit.SECONDS);
+                    driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
                 }
     }
 
@@ -138,13 +151,12 @@ public class DashboardTab extends Operations {
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         try {
             Assert.assertTrue(realColor.contains(mustColor));     //Verify task status
-            ProprtyLoader.writeToFile("Task color=" + realColor+"\n");
         }catch (AssertionError e){
             e.getStackTrace();
-            ProprtyLoader.writeToFile("ERROR! Incorrect task color: "+realColor+"  must be: "+mustColor+"\n");
+            ProprtyLoader.writeToFile("ERROR! Incorrect task color: "+realColor+"  must be: "+mustColor);
             throw new RuntimeException("Assert error status powerFailTestColorIdentification");
         }finally {
-            driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("dashTimeout")),TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
         }
     }
 

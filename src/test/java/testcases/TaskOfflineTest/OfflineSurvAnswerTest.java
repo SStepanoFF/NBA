@@ -1,5 +1,6 @@
 package testcases.TaskOfflineTest;
 
+import framework.ProprtyLoader;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
@@ -9,7 +10,7 @@ import pages.offline_Form.TaskOfflinePage;
 import setup.BaseTest;
 
 
-public class SurvAnswerTest extends BaseTest {
+public class OfflineSurvAnswerTest extends BaseTest {
 
     private WebDriver driver;
     private TaskOfflinePage taskOfflinePage;
@@ -22,14 +23,14 @@ public class SurvAnswerTest extends BaseTest {
 
     @Test
     public void submitWithOneIncorrectTaskTest(){
-        taskOfflinePage.powerFailIncorrect();
-        taskOfflinePage.submit();
+        ProprtyLoader.writeToFile("\nSubmitWithOneIncorrectTaskTest:");
+        taskOfflinePage.createPowerFailIncorrectTask();
     }
 
     @Test
     public void submitWithAllOtherCorrectTaskTest(){
+        ProprtyLoader.writeToFile("\nSubmitWithAllOtherCorrectTaskTest:");
         taskOfflinePage.createAllCorrectTasks();
-        taskOfflinePage.submit();
     }
 
     @Test

@@ -1,2 +1,0 @@
-ERROR! Can't connect to DB
-
