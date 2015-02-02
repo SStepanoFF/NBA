@@ -75,7 +75,6 @@ public class TaskOfflinePage extends MainOfflinePage {
             noBtnList.get(noBtnList.size() - 1).click();  //select last NO-Button
             textField.get(textField.size() - 1).sendKeys("text");  //write comment on NO answer
             submitBtn.click();
-            //super.submitTaskDate=getCurrentDate();        //Get date of task submitting
             ProprtyLoader.writeToFile("Power Fail incorrect task was created");
         }
         else{
@@ -85,7 +84,7 @@ public class TaskOfflinePage extends MainOfflinePage {
     }
 
     public void createAllCorrectTasks(){
-        int indexOfCorrect=0;
+        boolean createIndex=true;
         for (int i = 1; i < tasksList.size(); i++) {            //take all other task except first
              tasksList.get(i).click();
              String taskName=tasksList.get(i).getText();
@@ -100,13 +99,11 @@ public class TaskOfflinePage extends MainOfflinePage {
                  ProprtyLoader.writeToFile(taskName+" correct task was created");
              }else{
                  ProprtyLoader.writeToFile("ERROR! Correct "+taskName+" was not created");
-                 indexOfCorrect++;
+                 createIndex=false;
              }
          }
-        if (indexOfCorrect==0){
-            ProprtyLoader.writeToFile("All other correct tasks were created");
-        }else {
-            ProprtyLoader.writeToFile("ERROR! Not all other correct tasks were created");
+        if(!createIndex){
+            throw new RuntimeException("All other correct tasks were not created");
         }
     }
 
@@ -131,7 +128,7 @@ public class TaskOfflinePage extends MainOfflinePage {
     public void fixPowerFailTestTask(){
         formTab.click();
         powerFailTestForm.click();
-        if(findSurveyFormTab("Power Failure Test")) {
+        if (findSurveyFormTab("Power Failure Test")) {
             yesBtnList.get(yesBtnList.size() - 1).click();
             submitBtn.click();
         }else{

@@ -17,9 +17,9 @@
             </class>
             <class name="testcases.DashPageTests.DashMainPageTests">
                 <methods>
-                    <include name="selectDate"/>
-                    <include name="compareGameNumber"/>
-                    <include name="compareTaskNumber"/>
+                    <include name="selectDateTest"/>
+                    <include name="compareGameNumberTest"/>
+                    <include name="compareTaskNumberTest"/>
                 </methods>
             </class>
             <class name="testcases.TaskOfflineTest.OfflineSurvAnswerTest" >

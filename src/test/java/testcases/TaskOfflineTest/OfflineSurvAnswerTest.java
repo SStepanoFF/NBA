@@ -1,5 +1,6 @@
 package testcases.TaskOfflineTest;
 
+import framework.ProprtyLoader;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
@@ -22,11 +23,13 @@ public class OfflineSurvAnswerTest extends BaseTest {
 
     @Test
     public void submitWithOneIncorrectTaskTest(){
+        ProprtyLoader.writeToFile("\nSubmitWithOneIncorrectTaskTest:");
         taskOfflinePage.createPowerFailIncorrectTask();
     }
 
     @Test
     public void submitWithAllOtherCorrectTaskTest(){
+        ProprtyLoader.writeToFile("\nSubmitWithAllOtherCorrectTaskTest:");
         taskOfflinePage.createAllCorrectTasks();
     }
 

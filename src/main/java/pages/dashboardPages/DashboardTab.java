@@ -67,6 +67,7 @@ public class DashboardTab extends Operations {
                 if (date.get(i).getText().equals(day) && (date.get(i).getAttribute("data-month")).equals(month)) {         //verify day and month
                     date.get(i).click();
                     findDate=true;
+                    ProprtyLoader.writeToFile("Date was selected");
                 }
             }
             if(!findDate) prevMonthBtn.click();
@@ -122,14 +123,12 @@ public class DashboardTab extends Operations {
     public void powerFailTestStatusVerification(String status){
         String locator="button[id*='"+gameID+"']";
         List<WebElement> taskList = driver.findElements(By.cssSelector(locator));  //get task list from UI
-        ProprtyLoader.writeToFile("\nPowerFailTestStatus verification:");
         taskStatusAssertion(taskList.get(0).getText(),status);
     }
 
     public void allTasksStatusVerification(String status){  //Проверка статуса всех тасок если все они одинаковы
         String locator="button[id*='"+gameID+"']";
         List<WebElement> taskList = driver.findElements(By.cssSelector(locator));  //get task list from UI
-        ProprtyLoader.writeToFile("\nAll other task's status verification:");
         for (int i=1;i<taskList.size();i++){
             taskStatusAssertion(taskList.get(i).getText(), status);
         }
@@ -139,7 +138,6 @@ public class DashboardTab extends Operations {
                 driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
                 try {
                     Assert.assertTrue(realStatus.contains(mustStatus));     //Verify task status
-                    ProprtyLoader.writeToFile("Task status=" + realStatus);
                 }catch (AssertionError e){
                     e.getStackTrace();
                     ProprtyLoader.writeToFile("ERROR! Incorrect task status: "+realStatus+"  must be: "+mustStatus);
@@ -153,10 +151,9 @@ public class DashboardTab extends Operations {
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         try {
             Assert.assertTrue(realColor.contains(mustColor));     //Verify task status
-            ProprtyLoader.writeToFile("Task color=" + realColor+"\n");
         }catch (AssertionError e){
             e.getStackTrace();
-            ProprtyLoader.writeToFile("ERROR! Incorrect task color: "+realColor+"  must be: "+mustColor+"\n");
+            ProprtyLoader.writeToFile("ERROR! Incorrect task color: "+realColor+"  must be: "+mustColor);
             throw new RuntimeException("Assert error status powerFailTestColorIdentification");
         }finally {
             driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);

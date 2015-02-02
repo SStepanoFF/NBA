@@ -1,5 +1,6 @@
 package testcases.TaskOfflineTest;
 
+import framework.ProprtyLoader;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
@@ -8,9 +9,6 @@ import org.testng.annotations.Test;
 import pages.offline_Form.TaskOfflinePage;
 import setup.BaseTest;
 
-/**
- * Created by Sergey on 01.02.2015.
- */
 public class OfflineFixIncorrectTaskTest extends BaseTest{
 
     private WebDriver driver;
@@ -24,6 +22,7 @@ public class OfflineFixIncorrectTaskTest extends BaseTest{
 
     @Test
     private void fixIncorrectTaskTest(){
+        ProprtyLoader.writeToFile("\nFixIncorrectTaskTest:");
         taskOfflinePage.fixPowerFailTestTask();
     }
 
