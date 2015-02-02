@@ -18,7 +18,6 @@ public class TaskOfflinePage extends MainOfflinePage {
 
     private final String gameID=ProprtyLoader.loadProperty("gameID");
     private DataBase dataBase;
-    private String submitTaskDate;
 
     public TaskOfflinePage(WebDriver driver){
         super(driver);
@@ -64,6 +63,8 @@ public class TaskOfflinePage extends MainOfflinePage {
     private WebElement closeSurveyBtn;
     @FindBy (tagName = "textarea")
     private List<WebElement> textField;
+    @FindBy (xpath = "//input[@class='inputSingleLine']")
+    private WebElement clockTextField;
     @FindBy (id="goSubmitPage")
     private WebElement submitBtn;
     //endregion
@@ -76,7 +77,7 @@ public class TaskOfflinePage extends MainOfflinePage {
             }
             noBtnList.get(noBtnList.size() - 1).click();  //select last NO-Button
             textField.get(textField.size() - 1).sendKeys("text");  //write comment on NO answer
-            submitTaskDate=getCurrentDate();        //Get date of task submitting
+            super.submitTaskDate=getCurrentDate();        //Get date of task submitting
             submitBtn.click();
             ProprtyLoader.writeToFile("Power Fail incorrect task was created");
         }
@@ -87,21 +88,30 @@ public class TaskOfflinePage extends MainOfflinePage {
     }
 
     public void createAllCorrectTasks(){
-         for (int i = 1; i < tasksList.size(); i++) {            //take all other task except first
+        int indexOfCorrect=0;
+        for (int i = 1; i < tasksList.size(); i++) {            //take all other task except first
              tasksList.get(i).click();
              String taskName=tasksList.get(i).getText();
              if (findSurvey(taskName.substring(0,taskName.length()-8))) {  //delete year (2015) from task text name
                  for (WebElement yesBtn : yesBtnList) {          //select all YES answers
                      yesBtn.click();
                  }
+                 if (taskName.substring(0,taskName.length()-8).contains("Stanchion & Floor Clock")){
+                     clockTextField.sendKeys("12:12");
+                 }
                  submitBtn.click();
                  ProprtyLoader.writeToFile(taskName+" correct task was created");
              }else{
-                 ProprtyLoader.writeToFile("ERROR! All other correct tasks were not created");
+                 ProprtyLoader.writeToFile("ERROR! Correct "+taskName+" was not created");
+                 indexOfCorrect++;
                  //throw new RuntimeException("All other correct tasks were not created");
              }
          }
-        ProprtyLoader.writeToFile("All other correct tasks were created");
+        if (indexOfCorrect==0){
+            ProprtyLoader.writeToFile("All other correct tasks were created");
+        }else {
+            ProprtyLoader.writeToFile("ERROR! Not all other correct tasks were created");
+        }
     }
 
     private boolean findSurvey(String taskName){
@@ -109,7 +119,7 @@ public class TaskOfflinePage extends MainOfflinePage {
         for (int i = survList.size() - 1; i >= 0; i--) {
                 survList.get(i).click();
                 editBtnTasks.click();
-                if (taskId.get(7).getAttribute("value").contains("520b2717bc28412885942c3c5f9414e6")) {   //dataBase.getTaskExtId(gameID, taskName)  сравнение taskId  в сюрвее и в BD
+                if (taskId.get(7).getAttribute("value").contains(dataBase.getTaskExtId(gameID, taskName.substring(0,8)))) {   //  сравнение taskId  в сюрвее и в BD
                     index=true;
                     break;
                 } else {
@@ -125,7 +135,7 @@ public class TaskOfflinePage extends MainOfflinePage {
     public void fixPowerFailTestTask(){
         formTab.click();
         powerFailTestForm.click();
-        if(findSurvByDataForm(submitTaskDate)) {
+        if(findSurvByDataForm(super.submitTaskDate)) {
             editBtnForms.click();
             yesBtnList.get(yesBtnList.size() - 1).click();
             submitBtn.click();

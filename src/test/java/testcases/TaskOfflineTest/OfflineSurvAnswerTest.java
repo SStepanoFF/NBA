@@ -33,6 +33,7 @@ public class OfflineSurvAnswerTest extends BaseTest {
     @Test
     private void syncTest(){
         taskOfflinePage.syncOperation();
+        switchTab(driver);
     }
 
 //    @AfterClass

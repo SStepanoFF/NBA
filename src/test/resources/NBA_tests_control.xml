@@ -22,13 +22,13 @@
                     <!--<include name="compareTaskNumber"/>-->
                 <!--</methods>-->
             <!--</class>-->
-            <class name="testcases.TaskOfflineTest.OfflineSurvAnswerTest" >
-                <methods>
-                    <include name="submitWithOneIncorrectTaskTest"/>
+            <!--<class name="testcases.TaskOfflineTest.OfflineSurvAnswerTest" >-->
+                <!--<methods>-->
+                    <!--<include name="submitWithOneIncorrectTaskTest"/>-->
                     <!--<include name="submitWithAllOtherCorrectTaskTest"/>-->
                     <!--<include name="syncTest"/>-->
-                </methods>
-            </class>
+                <!--</methods>-->
+            <!--</class>-->
             <!--<class name="testcases.DashPageTests.DashTaskVerificationTest" >-->
                 <!--<methods>-->
                     <!--<include name="incorrectOneTaskStatusVerificationTest"/>-->

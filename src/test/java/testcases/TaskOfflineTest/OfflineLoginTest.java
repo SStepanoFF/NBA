@@ -3,6 +3,7 @@ package testcases.TaskOfflineTest;
 import framework.ProprtyLoader;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pages.offline_Form.LoginOfflinePage;

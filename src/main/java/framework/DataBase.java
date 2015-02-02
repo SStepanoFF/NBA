@@ -79,7 +79,7 @@ public class DataBase {
         try{
             statement = conn.createStatement();//Готовим запрос
             resultSets = statement.executeQuery("SELECT TASK_EXT_ID FROM GAMES JOIN TASKS ON GAMES.GAME_ID=TASKS.GAME_ID  " +
-                    "WHERE EXTERNAL_ID="+gameId+" AND TASKSECTIONTITLE=\""+taskName+"\"");
+                    "WHERE EXTERNAL_ID="+gameId+" AND TASKSECTIONTITLE LIKE\""+taskName+"%\"");
             while(resultSets.next()){
                 result= resultSets.getString("TASK_EXT_ID");
             }

@@ -7,12 +7,16 @@ import framework.ProprtyLoader;
  */
 public class test {
     public static void main(String []args){
-        DataBase dataBase=new DataBase();
+        //DataBase dataBase=new DataBase();
 
         //int q=dataBase.gamesCount();
         //ProprtyLoader.writeToFile("" + q);
 
-        String text=ProprtyLoader.loadProperty("date").substring(8);
-        ProprtyLoader.writeToFile("" + text);
+        String text="2015-01-19";
+        String res=text.substring(5, 7);
+        System.out.print(res);
+        String res1="";
+        if (Integer.parseInt(res.substring(0,1))==0) res=res.substring(1);
+        System.out.print(res);
     }
 }

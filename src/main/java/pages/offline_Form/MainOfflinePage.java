@@ -16,6 +16,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class MainOfflinePage extends Operations {
 
+    public String submitTaskDate;
+
     public MainOfflinePage(WebDriver driver){
         super(driver);
         WebDriverWait wait=new WebDriverWait(driver, Integer.parseInt(ProprtyLoader.loadProperty("survTimeout")));
