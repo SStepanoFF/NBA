@@ -7,10 +7,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import javax.xml.crypto.Data;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,7 +23,7 @@ public class Operations {
     public Operations(WebDriver driver){
         this.driver=driver;
         this.action=new Actions(driver);
-        driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")), TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(Integer.parseInt(Loader.loadProperty("timeout")), TimeUnit.SECONDS);
         PageFactory.initElements(driver, this);
     }
 
@@ -36,7 +32,7 @@ public class Operations {
     }
 
     public void waitAndClick(WebElement webElement){
-        WebDriverWait wait=new WebDriverWait(driver,Integer.parseInt(ProprtyLoader.loadProperty("timeout")));
+        WebDriverWait wait=new WebDriverWait(driver,Integer.parseInt(Loader.loadProperty("timeout")));
         wait.until(ExpectedConditions.elementToBeClickable(webElement));
         webElement.click();
     }
@@ -57,7 +53,7 @@ public class Operations {
         }catch (org.openqa.selenium.NoSuchElementException e){
             return false;
         }finally {
-            driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(Integer.parseInt(Loader.loadProperty("timeout")),TimeUnit.SECONDS);
         }
     }
 

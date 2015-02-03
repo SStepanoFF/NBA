@@ -1,20 +1,15 @@
 package setup;
 
-import com.gargoylesoftware.htmlunit.WebWindow;
-import framework.ProprtyLoader;
+import framework.Loader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.interactions.Actions;
 import org.testng.ITestContext;
 import org.testng.annotations.*;
 import webDriver.Driver;
-
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
+
 
 public class BaseTest {
 
@@ -24,7 +19,7 @@ public class BaseTest {
     public void setUpTest(ITestContext context) {
         driver = Driver.getInstance();
         context.setAttribute(getCurrentTestCaseName(context), driver);
-        ProprtyLoader.clearResultFile();
+        Loader.clearResultFile();
     }
 
     @AfterTest(alwaysRun = true)
@@ -54,7 +49,7 @@ public class BaseTest {
             ArrayList tabs = new ArrayList(driver.getWindowHandles());
             driver.switchTo().window(tabs.get(0).toString());  //driver.switchTo().defaultContent();
         }catch (Exception e){
-            ProprtyLoader.writeToFile("ERROR! Couldn't switch tab");
+            Loader.logWritter("ERROR! Couldn't switch tab");
         }
     }
 
@@ -64,7 +59,7 @@ public class BaseTest {
             switchWindow(driver,1);
             driver.navigate().to(url);
         } catch (Exception e) {
-            ProprtyLoader.writeToFile("ERROR! Couldn't load second page");
+            Loader.logWritter("ERROR! Couldn't load second page");
         }
     }
 
@@ -72,7 +67,7 @@ public class BaseTest {
         try{
             driver.switchTo().window(driver.getWindowHandles().toArray()[number].toString());
         }catch (Exception e){
-            ProprtyLoader.writeToFile("ERROR! Couldn't switch tab");
+            Loader.logWritter("ERROR! Couldn't switch tab");
         }
     }
 }

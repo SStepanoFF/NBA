@@ -1,9 +1,8 @@
 package testcases.TaskOfflineTest;
 
-import framework.ProprtyLoader;
+import framework.Loader;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pages.offline_Form.LoginOfflinePage;
@@ -18,7 +17,7 @@ public class OfflineLoginTest extends BaseTest {
     @BeforeClass
     public void setup(ITestContext context) {
         driver = getDriver(context);
-        createNewTab(driver, ProprtyLoader.loadProperty("offlineUrl"));
+        createNewTab(driver, Loader.loadProperty("offlineUrl"));
         //createNewWindow(driver,ProprtyLoader.loadProperty("offlineUrl"));
         loginOfflinePage =new LoginOfflinePage(driver);
     }
@@ -34,9 +33,8 @@ public class OfflineLoginTest extends BaseTest {
         mainOfflinePage.syncOperation();
     }
 
-    @AfterClass
-    public void teardown(ITestContext context){
-        driver = getDriver(context);
+    @Test
+    public void switchTabTest(){
         switchTab(driver);  //switchWindow(driver, 0);
     }
 

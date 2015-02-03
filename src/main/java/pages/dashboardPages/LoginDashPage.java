@@ -1,6 +1,6 @@
 package pages.dashboardPages;
 
-import framework.ProprtyLoader;
+import framework.Loader;
 import framework.Operations;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,14 +8,12 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.concurrent.TimeUnit;
-
 
 public class LoginDashPage extends Operations {
 
     public LoginDashPage(WebDriver driver){
         super(driver);
-        WebDriverWait wait=new WebDriverWait(driver,Integer.parseInt(ProprtyLoader.loadProperty("timeout")));
+        WebDriverWait wait=new WebDriverWait(driver,Integer.parseInt(Loader.loadProperty("timeout")));
         wait.until(ExpectedConditions.visibilityOf(logButt));
     }
 
@@ -34,13 +32,13 @@ public class LoginDashPage extends Operations {
 
     public void login(WebElement logField1,WebElement passField1, WebElement logBtn){
         String logName, password="";
-        if (ProprtyLoader.loadProperty("portal").equals("1")){
-            logName=ProprtyLoader.loadProperty("prodLoginName");
-            password=ProprtyLoader.loadProperty("prodPass");
+        if (Loader.loadProperty("portal").equals("1")){
+            logName= Loader.loadProperty("prodLoginName");
+            password= Loader.loadProperty("prodPass");
         }
         else {
-            logName=ProprtyLoader.loadProperty("testLoginName");
-            password=ProprtyLoader.loadProperty("testPass");
+            logName= Loader.loadProperty("testLoginName");
+            password= Loader.loadProperty("testPass");
         }
         logField1.sendKeys(logName);
         passField1.sendKeys(password);

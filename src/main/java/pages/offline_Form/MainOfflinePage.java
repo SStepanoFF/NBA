@@ -1,7 +1,7 @@
 package pages.offline_Form;
 
 import framework.Operations;
-import framework.ProprtyLoader;
+import framework.Loader;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,18 +9,12 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.concurrent.TimeUnit;
 
-/**
- * Created by sergii.stepanov on 29.01.2015.
- */
 public class MainOfflinePage extends Operations {
-
-    public String submitTaskDate;
 
     public MainOfflinePage(WebDriver driver){
         super(driver);
-        WebDriverWait wait=new WebDriverWait(driver, Integer.parseInt(ProprtyLoader.loadProperty("timeout")));
+        WebDriverWait wait=new WebDriverWait(driver, Integer.parseInt(Loader.loadProperty("timeout")));
         wait.until(ExpectedConditions.visibilityOf(taskTab));
     }
 

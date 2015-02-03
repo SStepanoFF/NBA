@@ -1,6 +1,6 @@
 package testcases.DashPageTests;
 
-import framework.ProprtyLoader;
+import framework.Loader;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.annotations.BeforeClass;
@@ -17,9 +17,9 @@ public class DashLoginTest extends BaseTest {
     @BeforeClass
     public void setup(ITestContext context) {
         driver = getDriver(context);
-       if (ProprtyLoader.loadProperty("portal").equals("1")) {
-           driver.navigate().to(ProprtyLoader.loadProperty("prodUrl"));
-        } else driver.navigate().to(ProprtyLoader.loadProperty("testUrl"));
+       if (Loader.loadProperty("portal").equals("1")) {
+           driver.navigate().to(Loader.loadProperty("prodUrl"));
+        } else driver.navigate().to(Loader.loadProperty("testUrl"));
         loginDashPage =new LoginDashPage(driver);
     }
 

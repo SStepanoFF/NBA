@@ -2,8 +2,7 @@ package pages.dashboardPages;
 
 import framework.Operations;
 import framework.DataBase;
-import framework.ProprtyLoader;
-import framework.Operations;
+import framework.Loader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -17,12 +16,12 @@ import java.util.concurrent.TimeUnit;
 
 public class DashboardTab extends Operations {
     private DataBase dataBase;
-    private final String gameID=ProprtyLoader.loadProperty("gameID");
+    private final String gameID= Loader.loadProperty("gameID");
 
     public DashboardTab(WebDriver driver){
         super(driver);
         dataBase=new DataBase();
-        WebDriverWait wait=new WebDriverWait(driver, Integer.parseInt(ProprtyLoader.loadProperty("timeout")));
+        WebDriverWait wait=new WebDriverWait(driver, Integer.parseInt(Loader.loadProperty("timeout")));
         wait.until(ExpectedConditions.visibilityOf(dashTab));
         dashTab.click();
     }
@@ -55,7 +54,7 @@ public class DashboardTab extends Operations {
 
     public void selectDate(){
         datepicker.click();
-        String dateProp=ProprtyLoader.loadProperty("date");
+        String dateProp= Loader.loadProperty("date");
         String day=dateProp.substring(8);                                           //get day from property file
         String month=dateProp.substring(5, 7);     //get month from property file
         if (Integer.parseInt(month.substring(0, 1))==0) {
@@ -67,7 +66,7 @@ public class DashboardTab extends Operations {
                 if (date.get(i).getText().equals(day) && (date.get(i).getAttribute("data-month")).equals(month)) {         //verify day and month
                     date.get(i).click();
                     findDate=true;
-                    ProprtyLoader.writeToFile("Date was selected");
+                    Loader.logWritter("Date was selected");
                 }
             }
             if(!findDate) prevMonthBtn.click();
@@ -81,28 +80,28 @@ public class DashboardTab extends Operations {
         List<WebElement> taskList = driver.findElements(By.cssSelector(locator));  //get task list from UI
         try {
             Assert.assertTrue(taskList.size() == dbCountTask); //Compare count of task with DB
-            ProprtyLoader.writeToFile("Number of tasks="+taskList.size()+"\n");
+            Loader.logWritter("Number of tasks=" + taskList.size());
         }catch (AssertionError e){
             e.getStackTrace();
-            ProprtyLoader.writeToFile("ERROR! Incorrect tasks number: UI="+taskList.size()+"  DB="+dbCountTask+"\n");
+            Loader.logWritter("ERROR! Incorrect tasks number: UI=" + taskList.size() + "  DB=" + dbCountTask);
             throw new RuntimeException("Assert error numbTasksVerification");
         }finally {
-            driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(Integer.parseInt(Loader.loadProperty("timeout")),TimeUnit.SECONDS);
         }
     }
 
     public void numbGamesVerification(){
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-        int dbCountGame=dataBase.gamesCount(ProprtyLoader.loadProperty("date"));
+        int dbCountGame=dataBase.gamesCount(Loader.loadProperty("date"));
         try {
             Assert.assertTrue(gamesList.size() == dbCountGame); //Compare count of games with DB
-            ProprtyLoader.writeToFile("Number of games="+gamesList.size()+"\n");
+            Loader.logWritter("Number of games=" + gamesList.size());
         }catch (AssertionError e){
             e.getStackTrace();
-            ProprtyLoader.writeToFile("ERROR! Incorrect games number: UI="+gamesList.size()+"  DB="+dbCountGame+"\n");
+            Loader.logWritter("ERROR! Incorrect games number: UI=" + gamesList.size() + "  DB=" + dbCountGame);
             throw new RuntimeException("Assert error numbGamesVerification");
         }finally {
-            driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(Integer.parseInt(Loader.loadProperty("timeout")),TimeUnit.SECONDS);
         }
     }
 
@@ -140,10 +139,10 @@ public class DashboardTab extends Operations {
                     Assert.assertTrue(realStatus.contains(mustStatus));     //Verify task status
                 }catch (AssertionError e){
                     e.getStackTrace();
-                    ProprtyLoader.writeToFile("ERROR! Incorrect task status: "+realStatus+"  must be: "+mustStatus);
+                    Loader.logWritter("ERROR! Incorrect task status: " + realStatus + "  must be: " + mustStatus);
                     throw new RuntimeException("Assert error Incorrect task status");
                 }finally {
-                    driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
+                    driver.manage().timeouts().implicitlyWait(Integer.parseInt(Loader.loadProperty("timeout")),TimeUnit.SECONDS);
                 }
     }
 
@@ -153,10 +152,10 @@ public class DashboardTab extends Operations {
             Assert.assertTrue(realColor.contains(mustColor));     //Verify task status
         }catch (AssertionError e){
             e.getStackTrace();
-            ProprtyLoader.writeToFile("ERROR! Incorrect task color: "+realColor+"  must be: "+mustColor);
+            Loader.logWritter("ERROR! Incorrect task color: " + realColor + "  must be: " + mustColor);
             throw new RuntimeException("Assert error status powerFailTestColorIdentification");
         }finally {
-            driver.manage().timeouts().implicitlyWait(Integer.parseInt(ProprtyLoader.loadProperty("timeout")),TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(Integer.parseInt(Loader.loadProperty("timeout")),TimeUnit.SECONDS);
         }
     }
 

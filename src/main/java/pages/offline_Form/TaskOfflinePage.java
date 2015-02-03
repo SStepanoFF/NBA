@@ -1,30 +1,34 @@
 package pages.offline_Form;
 
 import framework.DataBase;
-import framework.Operations;
-import framework.ProprtyLoader;
-import org.openqa.selenium.By;
+import framework.Loader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 
 public class TaskOfflinePage extends MainOfflinePage {
 
-    private final String gameID=ProprtyLoader.loadProperty("gameID");
+    private final String gameID= Loader.loadProperty("gameID");
     private DataBase dataBase;
 
     public TaskOfflinePage(WebDriver driver){
         super(driver);
         dataBase=new DataBase();
         waitDownLoad();
+//        if(isElementPresent(alertDownloadMes)){
+//            alertOkBtn.click();
+//            syncOperation();
+//        }
         taskTab.click();
     }
+
+//    @FindBy (xpath = "//div[class='dialog']")
+//    private WebElement alertDownloadMes;
+//    @FindBy (xpath = "//div[class='formLine']")
+//    private WebElement alertOkBtn;
 
     @FindBy (id="task")
     private WebElement taskTab;
@@ -75,10 +79,10 @@ public class TaskOfflinePage extends MainOfflinePage {
             noBtnList.get(noBtnList.size() - 1).click();  //select last NO-Button
             textField.get(textField.size() - 1).sendKeys("text");  //write comment on NO answer
             submitBtn.click();
-            ProprtyLoader.writeToFile("Power Fail incorrect task was created");
+            Loader.logWritter("Power Fail incorrect task was created");
         }
         else{
-            ProprtyLoader.writeToFile("ERROR! Power Fail incorrect task was not created");
+            Loader.logWritter("ERROR! Power Fail incorrect task was not created");
             throw new RuntimeException("Power Fail incorrect task was not created");
         }
     }
@@ -96,9 +100,9 @@ public class TaskOfflinePage extends MainOfflinePage {
                      clockTextField.sendKeys("12:12");
                  }
                  submitBtn.click();
-                 ProprtyLoader.writeToFile(taskName+" correct task was created");
+                 Loader.logWritter(taskName + " correct task was created");
              }else{
-                 ProprtyLoader.writeToFile("ERROR! Correct "+taskName+" was not created");
+                 Loader.logWritter("ERROR! Correct " + taskName + " was not created");
                  createIndex=false;
              }
          }
@@ -120,7 +124,7 @@ public class TaskOfflinePage extends MainOfflinePage {
                 }
             }
       if(!index) {
-          ProprtyLoader.writeToFile("ERROR! Can't find survey for task:" + taskName);
+          Loader.logWritter("ERROR! Can't find survey for task:" + taskName);
         }
         return index;
     }
@@ -132,7 +136,7 @@ public class TaskOfflinePage extends MainOfflinePage {
             yesBtnList.get(yesBtnList.size() - 1).click();
             submitBtn.click();
         }else{
-            ProprtyLoader.writeToFile("ERROR! Power Fail task fixing was not completed");
+            Loader.logWritter("ERROR! Power Fail task fixing was not completed");
             throw new RuntimeException("Power Fail task fixing was not completed");
         }
     }
@@ -150,7 +154,7 @@ public class TaskOfflinePage extends MainOfflinePage {
             }
         }
         if(!index) {
-            ProprtyLoader.writeToFile("ERROR! Can't find survey for task:" + taskName);
+            Loader.logWritter("ERROR! Can't find survey for task:" + taskName);
         }
         return index;
     }

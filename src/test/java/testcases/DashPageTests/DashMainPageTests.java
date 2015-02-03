@@ -1,9 +1,8 @@
 package testcases.DashPageTests;
 
-import framework.ProprtyLoader;
+import framework.Loader;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pages.dashboardPages.DashboardTab;
@@ -23,25 +22,24 @@ public class DashMainPageTests extends BaseTest {
 
     @Test
     private void selectDateTest(){
-        ProprtyLoader.writeToFile("\nSelectDateTest:");
+        Loader.logWritter("\nSelectDateTest:");
         dashboardTab.selectDate();
     }
 
     @Test
     private void compareGameNumberTest(){
-        ProprtyLoader.writeToFile("\nCompareGameNumberTest:");
+        Loader.logWritter("\nCompareGameNumberTest:");
         dashboardTab.numbGamesVerification();
     }
 
     @Test
     private void compareTaskNumberTest(){
-        ProprtyLoader.writeToFile("\nCompareTaskNumberTest:");
+        Loader.logWritter("\nCompareTaskNumberTest:");
         dashboardTab.numbTasksVerification();
     }
 
-    @AfterClass
-    public void teardown(ITestContext context){
-        driver = getDriver(context);
+    @Test
+    public void switchTabTest(){
         switchTab(driver);  //switchWindow(driver, 0);
     }
 

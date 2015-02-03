@@ -13,6 +13,7 @@
                 <methods>
                     <include name="loginSurveyPageTest"/>
                     <!--<include name="syncTest"/>-->
+                    <include name="switchTabTest"/>
                 </methods>
             </class>
             <class name="testcases.DashPageTests.DashMainPageTests">
@@ -20,37 +21,41 @@
                     <include name="selectDateTest"/>
                     <include name="compareGameNumberTest"/>
                     <include name="compareTaskNumberTest"/>
+                    <include name="switchTabTest"/>
                 </methods>
             </class>
             <class name="testcases.TaskOfflineTest.OfflineSurvAnswerTest" >
                 <methods>
                     <include name="submitWithOneIncorrectTaskTest"/>
-                    <include name="submitWithAllOtherCorrectTaskTest"/>
-                    <include name="syncTest"/>
+                    <!--<include name="submitWithAllOtherCorrectTaskTest"/>-->
+                    <!--<include name="syncTest"/>-->
+                    <include name="switchTabTest"/>
                 </methods>
             </class>
-            <class name="testcases.DashPageTests.DashTaskVerificationTest" >
-                <methods>
-                    <include name="incorrectOneTaskStatusVerificationTest"/>
-                    <include name="incorrectOneTaskColorVerificationTest"/>
-                    <include name="correctAllStatusVerificationTest"/>
-                    <include name="correctAllColorVerificationTest"/>
-                </methods>
-            </class>
-            <class name="testcases.TaskOfflineTest.OfflineFixIncorrectTaskTest" >
-                <methods>
-                    <include name="fixIncorrectTaskTest"/>
-                    <include name="syncTest"/>
-                </methods>
-            </class>
-            <class name="testcases.DashPageTests.DashFixTaskTest" >
-                <methods>
-                    <include name="correctedOneTaskStatusVerificationTest"/>
-                    <include name="correctedOneTaskColorVerificationTest"/>
-                    <include name="correctAllOtherStatusVerificationTest"/>
-                    <include name="correctAllOtherColorVerificationTest"/>
-                </methods>
-            </class>
+            <!--<class name="testcases.DashPageTests.DashTaskVerificationTest" >-->
+                <!--<methods>-->
+                    <!--<include name="incorrectOneTaskStatusVerificationTest"/>-->
+                    <!--<include name="incorrectOneTaskColorVerificationTest"/>-->
+                    <!--<include name="correctAllStatusVerificationTest"/>-->
+                    <!--<include name="correctAllColorVerificationTest"/>-->
+                    <!--<include name="switchTabTest"/>-->
+                <!--</methods>-->
+            <!--</class>-->
+            <!--<class name="testcases.TaskOfflineTest.OfflineFixIncorrectTaskTest" >-->
+                <!--<methods>-->
+                    <!--<include name="fixIncorrectTaskTest"/>-->
+                    <!--<include name="syncTest"/>-->
+                    <!--<include name="switchTabTest"/>-->
+                <!--</methods>-->
+            <!--</class>-->
+            <!--<class name="testcases.DashPageTests.DashFixTaskTest" >-->
+                <!--<methods>-->
+                    <!--<include name="correctedOneTaskStatusVerificationTest"/>-->
+                    <!--<include name="correctedOneTaskColorVerificationTest"/>-->
+                    <!--<include name="correctAllOtherStatusVerificationTest"/>-->
+                    <!--<include name="correctAllOtherColorVerificationTest"/>-->
+                <!--</methods>-->
+            <!--</class>-->
         </classes>
     </test>
 </suite>
