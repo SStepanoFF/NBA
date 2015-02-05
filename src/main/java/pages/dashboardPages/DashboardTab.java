@@ -56,9 +56,9 @@ public class DashboardTab extends Operations {
         datepicker.click();
         String dateProp= Loader.loadProperty("date");
         String day=dateProp.substring(8);                                           //get day from property file
-        String month=dateProp.substring(5, 7);     //get month from property file
-        if (Integer.parseInt(month.substring(0, 1))==0) {
-            month=Integer.toString(Integer.parseInt(month.substring(1))- 1);  //correct month type according to UI
+        String month=Integer.toString(Integer.parseInt(dateProp.substring(5, 7))-1);     //get month from property file and correct according to UI
+        if (Integer.parseInt(day.substring(0, 1))==0 ) {
+            day=day.substring(1);  //correct day type according to UI
         }
         boolean findDate=false;
         while (!findDate){

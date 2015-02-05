@@ -38,8 +38,12 @@ public class TaskOfflinePage extends MainOfflinePage {
     //region Task Name WebElements
     @FindBy (linkText = "Power Failure Test QA 2015")
     private WebElement powerFailTestTask;
+    @FindBy (linkText = "Power Failure Tesk")
+    private WebElement powerFailTestTaskProd;
     @FindBy (xpath="//a[@class='ksList__listItem showTasks']//h3[contains(text(),'2015')]")
-    private List<WebElement> tasksList;
+    private List<WebElement> tasksListTest;
+    @FindBy (xpath="//a[@class='ksList__listItem showTasks']//h3")
+    private List<WebElement> tasksListProd;
     @FindBy (xpath="//span[contains(text(),'Open')]")  //"span:contains('Open')"   span.ks-desc-title:contains('Open')
     private List<WebElement> survList;
     @FindBy (xpath = "//a[contains(@id,'form')]//h3[contains(text(),'Power Failure Test')]")
@@ -71,7 +75,10 @@ public class TaskOfflinePage extends MainOfflinePage {
     //endregion
 
     public void createPowerFailIncorrectTask(){
-        powerFailTestTask.click();
+        //powerFailTestTask.click();
+        if (Loader.loadProperty("portal").equals("1")) {
+            tasksListProd.get(0).click();
+        } else tasksListTest.get(0).click();
         if(findSurvey("Power Failure Test")) {
             for (WebElement yesBtn : yesBtnList) {  //select all YES answers
                 yesBtn.click();
@@ -89,6 +96,10 @@ public class TaskOfflinePage extends MainOfflinePage {
 
     public void createAllCorrectTasks(){
         boolean createIndex=true;
+        List<WebElement> tasksList;
+        if (Loader.loadProperty("portal").equals("1")) {
+            tasksList=tasksListProd;
+        } else tasksList=tasksListTest;
         for (int i = 1; i < tasksList.size(); i++) {            //take all other task except first
              tasksList.get(i).click();
              String taskName=tasksList.get(i).getText();

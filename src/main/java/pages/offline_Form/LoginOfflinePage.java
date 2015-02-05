@@ -12,6 +12,14 @@ public class LoginOfflinePage extends LoginDashPage {
 
     public LoginOfflinePage(WebDriver driver){
         super(driver);
+        if (Loader.loadProperty("portal").equals("1")){
+            super.logName= Loader.loadProperty("prodLoginNameOffline");
+            super.password= Loader.loadProperty("prodPass");
+        }
+        else {
+            logName= Loader.loadProperty("testLoginName");
+            password= Loader.loadProperty("testPass");
+        }
         WebDriverWait wait=new WebDriverWait(driver,Integer.parseInt(Loader.loadProperty("timeout")));
         wait.until(ExpectedConditions.visibilityOf(logButt));
     }

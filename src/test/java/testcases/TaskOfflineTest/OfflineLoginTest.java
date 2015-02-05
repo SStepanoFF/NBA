@@ -17,7 +17,10 @@ public class OfflineLoginTest extends BaseTest {
     @BeforeClass
     public void setup(ITestContext context) {
         driver = getDriver(context);
-        createNewTab(driver, Loader.loadProperty("offlineUrl"));
+        if (Loader.loadProperty("portal").equals("1")) {
+            createNewTab(driver, Loader.loadProperty("offlineUrlProd"));
+        } else createNewTab(driver, Loader.loadProperty("offlineUrlTest"));
+
         //createNewWindow(driver,ProprtyLoader.loadProperty("offlineUrl"));
         loginOfflinePage =new LoginOfflinePage(driver);
     }
