@@ -12,16 +12,13 @@ import java.util.List;
 public class TaskOfflinePage extends MainOfflinePage {
 
     private final String gameID= Loader.loadProperty("gameID");
+    private boolean portal=Loader.loadProperty("portal").equals("1");  //true-production false-test
     private DataBase dataBase;
 
     public TaskOfflinePage(WebDriver driver){
         super(driver);
         dataBase=new DataBase();
         waitDownLoad();
-//        if(isElementPresent(alertDownloadMes)){
-//            alertOkBtn.click();
-//            syncOperation();
-//        }
         taskTab.click();
     }
 
@@ -76,7 +73,7 @@ public class TaskOfflinePage extends MainOfflinePage {
 
     public void createPowerFailIncorrectTask(){
         //powerFailTestTask.click();
-        if (Loader.loadProperty("portal").equals("1")) {
+        if (portal) {
             tasksListProd.get(0).click();
         } else tasksListTest.get(0).click();
         if(findSurvey("Power Failure Test")) {
@@ -97,7 +94,7 @@ public class TaskOfflinePage extends MainOfflinePage {
     public void createAllCorrectTasks(){
         boolean createIndex=true;
         List<WebElement> tasksList;
-        if (Loader.loadProperty("portal").equals("1")) {
+        if (portal) {
             tasksList=tasksListProd;
         } else tasksList=tasksListTest;
         for (int i = 1; i < tasksList.size(); i++) {            //take all other task except first
@@ -157,10 +154,18 @@ public class TaskOfflinePage extends MainOfflinePage {
         for (int i =0;i< survListForm.size() ; i++) {
             survListForm.get(i).click();
             editBtnForms.click();
-            if (taskId.get(7).getAttribute("value").contains(dataBase.getTaskExtId(gameID, taskName.substring(0,8)))) {   //  сравнение taskId  в сюрвее и в BD
-                index=true;
-                break;
-            } else {
+            if (portal) {
+                if (taskId.get(12).getAttribute("value").contains(dataBase.getTaskExtId(gameID, taskName.substring(0, 8)))) {   //  сравнение taskId  в сюрвее и в BD
+                    index = true;
+                    break;
+                }
+            }else {
+                if (taskId.get(7).getAttribute("value").contains(dataBase.getTaskExtId(gameID, taskName.substring(0,8)))) {   //  сравнение taskId  в сюрвее и в BD
+                    index = true;
+                    break;
+                }
+            }
+            if(!index){
                 closeSurveyBtn.click();
             }
         }
