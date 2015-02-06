@@ -35,7 +35,7 @@ public class TaskOfflinePage extends MainOfflinePage {
     //region Task Name WebElements
     @FindBy (linkText = "Power Failure Test QA 2015")
     private WebElement powerFailTestTask;
-    @FindBy (linkText = "Power Failure Tesk")
+    @FindBy (linkText = "Power Failure Test")
     private WebElement powerFailTestTaskProd;
     @FindBy (xpath="//a[@class='ksList__listItem showTasks']//h3[contains(text(),'2015')]")
     private List<WebElement> tasksListTest;
@@ -77,11 +77,8 @@ public class TaskOfflinePage extends MainOfflinePage {
             tasksListProd.get(0).click();
         } else tasksListTest.get(0).click();
         if(findSurveyTaskTab("Power Failure Test")) {
-            for (WebElement yesBtn : yesBtnList) {  //select all YES answers
-                yesBtn.click();
-            }
-            noBtnList.get(noBtnList.size() - 1).click();  //select last NO-Button
-            textField.get(textField.size() - 1).sendKeys("text");  //write comment on NO answer
+            noBtnList.get(0).click();  //select last NO-Button
+            textField.get(0).sendKeys("text");  //write comment on NO answer
             submitBtn.click();
             Loader.logWritter("Power Fail incorrect task was created");
         }
@@ -100,7 +97,7 @@ public class TaskOfflinePage extends MainOfflinePage {
         for (int i = 1; i < tasksList.size(); i++) {            //take all other task except first
              tasksList.get(i).click();
              String taskName=tasksList.get(i).getText();
-             if (findSurveyTaskTab(taskName.substring(0,taskName.length()-8))) {  //delete year (2015) from task text name
+             if (findSurveyTaskTab(taskName.substring(0, taskName.length() - 8))) {  //delete year (2015) from task text name
                  for (WebElement yesBtn : yesBtnList) {          //select all YES answers
                      yesBtn.click();
                  }
@@ -141,7 +138,9 @@ public class TaskOfflinePage extends MainOfflinePage {
         formTab.click();
         powerFailTestForm.click();
         if (findSurveyFormTab("Power Failure Test")) {
-            yesBtnList.get(yesBtnList.size() - 1).click();
+            for (WebElement yesBtn : yesBtnList) {  //select all YES answers
+                yesBtn.click();
+            }
             submitBtn.click();
         }else{
             Loader.logWritter("ERROR! Power Fail task fixing was not completed");
@@ -154,11 +153,14 @@ public class TaskOfflinePage extends MainOfflinePage {
         for (int i =0;i< survListForm.size() ; i++) {
             survListForm.get(i).click();
             editBtnForms.click();
-            if (taskId.get(12).getAttribute("value").contains(dataBase.getTaskExtId(gameID, taskName.substring(0, 8)))) {   //  сравнение taskId  в сюрвее и в BD
-                index = true;
-                break;
-            } else {
-            closeSurveyBtn.click();
+            for(WebElement element:taskId) {
+                if (element.getAttribute("value").contains(dataBase.getTaskExtId(gameID, taskName.substring(0, 8)))) {   //  сравнение taskId  в сюрвее и в BD
+                    index = true;
+                    break;
+                }
+            }
+            if(!index){
+                closeSurveyBtn.click();
             }
         }
         if(!index) {

@@ -114,7 +114,7 @@ public class DashboardTab extends Operations {
     public void allTaskColorVerification(String color){
         String locator="//td[descendant::button[contains(@id,'"+gameID+"')]]";  //locator for task color
         List<WebElement> taskColor=driver.findElements(By.xpath(locator));
-        for (int i=0;i<taskColor.size();i++) {
+        for (int i=1;i<taskColor.size();i++) {
             taskColorAssertion(taskColor.get(i).getCssValue("background-color"), color);
         }
     }
