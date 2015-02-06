@@ -55,7 +55,7 @@ public class TaskOfflinePage extends MainOfflinePage {
     private WebElement editBtnForms;
 
     //region Survey WebElements
-    @FindBy (css="form>input")
+    @FindBy (css="table~input")
     private List<WebElement> taskId;
     @FindBy (xpath="//label//span[contains(text(),'Yes')]")
     private List<WebElement> yesBtnList;
@@ -76,7 +76,7 @@ public class TaskOfflinePage extends MainOfflinePage {
         if (portal) {
             tasksListProd.get(0).click();
         } else tasksListTest.get(0).click();
-        if(findSurvey("Power Failure Test")) {
+        if(findSurveyTaskTab("Power Failure Test")) {
             for (WebElement yesBtn : yesBtnList) {  //select all YES answers
                 yesBtn.click();
             }
@@ -100,7 +100,7 @@ public class TaskOfflinePage extends MainOfflinePage {
         for (int i = 1; i < tasksList.size(); i++) {            //take all other task except first
              tasksList.get(i).click();
              String taskName=tasksList.get(i).getText();
-             if (findSurvey(taskName.substring(0,taskName.length()-8))) {  //delete year (2015) from task text name
+             if (findSurveyTaskTab(taskName.substring(0,taskName.length()-8))) {  //delete year (2015) from task text name
                  for (WebElement yesBtn : yesBtnList) {          //select all YES answers
                      yesBtn.click();
                  }
@@ -119,7 +119,7 @@ public class TaskOfflinePage extends MainOfflinePage {
         }
     }
 
-    private boolean findSurvey(String taskName){
+    private boolean findSurveyTaskTab(String taskName){
       boolean index=false;
         for (int i = survList.size() - 1; i >= 0; i--) {
                 survList.get(i).click();
@@ -154,19 +154,11 @@ public class TaskOfflinePage extends MainOfflinePage {
         for (int i =0;i< survListForm.size() ; i++) {
             survListForm.get(i).click();
             editBtnForms.click();
-            if (portal) {
-                if (taskId.get(12).getAttribute("value").contains(dataBase.getTaskExtId(gameID, taskName.substring(0, 8)))) {   //  сравнение taskId  в сюрвее и в BD
-                    index = true;
-                    break;
-                }
-            }else {
-                if (taskId.get(7).getAttribute("value").contains(dataBase.getTaskExtId(gameID, taskName.substring(0,8)))) {   //  сравнение taskId  в сюрвее и в BD
-                    index = true;
-                    break;
-                }
-            }
-            if(!index){
-                closeSurveyBtn.click();
+            if (taskId.get(12).getAttribute("value").contains(dataBase.getTaskExtId(gameID, taskName.substring(0, 8)))) {   //  сравнение taskId  в сюрвее и в BD
+                index = true;
+                break;
+            } else {
+            closeSurveyBtn.click();
             }
         }
         if(!index) {
