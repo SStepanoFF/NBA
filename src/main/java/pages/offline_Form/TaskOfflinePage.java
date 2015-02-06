@@ -1,22 +1,18 @@
 package pages.offline_Form;
 
 import framework.DataBase;
-import framework.Operations;
-import framework.ProprtyLoader;
-import org.openqa.selenium.By;
+import framework.Loader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 
 public class TaskOfflinePage extends MainOfflinePage {
 
-    private final String gameID=ProprtyLoader.loadProperty("gameID");
+    private final String gameID= Loader.loadProperty("gameID");
+    private boolean portal=Loader.loadProperty("portal").equals("1");  //true-production false-test
     private DataBase dataBase;
 
     public TaskOfflinePage(WebDriver driver){
@@ -26,6 +22,11 @@ public class TaskOfflinePage extends MainOfflinePage {
         taskTab.click();
     }
 
+//    @FindBy (xpath = "//div[class='dialog']")
+//    private WebElement alertDownloadMes;
+//    @FindBy (xpath = "//div[class='formLine']")
+//    private WebElement alertOkBtn;
+
     @FindBy (id="task")
     private WebElement taskTab;
     @FindBy (id="form")
@@ -34,8 +35,12 @@ public class TaskOfflinePage extends MainOfflinePage {
     //region Task Name WebElements
     @FindBy (linkText = "Power Failure Test QA 2015")
     private WebElement powerFailTestTask;
+    @FindBy (linkText = "Power Failure Test")
+    private WebElement powerFailTestTaskProd;
     @FindBy (xpath="//a[@class='ksList__listItem showTasks']//h3[contains(text(),'2015')]")
-    private List<WebElement> tasksList;
+    private List<WebElement> tasksListTest;
+    @FindBy (xpath="//a[@class='ksList__listItem showTasks']//h3")
+    private List<WebElement> tasksListProd;
     @FindBy (xpath="//span[contains(text(),'Open')]")  //"span:contains('Open')"   span.ks-desc-title:contains('Open')
     private List<WebElement> survList;
     @FindBy (xpath = "//a[contains(@id,'form')]//h3[contains(text(),'Power Failure Test')]")
@@ -50,7 +55,7 @@ public class TaskOfflinePage extends MainOfflinePage {
     private WebElement editBtnForms;
 
     //region Survey WebElements
-    @FindBy (css="form>input")
+    @FindBy (css="table~input")
     private List<WebElement> taskId;
     @FindBy (xpath="//label//span[contains(text(),'Yes')]")
     private List<WebElement> yesBtnList;
@@ -67,28 +72,32 @@ public class TaskOfflinePage extends MainOfflinePage {
     //endregion
 
     public void createPowerFailIncorrectTask(){
-        powerFailTestTask.click();
-        if(findSurvey("Power Failure Test")) {
-            for (WebElement yesBtn : yesBtnList) {  //select all YES answers
-                yesBtn.click();
-            }
-            noBtnList.get(noBtnList.size() - 1).click();  //select last NO-Button
-            textField.get(textField.size() - 1).sendKeys("text");  //write comment on NO answer
+        //powerFailTestTask.click();
+        if (portal) {
+            tasksListProd.get(0).click();
+        } else tasksListTest.get(0).click();
+        if(findSurveyTaskTab("Power Failure Test")) {
+            noBtnList.get(0).click();  //select last NO-Button
+            textField.get(0).sendKeys("text");  //write comment on NO answer
             submitBtn.click();
-            ProprtyLoader.writeToFile("Power Fail incorrect task was created");
+            Loader.logWritter("Power Fail incorrect task was created");
         }
         else{
-            ProprtyLoader.writeToFile("ERROR! Power Fail incorrect task was not created");
+            Loader.logWritter("ERROR! Power Fail incorrect task was not created");
             throw new RuntimeException("Power Fail incorrect task was not created");
         }
     }
 
     public void createAllCorrectTasks(){
         boolean createIndex=true;
+        List<WebElement> tasksList;
+        if (portal) {
+            tasksList=tasksListProd;
+        } else tasksList=tasksListTest;
         for (int i = 1; i < tasksList.size(); i++) {            //take all other task except first
              tasksList.get(i).click();
              String taskName=tasksList.get(i).getText();
-             if (findSurvey(taskName.substring(0,taskName.length()-8))) {  //delete year (2015) from task text name
+             if (findSurveyTaskTab(taskName.substring(0, taskName.length() - 8))) {  //delete year (2015) from task text name
                  for (WebElement yesBtn : yesBtnList) {          //select all YES answers
                      yesBtn.click();
                  }
@@ -96,9 +105,9 @@ public class TaskOfflinePage extends MainOfflinePage {
                      clockTextField.sendKeys("12:12");
                  }
                  submitBtn.click();
-                 ProprtyLoader.writeToFile(taskName+" correct task was created");
+                 Loader.logWritter(taskName + " correct task was created");
              }else{
-                 ProprtyLoader.writeToFile("ERROR! Correct "+taskName+" was not created");
+                 Loader.logWritter("ERROR! Correct " + taskName + " was not created");
                  createIndex=false;
              }
          }
@@ -107,7 +116,7 @@ public class TaskOfflinePage extends MainOfflinePage {
         }
     }
 
-    private boolean findSurvey(String taskName){
+    private boolean findSurveyTaskTab(String taskName){
       boolean index=false;
         for (int i = survList.size() - 1; i >= 0; i--) {
                 survList.get(i).click();
@@ -120,7 +129,7 @@ public class TaskOfflinePage extends MainOfflinePage {
                 }
             }
       if(!index) {
-          ProprtyLoader.writeToFile("ERROR! Can't find survey for task:" + taskName);
+          Loader.logWritter("ERROR! Can't find survey for task:" + taskName);
         }
         return index;
     }
@@ -129,10 +138,12 @@ public class TaskOfflinePage extends MainOfflinePage {
         formTab.click();
         powerFailTestForm.click();
         if (findSurveyFormTab("Power Failure Test")) {
-            yesBtnList.get(yesBtnList.size() - 1).click();
+            for (WebElement yesBtn : yesBtnList) {  //select all YES answers
+                yesBtn.click();
+            }
             submitBtn.click();
         }else{
-            ProprtyLoader.writeToFile("ERROR! Power Fail task fixing was not completed");
+            Loader.logWritter("ERROR! Power Fail task fixing was not completed");
             throw new RuntimeException("Power Fail task fixing was not completed");
         }
     }
@@ -142,15 +153,18 @@ public class TaskOfflinePage extends MainOfflinePage {
         for (int i =0;i< survListForm.size() ; i++) {
             survListForm.get(i).click();
             editBtnForms.click();
-            if (taskId.get(7).getAttribute("value").contains(dataBase.getTaskExtId(gameID, taskName.substring(0,8)))) {   //  сравнение taskId  в сюрвее и в BD
-                index=true;
-                break;
-            } else {
+            for(WebElement element:taskId) {
+                if (element.getAttribute("value").contains(dataBase.getTaskExtId(gameID, taskName.substring(0, 8)))) {   //  сравнение taskId  в сюрвее и в BD
+                    index = true;
+                    break;
+                }
+            }
+            if(!index){
                 closeSurveyBtn.click();
             }
         }
         if(!index) {
-            ProprtyLoader.writeToFile("ERROR! Can't find survey for task:" + taskName);
+            Loader.logWritter("ERROR! Can't find survey for task:" + taskName);
         }
         return index;
     }

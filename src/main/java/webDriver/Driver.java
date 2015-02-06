@@ -1,6 +1,6 @@
 package webDriver;
 
-import framework.ProprtyLoader;
+import framework.Loader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
@@ -10,13 +10,13 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class Driver {
     public static WebDriver getInstance(){
         WebDriver webDriver = null;
-        if (ProprtyLoader.loadProperty("browser.name").isEmpty()){
+        if (Loader.loadProperty("browser.name").isEmpty()){
             webDriver=new FirefoxDriver();
         }
-        if (ProprtyLoader.loadProperty("browser.name").equalsIgnoreCase("chrome")){
+        if (Loader.loadProperty("browser.name").equalsIgnoreCase("chrome")){
             webDriver=ChromeWebDriver.getInstance();
         }
-        if (ProprtyLoader.loadProperty("browser.name").equalsIgnoreCase("IE")){
+        if (Loader.loadProperty("browser.name").equalsIgnoreCase("IE")){
            webDriver=IEWebDriver.getInstance();
         }
         return webDriver;

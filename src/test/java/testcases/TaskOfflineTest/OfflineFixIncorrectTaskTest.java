@@ -1,9 +1,8 @@
 package testcases.TaskOfflineTest;
 
-import framework.ProprtyLoader;
+import framework.Loader;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pages.offline_Form.TaskOfflinePage;
@@ -22,7 +21,7 @@ public class OfflineFixIncorrectTaskTest extends BaseTest{
 
     @Test
     private void fixIncorrectTaskTest(){
-        ProprtyLoader.writeToFile("\nFixIncorrectTaskTest:");
+        Loader.logWritter("\nFixIncorrectTaskTest:");
         taskOfflinePage.fixPowerFailTestTask();
     }
 
@@ -31,9 +30,8 @@ public class OfflineFixIncorrectTaskTest extends BaseTest{
         taskOfflinePage.syncOperation();
     }
 
-    @AfterClass
-    public void teardown(ITestContext context){
-        driver = getDriver(context);
+    @Test
+    public void switchTabTest(){
         switchTab(driver);  //switchWindow(driver, 0);
     }
 }

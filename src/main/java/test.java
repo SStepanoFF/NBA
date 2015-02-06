@@ -1,7 +1,3 @@
-import framework.DataBase;
-import framework.Operations;
-import framework.ProprtyLoader;
-
 /**
  * Created by sergii.stepanov on 20.01.2015.
  */

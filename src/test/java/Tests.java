@@ -1,4 +1,4 @@
-import framework.ProprtyLoader;
+import framework.Loader;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -16,9 +16,9 @@ public class Tests extends BaseTest {
 
     @BeforeClass
     public void setUp() {
-        if (ProprtyLoader.loadProperty("portal").equals("1")) {
-            driver.navigate().to(ProprtyLoader.loadProperty("prodUrl"));
-        } else driver.navigate().to(ProprtyLoader.loadProperty("testUrl"));
+        if (Loader.loadProperty("portal").equals("1")) {
+            driver.navigate().to(Loader.loadProperty("prodUrl"));
+        } else driver.navigate().to(Loader.loadProperty("testUrl"));
         loginDashPage =new LoginDashPage(driver);
     }
 

@@ -5,16 +5,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Properties;
 
-public class ProprtyLoader {
+public class Loader {
     private static final String propFile = "../NBA.properties";
     static Properties proper = new Properties();
-    static File resultFile = new File("resultFile.txt");
+    static File resultFile = new File("log.txt");
     static FileWriter fileWriter = null;
 
     public static String loadProperty(String name) {
 
         try {
-            proper.load(ProprtyLoader.class.getResourceAsStream(propFile));
+            proper.load(Loader.class.getResourceAsStream(propFile));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -36,7 +36,7 @@ public class ProprtyLoader {
             proper.setProperty("res",text);
     }*/
 
-    public static void writeToFile(String text) {
+    public static void logWritter(String text) {
         try {
             fileWriter = new FileWriter(resultFile, true);
             fileWriter.append(text + "\n");

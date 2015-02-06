@@ -1,6 +1,6 @@
 package testcases.DashPageTests;
 
-import framework.ProprtyLoader;
+import framework.Loader;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.annotations.BeforeClass;
@@ -19,7 +19,7 @@ public class DashFixTaskTest extends BaseTest {
     private String blue="rgba(0, 109, 204, 1)";
     private String green="rgba(0, 128, 0, 1)";
     private String red="rgba(255, 0, 0, 1)";
-    private String yellow="rgba(255, 125, 0, 1)";
+    private String orange="rgba(255, 125, 0, 1)";
 
     @BeforeClass
     public void setup(ITestContext context) {
@@ -29,25 +29,25 @@ public class DashFixTaskTest extends BaseTest {
 
     @Test
     private void correctedOneTaskStatusVerificationTest(){
-        ProprtyLoader.writeToFile("\nCorrectedOneTaskStatusVerificationTest:");
+        Loader.logWritter("\nCorrectedOneTaskStatusVerificationTest:");
         dashboardTab.powerFailTestStatusVerification("Done");
     }
 
     @Test
     private void correctedOneTaskColorVerificationTest(){
-        ProprtyLoader.writeToFile("\nCorrectedOneTaskColorVerificationTest:");
+        Loader.logWritter("\nCorrectedOneTaskColorVerificationTest:");
          dashboardTab.powerFailTestColorVerification(blue); // blue green red yellow
     }
 
     @Test
     private void correctAllOtherStatusVerificationTest(){
-        ProprtyLoader.writeToFile("\nCorrectAllOtherStatusVerificationTest:");
+        Loader.logWritter("\nCorrectAllOtherStatusVerificationTest:");
         dashboardTab.allTasksStatusVerification("Done");
     }
 
     @Test
     private void correctAllOtherColorVerificationTest(){
-        ProprtyLoader.writeToFile("\nCorrectAllOtherColorVerificationTest:");
+        Loader.logWritter("\nCorrectAllOtherColorVerificationTest:");
         dashboardTab.allTaskColorVerification(green);
     }
 }

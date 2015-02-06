@@ -1,9 +1,8 @@
 package testcases.DashPageTests;
 
-import framework.ProprtyLoader;
+import framework.Loader;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pages.dashboardPages.DashboardTab;
@@ -20,7 +19,7 @@ public class DashTaskVerificationTest extends BaseTest {
     private String blue="rgba(0, 109, 204, 1)";
     private String green="rgba(0, 128, 0, 1)";
     private String red="rgba(255, 0, 0, 1)";
-    private String yellow="rgba(255, 125, 0, 1)";
+    private String orange="rgba(255, 125, 0, 1)";
 
     @BeforeClass
     public void setup(ITestContext context) {
@@ -30,31 +29,35 @@ public class DashTaskVerificationTest extends BaseTest {
 
     @Test
     private void incorrectOneTaskStatusVerificationTest(){
-        ProprtyLoader.writeToFile("\nIncorrectOneTaskStatusVerificationTest:");
+        Loader.logWritter("\nIncorrectOneTaskStatusVerificationTest:");
         dashboardTab.powerFailTestStatusVerification("Incorrect");
     }
 
     @Test
     private void incorrectOneTaskColorVerificationTest(){
-        ProprtyLoader.writeToFile("\nIncorrectOneTaskColorVerificationTest:");
-        dashboardTab.powerFailTestColorVerification(yellow); // blue green red orange
+        Loader.logWritter("\nIncorrectOneTaskColorVerificationTest:");
+        dashboardTab.powerFailTestColorVerification(orange); // blue green red orange
     }
 
     @Test
     private void correctAllStatusVerificationTest(){
-        ProprtyLoader.writeToFile("\nCorrectAllStatusVerificationTest:");
+        Loader.logWritter("\nCorrectAllStatusVerificationTest:");
         dashboardTab.allTasksStatusVerification("Done");
     }
 
     @Test
     private void correctAllColorVerificationTest(){
-        ProprtyLoader.writeToFile("\nCorrectAllColorVerificationTest:");
+        Loader.logWritter("\nCorrectAllColorVerificationTest:");
         dashboardTab.allTaskColorVerification(green);
     }
 
-    @AfterClass
-    public void teardown(ITestContext context){
-        driver = getDriver(context);
+    @Test
+    public void switchTabTest(){
         switchTab(driver);  //switchWindow(driver, 0);
     }
+//    @AfterClass
+//    public void teardown(ITestContext context){
+//        driver = getDriver(context);
+//        switchTab(driver);  //switchWindow(driver, 0);
+//    }
 }
