@@ -55,9 +55,5 @@ public class DashTaskVerificationTest extends BaseTest {
     public void switchTabTest(){
         switchTab(driver);  //switchWindow(driver, 0);
     }
-//    @AfterClass
-//    public void teardown(ITestContext context){
-//        driver = getDriver(context);
-//        switchTab(driver);  //switchWindow(driver, 0);
-//    }
+
 }

@@ -67,6 +67,7 @@ public class DashboardTab extends Operations {
                     date.get(i).click();
                     findDate=true;
                     Loader.logWritter("Date was selected");
+                    break;
                 }
             }
             if(!findDate) prevMonthBtn.click();
