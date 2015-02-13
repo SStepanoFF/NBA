@@ -160,4 +160,6 @@ public class DashboardTab extends Operations {
         }
     }
 
+    public void complitGameVerification(){}
+
 }
