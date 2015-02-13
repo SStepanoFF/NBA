@@ -59,6 +59,7 @@ public class TaskOfflinePage extends MainOfflinePage {
     private WebElement backPageBtnTasks;
     @FindBy (xpath = "//div[@class='paging']//span[2]")
     private WebElement countPage;
+
     //region Survey WebElements
     @FindBy (css="table~input")
     private List<WebElement> taskId;
