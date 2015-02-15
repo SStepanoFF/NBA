@@ -93,7 +93,7 @@ public class DataBase {
                 resultSets.close();
                 statement.close();
                 // conn.close();
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

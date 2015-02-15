@@ -57,7 +57,7 @@ public class TaskOfflinePage extends MainOfflinePage {
     private WebElement nextPageBtnTasks;
     @FindBy (xpath = "//div[@id='tasks']//span[@class='butContainer']/following-sibling::*[1]/self::span")
     private WebElement backPageBtnTasks;
-    @FindBy (xpath = "//div[@class='paging']//span[2]")
+    @FindBy (xpath = "//div[@id='tasks']//span[contains(text(),'/')]")
     private WebElement countPage;
 
     //region Survey WebElements
@@ -94,7 +94,7 @@ public class TaskOfflinePage extends MainOfflinePage {
     }
 
     public void createAllCorrectTasks(){
-        boolean createIndex=true;
+        boolean createIndex=false;
         List<WebElement> tasksList;
         if (portal) {
             tasksList=tasksListProd;
@@ -110,10 +110,11 @@ public class TaskOfflinePage extends MainOfflinePage {
                      clockTextField.sendKeys("12:12");
                  }
                  submitBtn.click();
+                 createIndex=false;
                  Loader.logWritter(taskName + " correct task was created");
              }else{
                  Loader.logWritter("ERROR! Correct " + taskName + " was not created");
-                 createIndex=false;
+//                 createIndex=false;
              }
          }
         if(!createIndex){
@@ -153,8 +154,10 @@ public class TaskOfflinePage extends MainOfflinePage {
                 break;
             } else {
                 closeSurveyBtn.click();
-                for (int y = pageNumber; y>0; y--) {
-                    nextPageBtnTasks.click();
+                if (i!=0) {
+                    for (int y = pageNumber; y > 0; y--) {
+                        nextPageBtnTasks.click();
+                    }
                 }
             }
         }
