@@ -18,7 +18,6 @@ public class DashTaskVerificationTest extends BaseTest {
 
     private String blue="rgba(0, 109, 204, 1)";
     private String green="rgba(0, 128, 0, 1)";
-    private String red="rgba(255, 0, 0, 1)";
     private String orange="rgba(255, 125, 0, 1)";
 
     @BeforeClass

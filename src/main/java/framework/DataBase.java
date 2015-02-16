@@ -26,7 +26,7 @@ public class DataBase {
         }
     }
 
-    public static int taskCount(String gameID){
+    public int taskCount(String gameID){
         int result=-1;
         try{
             statement = conn.createStatement();//Готовим запрос
@@ -44,7 +44,7 @@ public class DataBase {
                 resultSets.close();
                 statement.close();
                // conn.close();
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -82,6 +82,30 @@ public class DataBase {
                     "WHERE EXTERNAL_ID="+gameId+" AND TASKSECTIONTITLE LIKE\""+taskName+"%\"");
             while(resultSets.next()){
                 result= resultSets.getString("TASK_EXT_ID");
+            }
+            return result;
+        } catch(Exception e){
+            e.printStackTrace();
+            return result;
+        }
+        finally{
+            try {
+                resultSets.close();
+                statement.close();
+                // conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public int getGameStatus(String gameID){
+        int result=-1;
+        try{
+            statement = conn.createStatement();//Готовим запрос
+            resultSets = statement.executeQuery("SELECT STATUS FROM GAMES WHERE EXTERNAL_ID="+gameID);
+            while(resultSets.next()){
+                result=resultSets.getInt("STATUS");
             }
             return result;
         } catch(Exception e){

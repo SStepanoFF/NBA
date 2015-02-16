@@ -18,6 +18,15 @@ public class DashboardTab extends Operations {
     private DataBase dataBase;
     private final String gameID= Loader.loadProperty("gameID");
 
+    private enum GameStatus{
+        Overdue(0) , Done(1), CompleteWithIncorrect(2);
+        private int value;
+
+        GameStatus(int value) {
+            this.value=value;
+        }
+    };
+
     public DashboardTab(WebDriver driver){
         super(driver);
         dataBase=new DataBase();
@@ -160,6 +169,18 @@ public class DashboardTab extends Operations {
         }
     }
 
-    public void complitGameVerification(){}
+    public void gameStatusVerification(int mustStatus){
+        int statusInDB=dataBase.getGameStatus(gameID);
+        try {
+            Assert.assertTrue(statusInDB==mustStatus);     //Verify game status
+        }catch (AssertionError e){
+            e.getStackTrace();
+            Loader.logWritter("ERROR! Incorrect game status: " + statusInDB + "  must be: " + mustStatus);
+            throw new RuntimeException("Assert error game status verification");
+        }
+    }
+//    public void gameStatusVerification(GameStatus overdue) {
+//    }
+
 
 }
