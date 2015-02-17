@@ -56,8 +56,13 @@
         </dependency>
         <dependency>
             <groupId>io.selendroid</groupId>
+            <artifactId>selendroid-standalone</artifactId>
+            <version>0.14.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.selendroid</groupId>
             <artifactId>selendroid-client</artifactId>
-            <version>0.10.0</version>
+            <version>0.14.0</version>
         </dependency>
         <dependency>
             <groupId>org.json</groupId>
@@ -65,11 +70,10 @@
             <version>20090211</version>
         </dependency>
         <dependency>
-            <groupId>io.selendroid</groupId>
-            <artifactId>selendroid-client</artifactId>
-            <version>0.10.0</version>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.3.6</version>
         </dependency>
-
 
     </dependencies>
 
