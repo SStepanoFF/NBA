@@ -94,7 +94,7 @@ public class TaskOfflinePage extends MainOfflinePage {
     }
 
     public void createAllCorrectTasks(){
-        boolean createIndex=false;
+        boolean createIndex=true;
         List<WebElement> tasksList;
         if (portal) {
             tasksList=tasksListProd;
@@ -110,11 +110,11 @@ public class TaskOfflinePage extends MainOfflinePage {
                      clockTextField.sendKeys("12:12");
                  }
                  submitBtn.click();
-                 createIndex=false;
+//                 createIndex=true;
                  Loader.logWritter(taskName + " correct task was created");
              }else{
                  Loader.logWritter("ERROR! Correct " + taskName + " was not created");
-//                 createIndex=false;
+                 createIndex=false;
              }
          }
         if(!createIndex){
