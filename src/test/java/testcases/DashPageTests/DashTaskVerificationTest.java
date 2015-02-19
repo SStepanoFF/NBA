@@ -51,6 +51,13 @@ public class DashTaskVerificationTest extends BaseTest {
     }
 
     @Test
+    private void gameStatusVerificationCompleteIncorrectTest(){
+        Loader.logWritter("\ngameStatusVerificationTest:");
+        // GameStatus gameStatus=GameStatus.Overdue;
+        dashboardTab.gameStatusVerification(2);     //0-overdue, 1-Done, 2-game complete with incorrect
+    }
+
+    @Test
     public void switchTabTest(){
         switchTab(driver);  //switchWindow(driver, 0);
     }

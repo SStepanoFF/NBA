@@ -50,4 +50,11 @@ public class DashFixTaskTest extends BaseTest {
         Loader.logWritter("\nCorrectAllOtherColorVerificationTest:");
         dashboardTab.allTaskColorVerification(green);
     }
+
+    @Test
+    private void gameStatusVerificationCompleteTest(){
+        Loader.logWritter("\ngameStatusVerificationTest:");
+        // GameStatus gameStatus=GameStatus.Overdue;
+        dashboardTab.gameStatusVerification(2);     //0-overdue, 1-Done, 2-game complete with incorrect
+    }
 }

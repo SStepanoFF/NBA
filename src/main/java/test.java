@@ -1,5 +1,3 @@
-
-
 //import io.selendroid.SelendroidDriver;
 //import io.selendroid.SelendroidCapabilities;
 //import io.selendroid.device.DeviceTargetPlatform;
@@ -14,13 +12,6 @@
 //
 //import java.util.concurrent.TimeUnit;
 //
-///**
-//* Created with IntelliJ IDEA.
-//* User: ivan.halyavka
-//* Date: 2/4/15
-//* Time: 10:07 AM
-//* To change this template use File | Settings | File Templates.
-//*/
 //public class test {
 //
 //
@@ -83,7 +74,7 @@ public class test {
     //private WebDriver webDriver;
 
     public static void main(String []args) throws Exception {
-        WebDriver webDriverdriver=null;
+//        WebDriver webDriverdriver=null;
         SelendroidConfiguration config = new SelendroidConfiguration();
         config.addSupportedApp("src/main/resources/" + application);
         SelendroidLauncher selendroidServer = new SelendroidLauncher(config);
@@ -97,9 +88,9 @@ public class test {
 
 
         SelendroidCapabilities capa = new SelendroidCapabilities("io.selendroid.testapp:0.14.0");
-        capa.setEmulator(true);
         capa.setPlatformVersion(DeviceTargetPlatform.ANDROID19);
-        capa.setModel("HTC One");
+        capa.setEmulator(true);
+        capa.setModel("AVD_for_Nexus_5");
 //        WebDriver driver = new SelendroidDriver("http://localhost:4444/wd/hub", SelendroidCapabilities.device(DeviceTargetPlatform.ANDROID19, pack));
         WebDriver driver = new SelendroidDriver(capa);
         driver.findElement(By.id("usernameField")).sendKeys("http://ksbeta.pr1.ssstest.com");

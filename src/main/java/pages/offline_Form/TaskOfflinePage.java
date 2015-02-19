@@ -143,7 +143,6 @@ public class TaskOfflinePage extends MainOfflinePage {
         return findSurvey;
     }
 
-
     private boolean serchInSurveyList(String taskName, int pageNumber){
         boolean index=false;
         for (int i = survList.size() - 1; i >= 0; i--) {

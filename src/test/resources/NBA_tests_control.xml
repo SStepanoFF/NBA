@@ -21,6 +21,8 @@
                     <include name="selectDateTest"/>
                     <include name="compareGameNumberTest"/>
                     <include name="compareTaskNumberTest"/>
+                    <include name="overdueColorVerificationTest"/>
+                    <include name="gameStatusVerificationTest"/>
                     <include name="switchTabTest"/>
                 </methods>
             </class>
@@ -32,30 +34,32 @@
                     <include name="switchTabTest"/>
                 </methods>
             </class>
-            <!--<class name="testcases.DashPageTests.DashTaskVerificationTest" >-->
-                <!--<methods>-->
-                    <!--<include name="incorrectOneTaskStatusVerificationTest"/>-->
-                    <!--<include name="incorrectOneTaskColorVerificationTest"/>-->
-                    <!--<include name="correctAllStatusVerificationTest"/>-->
-                    <!--<include name="correctAllColorVerificationTest"/>-->
-                    <!--<include name="switchTabTest"/>-->
-                <!--</methods>-->
-            <!--</class>-->
-            <!--<class name="testcases.TaskOfflineTest.OfflineFixIncorrectTaskTest" >-->
-                <!--<methods>-->
-                    <!--<include name="fixIncorrectTaskTest"/>-->
-                    <!--<include name="syncTest"/>-->
-                    <!--<include name="switchTabTest"/>-->
-                <!--</methods>-->
-            <!--</class>-->
-            <!--<class name="testcases.DashPageTests.DashFixTaskTest" >-->
-                <!--<methods>-->
-                    <!--<include name="correctedOneTaskStatusVerificationTest"/>-->
-                    <!--<include name="correctedOneTaskColorVerificationTest"/>-->
-                    <!--<include name="correctAllOtherStatusVerificationTest"/>-->
-                    <!--<include name="correctAllOtherColorVerificationTest"/>-->
-                <!--</methods>-->
-            <!--</class>-->
+            <class name="testcases.DashPageTests.DashTaskVerificationTest" >
+                <methods>
+                    <include name="incorrectOneTaskStatusVerificationTest"/>
+                    <include name="incorrectOneTaskColorVerificationTest"/>
+                    <include name="correctAllStatusVerificationTest"/>
+                    <include name="correctAllColorVerificationTest"/>
+                    <include name="gameStatusVerificationCompleteIncorrectTest"/>
+                    <include name="switchTabTest"/>
+                </methods>
+            </class>
+            <class name="testcases.TaskOfflineTest.OfflineFixIncorrectTaskTest" >
+                <methods>
+                    <include name="fixIncorrectTaskTest"/>
+                    <include name="syncTest"/>
+                    <include name="switchTabTest"/>
+                </methods>
+            </class>
+            <class name="testcases.DashPageTests.DashFixTaskTest" >
+                <methods>
+                    <include name="correctedOneTaskStatusVerificationTest"/>
+                    <include name="correctedOneTaskColorVerificationTest"/>
+                    <include name="correctAllOtherStatusVerificationTest"/>
+                    <include name="correctAllOtherColorVerificationTest"/>
+                    <include name="gameStatusVerificationCompleteTest"/>
+                </methods>
+            </class>
         </classes>
     </test>
 </suite>
