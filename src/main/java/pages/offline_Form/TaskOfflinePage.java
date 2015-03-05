@@ -99,7 +99,7 @@ public class TaskOfflinePage extends MainOfflinePage {
         if (portal) {
             tasksList=tasksListProd;
         } else tasksList=tasksListTest;
-        for (int i = 1; i < tasksList.size()-1; i++) {            //take all other task except first
+        for (int i = 1; i < tasksList.size(); i++) {            //take all other task except first
              tasksList.get(i).click();
              String taskName=tasksList.get(i).getText();
              if (findSurveyTaskTab(taskName.substring(0, taskName.length() - 8))) {  //delete year (2015) from task text name

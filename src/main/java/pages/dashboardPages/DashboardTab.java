@@ -125,10 +125,10 @@ public class DashboardTab extends Operations {
     public void allTaskColorVerification(String color){
         String locator="//td[descendant::button[contains(@id,'"+gameID+"')]]";  //locator for task color
         List<WebElement> taskColor=driver.findElements(By.xpath(locator));
-        for (int i=1;i<taskColor.size()-1;i++) {
+        for (int i=1;i<taskColor.size();i++) {
             taskColorAssertion(taskColor.get(i).getCssValue("background-color"), color);
         }
-        taskColorAssertion(taskColor.get(taskColor.size()-1).getCssValue("background-color"), red);
+//        taskColorAssertion(taskColor.get(taskColor.size()-1).getCssValue("background-color"), red);
     }
 
     public void powerFailTestStatusVerification(String status){
@@ -140,7 +140,7 @@ public class DashboardTab extends Operations {
     public void allTasksStatusVerification(String status){  //Проверка статуса всех тасок если все они одинаковы
         String locator="button[id*='"+gameID+"']";
         List<WebElement> taskList = driver.findElements(By.cssSelector(locator));  //get task list from UI
-        for (int i=1;i<taskList.size()-1;i++){
+        for (int i=1;i<taskList.size();i++){
             taskStatusAssertion(taskList.get(i).getText(), status);
         }
     }
