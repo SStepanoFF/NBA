@@ -53,6 +53,12 @@ public class TaskOfflinePage extends MainOfflinePage {
     private WebElement editBtnTasks;
     @FindBy (xpath = "//div[@class='detailsPanel']/a[1]")//a[@class='detailsPanel_item editResponseButton']
     private WebElement editBtnForms;
+    @FindBy (xpath = "//div[@id='tasks']//span[@class='nextPageBtn']")
+    private WebElement nextPageBtnTasks;
+    @FindBy (xpath = "//div[@id='tasks']//span[@class='butContainer']/following-sibling::*[1]/self::span")
+    private WebElement backPageBtnTasks;
+    @FindBy (xpath = "//div[@id='tasks']//span[contains(text(),'/')]")
+    private WebElement countPage;
 
     //region Survey WebElements
     @FindBy (css="table~input")
@@ -72,7 +78,6 @@ public class TaskOfflinePage extends MainOfflinePage {
     //endregion
 
     public void createPowerFailIncorrectTask(){
-        //powerFailTestTask.click();
         if (portal) {
             tasksListProd.get(0).click();
         } else tasksListTest.get(0).click();
@@ -105,6 +110,7 @@ public class TaskOfflinePage extends MainOfflinePage {
                      clockTextField.sendKeys("12:12");
                  }
                  submitBtn.click();
+//                 createIndex=true;
                  Loader.logWritter(taskName + " correct task was created");
              }else{
                  Loader.logWritter("ERROR! Correct " + taskName + " was not created");
@@ -117,19 +123,42 @@ public class TaskOfflinePage extends MainOfflinePage {
     }
 
     private boolean findSurveyTaskTab(String taskName){
-      boolean index=false;
+        boolean findSurvey=false;
+        int pageQuantity=1;
+        if (isElementPresent(countPage)){
+            pageQuantity = Integer.parseInt(countPage.getText().substring(4));
+        }
+        for (int i=pageQuantity;i>0;i--) {
+            for (int y = i-1;y >0;y--) {
+                nextPageBtnTasks.click();
+            }
+            findSurvey = serchInSurveyList(taskName, i-1);
+            if (findSurvey) {
+                break;
+            }
+        }
+        if (!findSurvey) {
+            Loader.logWritter("ERROR! Can't find survey for task:" + taskName);
+        }
+        return findSurvey;
+    }
+
+    private boolean serchInSurveyList(String taskName, int pageNumber){
+        boolean index=false;
         for (int i = survList.size() - 1; i >= 0; i--) {
-                survList.get(i).click();
-                editBtnTasks.click();
-                if (taskId.get(7).getAttribute("value").contains(dataBase.getTaskExtId(gameID, taskName.substring(0,8)))) {   //  сравнение taskId  в сюрвее и в BD
-                    index=true;
-                    break;
-                } else {
-                    closeSurveyBtn.click();
+            survList.get(i).click();
+            editBtnTasks.click();
+            if (taskId.get(7).getAttribute("value").contains(dataBase.getTaskExtId(gameID, taskName.substring(0, 8)))) {   //  сравнение taskId  в сюрвее и в BD
+                index = true;
+                break;
+            } else {
+                closeSurveyBtn.click();
+                if (i!=0) {
+                    for (int y = pageNumber; y > 0; y--) {
+                        nextPageBtnTasks.click();
+                    }
                 }
             }
-      if(!index) {
-          Loader.logWritter("ERROR! Can't find survey for task:" + taskName);
         }
         return index;
     }

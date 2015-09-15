@@ -17,6 +17,16 @@ import java.util.concurrent.TimeUnit;
 public class DashboardTab extends Operations {
     private DataBase dataBase;
     private final String gameID= Loader.loadProperty("gameID");
+    private String red="rgba(255, 0, 0, 1)";
+
+    private enum GameStatus{
+        Overdue(0) , Done(1), CompleteWithIncorrect(2);
+        private int value;
+
+        GameStatus(int value) {
+            this.value=value;
+        }
+    };
 
     public DashboardTab(WebDriver driver){
         super(driver);
@@ -67,6 +77,7 @@ public class DashboardTab extends Operations {
                     date.get(i).click();
                     findDate=true;
                     Loader.logWritter("Date was selected");
+                    break;
                 }
             }
             if(!findDate) prevMonthBtn.click();
@@ -117,6 +128,7 @@ public class DashboardTab extends Operations {
         for (int i=1;i<taskColor.size();i++) {
             taskColorAssertion(taskColor.get(i).getCssValue("background-color"), color);
         }
+//        taskColorAssertion(taskColor.get(taskColor.size()-1).getCssValue("background-color"), red);
     }
 
     public void powerFailTestStatusVerification(String status){
@@ -137,6 +149,7 @@ public class DashboardTab extends Operations {
                 driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
                 try {
                     Assert.assertTrue(realStatus.contains(mustStatus));     //Verify task status
+                    Loader.logWritter("Task status is correct.");
                 }catch (AssertionError e){
                     e.getStackTrace();
                     Loader.logWritter("ERROR! Incorrect task status: " + realStatus + "  must be: " + mustStatus);
@@ -150,6 +163,7 @@ public class DashboardTab extends Operations {
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         try {
             Assert.assertTrue(realColor.contains(mustColor));     //Verify task status
+            Loader.logWritter("Color is correct");
         }catch (AssertionError e){
             e.getStackTrace();
             Loader.logWritter("ERROR! Incorrect task color: " + realColor + "  must be: " + mustColor);
@@ -158,5 +172,20 @@ public class DashboardTab extends Operations {
             driver.manage().timeouts().implicitlyWait(Integer.parseInt(Loader.loadProperty("timeout")),TimeUnit.SECONDS);
         }
     }
+
+    public void gameStatusVerification(int mustStatus){
+        int statusInDB=dataBase.getGameStatus(gameID);
+        try {
+            Assert.assertTrue(statusInDB==mustStatus);     //Verify game status
+            Loader.logWritter("Game status is correct.");
+        }catch (AssertionError e){
+            e.getStackTrace();
+            Loader.logWritter("ERROR! Incorrect game status: " + statusInDB + "  must be: " + mustStatus);
+            throw new RuntimeException("Assert error game status verification");
+        }
+    }
+//    public void gameStatusVerification(GameStatus overdue) {
+//    }
+
 
 }

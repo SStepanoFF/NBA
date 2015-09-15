@@ -21,6 +21,8 @@
                     <include name="selectDateTest"/>
                     <include name="compareGameNumberTest"/>
                     <include name="compareTaskNumberTest"/>
+                    <include name="overdueColorVerificationTest"/>
+                    <include name="gameStatusVerificationTest"/>
                     <include name="switchTabTest"/>
                 </methods>
             </class>
@@ -38,6 +40,7 @@
                     <include name="incorrectOneTaskColorVerificationTest"/>
                     <include name="correctAllStatusVerificationTest"/>
                     <include name="correctAllColorVerificationTest"/>
+                    <include name="gameStatusVerificationCompleteIncorrectTest"/>
                     <include name="switchTabTest"/>
                 </methods>
             </class>
@@ -54,6 +57,7 @@
                     <include name="correctedOneTaskColorVerificationTest"/>
                     <include name="correctAllOtherStatusVerificationTest"/>
                     <include name="correctAllOtherColorVerificationTest"/>
+                    <include name="gameStatusVerificationCompleteTest"/>
                 </methods>
             </class>
         </classes>

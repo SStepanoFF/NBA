@@ -18,7 +18,6 @@ public class DashTaskVerificationTest extends BaseTest {
 
     private String blue="rgba(0, 109, 204, 1)";
     private String green="rgba(0, 128, 0, 1)";
-    private String red="rgba(255, 0, 0, 1)";
     private String orange="rgba(255, 125, 0, 1)";
 
     @BeforeClass
@@ -52,12 +51,15 @@ public class DashTaskVerificationTest extends BaseTest {
     }
 
     @Test
+    private void gameStatusVerificationCompleteIncorrectTest(){
+        Loader.logWritter("\ngameStatusVerificationTest:");
+        // GameStatus gameStatus=GameStatus.Overdue;
+        dashboardTab.gameStatusVerification(2);     //0-overdue, 1-Done, 2-game complete with incorrect
+    }
+
+    @Test
     public void switchTabTest(){
         switchTab(driver);  //switchWindow(driver, 0);
     }
-//    @AfterClass
-//    public void teardown(ITestContext context){
-//        driver = getDriver(context);
-//        switchTab(driver);  //switchWindow(driver, 0);
-//    }
+
 }
